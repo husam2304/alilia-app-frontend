@@ -1,5 +1,6 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Button from './Ui/Button';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const Pagination = ({
     currentPage,
@@ -9,6 +10,8 @@ const Pagination = ({
     itemsPerPage,
     showInfo = true
 }) => {
+    const { t } = useLanguage();
+    
     if (totalPages <= 1) return null;
 
     const getVisiblePages = () => {
@@ -49,9 +52,9 @@ const Pagination = ({
         <div className="flex items-center justify-between">
             {showInfo && (
                 <div className="text-sm text-gray-700">
-                    عرض <span className="font-medium">{startItem}</span> إلى{' '}
-                    <span className="font-medium">{endItem}</span> من{' '}
-                    <span className="font-medium">{totalItems}</span> نتيجة
+                    {t('showing')} <span className="font-medium">{startItem}</span> {t('to')}{' '}
+                    <span className="font-medium">{endItem}</span> {t('of')}{' '}
+                    <span className="font-medium">{totalItems}</span> {t('results')}
                 </div>
             )}
 
@@ -65,7 +68,7 @@ const Pagination = ({
                     className="ml-2"
                 >
                     <ChevronRight className="w-4 h-4" />
-                    السابق
+                    {t('previous')}
                 </Button>
 
                 {/* Page Numbers */}
@@ -98,7 +101,7 @@ const Pagination = ({
                     disabled={currentPage === totalPages}
                     className="mr-2"
                 >
-                    التالي
+                    {t('next')}
                     <ChevronLeft className="w-4 h-4" />
                 </Button>
             </div>

@@ -3,12 +3,14 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { Eye, EyeOff, User, Lock } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
+import { useLanguage } from '../contexts/LanguageContext';
 import Logo from './../assets/images/logo.png';
 import LoginImage from '../assets/images/login.png';
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const { login, isLoading } = useAuth();
+    const { t } = useLanguage();
     const navigate = useNavigate();
 
     const {
@@ -70,10 +72,10 @@ const Login = () => {
                         {/* Welcome Section */}
                         <div className="text-center mb-8">
                             <h1 className="text-2xl font-bold text-gray-900 mb-2">
-                                تسجيل الدخول في التطبيق
+                                {t('loginTitle')}
                             </h1>
                             <p className="text-gray-600 text-sm">
-                                مرحباً بك في التطبيق
+                                {t('loginWelcome')}
                             </p>
                         </div>
 
@@ -82,7 +84,7 @@ const Login = () => {
                             {/* User Code Field */}
                             <div>
                                 <label htmlFor="userCode" className="block text-sm font-medium text-gray-700 mb-2">
-                                    الحساب او الأسم او رقم الهاتف
+                                    {t('userCodeLabel')}
                                 </label>
                                 <div className="relative">
                                     <input
@@ -90,10 +92,10 @@ const Login = () => {
                                         type="text"
                                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-right"
                                         {...register('userCode', {
-                                            required: 'رمز المستخدم مطلوب',
+                                            required: t('userCodeLabel') + ' مطلوب',
                                             minLength: {
                                                 value: 3,
-                                                message: 'رمز المستخدم قصير جداً'
+                                                message: t('userCodeLabel') + ' قصير جداً'
                                             }
                                         })}
                                     />
@@ -107,7 +109,7 @@ const Login = () => {
                             {/* Password Field */}
                             <div>
                                 <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-                                    كلمة السر
+                                    {t('passwordLabel')}
                                 </label>
                                 <div className="relative">
                                     <input
@@ -116,10 +118,10 @@ const Login = () => {
                                         placeholder="••••••••"
                                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-right pr-12"
                                         {...register('password', {
-                                            required: 'كلمة المرور مطلوبة',
+                                            required: t('passwordLabel') + ' مطلوبة',
                                             minLength: {
                                                 value: 6,
-                                                message: 'كلمة المرور قصيرة جداً'
+                                                message: t('passwordLabel') + ' قصيرة جداً'
                                             }
                                         })}
                                     />
@@ -159,14 +161,14 @@ const Login = () => {
                                 onMouseEnter={(e) => e.target.style.backgroundColor = '#7a0e47'}
                                 onMouseLeave={(e) => e.target.style.backgroundColor = '#931158'}
                             >
-                                {isLoading ? 'جاري تسجيل الدخول...' : 'تسجيل الدخول'}
+                                {isLoading ? t('loggingIn') : t('loginButton')}
                             </button>
                         </form>
 
                         {/* Registration Link */}
                         <div className="text-center mt-6">
                             <p className="text-gray-600 text-sm mb-2">
-                                ليس لديك حساب بالفعل؟
+                                {t('noAccount')}
                             </p>
                             <Link
                                 to="/auth/register"
@@ -175,7 +177,7 @@ const Login = () => {
                                 onMouseEnter={(e) => e.target.style.color = '#7a0e47'}
                                 onMouseLeave={(e) => e.target.style.color = '#931158'}
                             >
-                                التسجيل
+                                {t('registerLink')}
                             </Link>
                         </div>
 
@@ -191,7 +193,7 @@ const Login = () => {
                                 }}
                             />
                             <label htmlFor="terms" className="mr-2 text-xs text-gray-600">
-                                أوافق على الشروط والأحكام
+                                {t('agreeTerms')}
                             </label>
                         </div>
                     </div>

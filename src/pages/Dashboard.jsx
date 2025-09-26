@@ -28,6 +28,7 @@ import {
 
 import { dashboardService } from '../service';
 import { useAuth } from '../contexts/AuthContext';
+import { useLanguage } from '../contexts/LanguageContext';
 import Card from '../components/cards/Card';
 import StatCard from '../components/cards/StatCard';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -49,6 +50,7 @@ ChartJS.register(
 
 const Dashboard = () => {
     const { user } = useAuth();
+    const { t } = useLanguage();
     const [dashboardData, setDashboardData] = useState(null);
     const [chartsData, setChartsData] = useState(null);
     const [topProducts, setTopProducts] = useState([]);
@@ -225,9 +227,9 @@ const Dashboard = () => {
             {/* Header */}
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-gray-900">لوحة التحكم</h1>
+                    <h1 className="text-3xl font-bold text-gray-900">{t('dashboardTitle')}</h1>
                     <p className="text-gray-600 mt-1">
-                        مرحباً {user?.name || 'بك'}, إليك نظرة عامة على أعمالك
+                        {t('dashboardWelcome', { name: user?.name || '' })}
                     </p>
                 </div>
 
@@ -263,7 +265,7 @@ const Dashboard = () => {
             {/* Stats Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
                 <StatCard
-                    title=" عدد  العروض النشطة"
+                    title={t('activeOffers')}
                     value={dashboardData?.activeOffers || 0}
 
                     icon={ShoppingBag}
@@ -271,7 +273,7 @@ const Dashboard = () => {
                 />
 
                 <StatCard
-                    title="عدد طلبات القائمة"
+                    title={t('pendingOrders')}
                     value={dashboardData?.pendingOrders || 0}
 
                     icon={Truck}
@@ -279,21 +281,21 @@ const Dashboard = () => {
                 />
 
                 <StatCard
-                    title="عدد الطلبات"
+                    title={t('completedOffers')}
                     value={dashboardData?.completedOffers || 0}
 
                     icon={Package}
                     color="primary"
                 />
                 <StatCard
-                    title="عدد الطلبات المكتمة "
+                    title={t('totalOrders')}
                     value={dashboardData?.totalOrders || 0}
 
                     icon={MapPin}
                     color="secondary"
                 />
                 <StatCard
-                    title="إجمالي الأرباح"
+                    title={t('totalProfit')}
                     value={dashboardData?.totalProfit || 0}
 
                     icon={TrendingUp}
@@ -305,7 +307,7 @@ const Dashboard = () => {
             <div className="grid  grid-cols-1 lg:grid-cols-3 gap-6">
                 {/* Pie Chart */}
                 <Card className="p-6 bg-card-150">
-                    <h3 className="text-lg font-semibold mb-4">طلبات التوصيل</h3>
+                    <h3 className="text-lg font-semibold mb-4">{t('deliveryRequests')}</h3>
                     <div className="flex items-center gap-4">
                         <div className="w-48 h-48">
                             <Doughnut
@@ -336,7 +338,7 @@ const Dashboard = () => {
 
                 {/* Line Chart */}
                 <Card className="p-6 lg:col-span-2 bg-card-150">
-                    <h3 className="text-lg font-semibold mb-4">طلبات العروض</h3>
+                    <h3 className="text-lg font-semibold mb-4">{t('offerOrders')}</h3>
                     <div className="h-64">
                         <Line
                             data={{
@@ -360,7 +362,7 @@ const Dashboard = () => {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 {/* Bar Chart */}
                 <Card className="p-6 lg:col-span-2 bg-card-150">
-                    <h3 className="text-lg font-semibold mb-4">الأرباح خلال السنة</h3>
+                    <h3 className="text-lg font-semibold mb-4">{t('profitsThisYear')}</h3>
                     <div className="h-64">
                         <Bar
                             data={{
@@ -382,7 +384,7 @@ const Dashboard = () => {
 
                 {/* Top Products */}
                 <Card className="p-6 bg-card-150">
-                    <h3 className="text-lg font-semibold mb-4">المنتجات الأكثر تسوق</h3>
+                    <h3 className="text-lg font-semibold mb-4">{t('topProducts')}</h3>
                     <div className="space-y-3">
                         {topProducts?.slice(0, 6)?.map((product, index) => (
                             <div

@@ -1,5 +1,8 @@
+import { useLanguage } from '../contexts/LanguageContext';
 
 const LoadingSpinner = ({ size = 'md', className = '' }) => {
+    const { t } = useLanguage();
+    
     const sizes = {
         sm: 'w-4 h-4',
         md: 'w-8 h-8',
@@ -15,7 +18,7 @@ const LoadingSpinner = ({ size = 'md', className = '' }) => {
             rounded-full animate-spin ${className}
           `}
                 />
-                <p className="mt-4 text-gray-700 font-medium">جاري التحميل...</p>
+                <p className="mt-4 text-gray-700 font-medium">{t('loading')}</p>
             </div>
         </div>
     );

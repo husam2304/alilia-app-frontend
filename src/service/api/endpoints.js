@@ -22,6 +22,9 @@ export const endpoints = {
     },
     admin: {
         orders: "/Admin/Orders",
+    },
+    customer: {
+        changeLanguage: "/Customer/ChangeLanguage"
     }
 };
 export default endpoints;

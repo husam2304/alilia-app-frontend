@@ -24,6 +24,9 @@ api.interceptors.request.use(
             config.headers.Authorization = `Bearer ${token}`;
         }
 
+        // Add Accept-Language header
+        const language = localStorage.getItem('language') || 'ar';
+        config.headers['Accept-Language'] = language;
 
         return config;
     },

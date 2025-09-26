@@ -1,4 +1,7 @@
 import React from 'react';
+import { translations } from '../../locales/ar';
+import en from '../../locales/en';
+import ar from '../../locales/ar';
 
 class ErrorBoundary extends React.Component {
     constructor(props) {
@@ -18,8 +21,13 @@ class ErrorBoundary extends React.Component {
 
     render() {
         if (this.state.hasError) {
+            // Get current language from localStorage
+            const currentLanguage = localStorage.getItem('language') || 'ar';
+            const translationsMap = { ar, en };
+            const errorMessage = translationsMap[currentLanguage]?.error || 'حدث خطأ ما. الرجاء إعادة المحاولة لاحقًا.';
+            
             // UI fallback بديل
-            return <h2>حدث خطأ ما. الرجاء إعادة المحاولة لاحقًا.</h2>;
+            return <h2>{errorMessage}</h2>;
         }
 
         return this.props.children;

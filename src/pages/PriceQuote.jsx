@@ -6,9 +6,11 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { DataUtils } from '../utils';
 import toast from 'react-hot-toast';
 import { vendorService } from '../service';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const PriceQuote = () => {
     const { OrderId } = useParams();
+    const { t } = useLanguage();
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors }, watch, setValue } = useForm({
         defaultValues: {
@@ -97,7 +99,7 @@ const PriceQuote = () => {
             // Call API
             const response = await vendorService.createOffer(OrderId, formData);
             console.log("Offer created successfully:", response);
-            toast.success("تم إرسال العرض بنجاح ✅");
+            toast.success(t('success') + " ✅");
             navigate('/dashboard/orders');
         } catch (error) {
         }
@@ -139,7 +141,7 @@ const PriceQuote = () => {
             {/* Header */}
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-gray-900">تقديم عرض سعر</h1>
+                    <h1 className="text-3xl font-bold text-gray-900">{t('priceQuoteTitle')}</h1>
 
                 </div>
             </div>
@@ -153,12 +155,12 @@ const PriceQuote = () => {
                         <div className="space-y-6">
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-2 text-right">
-                                    تاريخ العرض
+                                    {t('offerDate')}
                                 </label>
                                 <div className="relative">
                                     <input
                                         type="date"
-                                        {...register('offerDate', { required: 'تاريخ العرض مطلوب' })}
+                                        {...register('offerDate', { required: t('offerDate') + ' مطلوب' })}
                                         className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#931158] focus:border-[#931158] text-right"
                                         disabled
                                     />
@@ -189,12 +191,12 @@ const PriceQuote = () => {
                         {/* صالحية العرض */}
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-2 text-right">
-                                صلاحية العرض
+                                {t('validityDate')}
                             </label>
                             <div className="relative">
                                 <input
                                     type="date"
-                                    {...register('validityDate', { required: 'تاريخ صالحية العرض مطلوب' })}
+                                    {...register('validityDate', { required: t('validityDate') + ' مطلوب' })}
                                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#931158] focus:border-[#931158] text-right"
                                 />
                                 <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
@@ -205,7 +207,7 @@ const PriceQuote = () => {
                         </div>
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-2 text-right">
-                                اسم المنتج
+                                {t('productName')}
                             </label>
                             <div className="relative">
                                 <input
@@ -220,10 +222,10 @@ const PriceQuote = () => {
                         {/* وصف المنتج */}
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-2 text-right">
-                                وصف المنتج
+                                {t('productDescription')}
                             </label>
                             <textarea
-                                {...register('productDescription', { required: 'وصف المنتج مطلوب' })}
+                                {...register('productDescription', { required: t('productDescription') + ' مطلوب' })}
                                 rows={4}
                                 className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#931158] focus:border-[#931158] text-right resize-none"
                                 placeholder=""
@@ -237,7 +239,7 @@ const PriceQuote = () => {
                         <div className="mb-6">
                             <div className="flex items-center mb-2">
                                 <label className="block text-sm font-medium text-gray-700 text-right">
-                                    إضافة صور المنتج
+                                    {t('addProductImages')}
                                 </label>
                                 <Star className="h-4 w-4 text-[#931158] mr-2" />
                             </div>
@@ -292,12 +294,12 @@ const PriceQuote = () => {
                         {/* سعر المنتج */}
                         <div className="mb-6">
                             <label className="block text-sm font-medium text-gray-700 mb-2 text-right">
-                                سعر المنتج
+                                {t('productPrice')}
                             </label>
                             <div className="relative">
                                 <input
                                     type="number"
-                                    {...register('productPrice', { required: 'سعر المنتج مطلوب' })}
+                                    {...register('productPrice', { required: t('productPrice') + ' مطلوب' })}
                                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#931158] focus:border-[#931158] text-right"
                                     placeholder="200"
                                 />
@@ -313,7 +315,7 @@ const PriceQuote = () => {
                         {/* خصومات */}
                         <div className="mb-6">
                             <label className="block text-sm font-medium text-gray-700 mb-4 text-right">
-                                خصومات
+                                {t('discounts')}
                             </label>
 
                             <div className="space-y-4">
@@ -329,14 +331,14 @@ const PriceQuote = () => {
                                             className="h-4 w-4 text-[#931158] focus:ring-[#931158] border-gray-300"
                                         />
                                         <label htmlFor="buyDiscount" className="mr-2 text-sm text-gray-700">
-                                            اشتري
+                                            {t('buyDiscount')}
                                         </label>
                                         <select {...register('buyCount')} className="mx-2 px-3 py-1 border border-gray-300 rounded text-sm">
                                             <option value={1}>1</option>
                                             <option value={2}>2</option>
                                             <option value={3}>3</option>
                                         </select>
-                                        <span className="text-sm text-gray-600 mx-1">واحصل على</span>
+                                        <span className="text-sm text-gray-600 mx-1">{t('getDiscount')}</span>
                                         <input
                                             type="text"
                                             id="extraProduct"
@@ -375,7 +377,7 @@ const PriceQuote = () => {
                                             className="h-4 w-4 text-[#931158] focus:ring-[#931158] border-gray-300"
                                         />
                                         <label htmlFor="percentageDiscount" className="mr-2 text-sm text-gray-700">
-                                            خصم بنسبة
+                                            {t('percentageDiscount')}
                                         </label>
                                         <input
                                             type="number"
@@ -399,7 +401,7 @@ const PriceQuote = () => {
                                         className="h-4 w-4 text-[#931158] focus:ring-[#931158] border-gray-300"
                                     />
                                     <label htmlFor="noDiscount" className="mr-2 text-sm text-gray-700">
-                                        لا يوجد
+                                        {t('noDiscount')}
                                     </label>
                                 </div>
                             </div>
@@ -411,7 +413,7 @@ const PriceQuote = () => {
                                 type="submit"
                                 className="w-full bg-[#931158] hover:bg-[#7a0e47] text-white py-3 px-6 rounded-md font-medium transition-colors"
                             >
-                                إنشاء العرض
+                                {t('createOfferButton')}
                             </Button>
                         </div>
                     </form>
@@ -419,27 +421,27 @@ const PriceQuote = () => {
 
                 {/* معلومات الطلب - الجانب الأيسر */}
                 <div className="w-80 bg-white rounded-lg shadow-sm border border-gray-200 p-6 h-fit">
-                    <h2 className="text-lg font-semibold text-gray-900 mb-4">معلومات الطلب</h2>
+                    <h2 className="text-lg font-semibold text-gray-900 mb-4">{t('orderInfo')}</h2>
 
                     <div className="space-y-3 text-sm">
                         <div className="flex justify-between">
-                            <span className="text-gray-600">التاريخ:</span>
+                            <span className="text-gray-600">{t('date')}:</span>
                             <span className="font-medium">{orderInfo.date}</span>
                         </div>
                         {/* <div className="flex justify-between">
-                                <span className="text-gray-600">الوقت:</span>
+                                <span className="text-gray-600">{t('time')}:</span>
                                 <span className="font-medium">{orderInfo.time}</span>
                             </div> */}
                         <div className="flex justify-between">
-                            <span className="text-gray-600">رقم الطلب:</span>
+                            <span className="text-gray-600">{t('orderNumber')}:</span>
                             <span className="font-medium">{orderInfo.orderNumber}</span>
                         </div>
                         <div className="flex justify-between">
-                            <span className="text-gray-600">المنتج:</span>
+                            <span className="text-gray-600">{t('product')}:</span>
                             <span className="font-medium">{orderInfo.product}</span>
                         </div>
                         <div className="flex justify-between">
-                            <span className="text-gray-600">التفاصيل:</span>
+                            <span className="text-gray-600">{t('details')}:</span>
                             <span className="font-medium">{orderInfo.description}</span>
                         </div>
                     </div>

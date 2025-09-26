@@ -1,3 +1,9 @@
+import { translations } from '../locales/ar';
+import en from '../locales/en';
+import ar from '../locales/ar';
+
+const translationsMap = { ar, en };
+
 export const DataUtils = {
     formatDate(dateString) {
         if (!dateString) return '';
@@ -20,48 +26,54 @@ export const DataUtils = {
         }).format(amount);
     },
 
-    formatOrderStatus(status, language = 'ar') {
+    formatOrderStatus(status, language = null) {
+        // Get current language from localStorage if not provided
+        const currentLang = language || localStorage.getItem('language') || 'ar';
+        
         const statusMap = {
             '1': {
-                ar: 'قائم',
-                en: 'InProgress'
+                ar: translationsMap.ar.inProgress,
+                en: translationsMap.en.inProgress
             },
             '2': {
-                ar: 'مغلق',
-                en: 'Closed'
+                ar: translationsMap.ar.closed,
+                en: translationsMap.en.closed
             },
             '3': {
-                ar: 'ملغي',
-                en: 'Canceled'
+                ar: translationsMap.ar.canceled,
+                en: translationsMap.en.canceled
             }
         };
-        return statusMap[status]?.[language] || status;
+        return statusMap[status]?.[currentLang] || status;
     },
 
-    formatDeliveryStatus(status, language = 'ar') {
+    formatDeliveryStatus(status, language = null) {
+        // Get current language from localStorage if not provided
+        const currentLang = language || localStorage.getItem('language') || 'ar';
+        
         const statusMap = {
             '1': {
-                ar: 'لا يوجد عرض',
-                en: 'NoOffer'
+                ar: translationsMap.ar.noOffer,
+                en: translationsMap.en.noOffer
             },
             '2': {
-                ar: 'قائم',
-                en: 'Preparing'
+                ar: translationsMap.ar.preparing,
+                en: translationsMap.en.preparing
             },
             '3': {
-                ar: 'تم قبول العرض',
-                en: 'OfferAccepted'
+                ar: translationsMap.ar.offerAccepted,
+                en: translationsMap.en.offerAccepted
             },
             '4': {
-                ar: 'انتهت صلاحية العرض',
-                en: 'OfferExpired'
+                ar: translationsMap.ar.offerExpired,
+                en: translationsMap.en.offerExpired
             },
             '5': {
-                ar: 'تم رفض العرض',
-                en: 'OfferRejected'
+                ar: translationsMap.ar.offerRejected,
+                en: translationsMap.en.offerRejected
             }
         };
-        return statusMap[status]?.[language] || status;
+        return statusMap[status]?.[currentLang] || status;
     },
 
     formatPaymentStatus(status) {

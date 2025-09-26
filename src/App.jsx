@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useAuth } from "./contexts/AuthContext";
 import ErrorBoundary from "./components/ErrorBoundry/ErrorBoundry";
+import { LanguageProvider } from "./contexts/LanguageContext";
 import {
   persistQueryClient,
 } from "@tanstack/react-query-persist-client";
@@ -43,9 +44,11 @@ function App() {
   return (
     <>
       <ErrorBoundary>
-        <QueryClientProvider client={queryClient}>
-          <AppRoute />
-        </QueryClientProvider>
+        <LanguageProvider>
+          <QueryClientProvider client={queryClient}>
+            <AppRoute />
+          </QueryClientProvider>
+        </LanguageProvider>
       </ErrorBoundary>
     </>
   );

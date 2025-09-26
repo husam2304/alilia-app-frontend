@@ -21,10 +21,12 @@ import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { adminService, vendorService } from '../service';
 import { useAuth } from '../contexts/AuthContext';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const Orders = () => {
     const [orders, setOrders] = useState([]);
     const { user } = useAuth();
+    const { t } = useLanguage();
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedOrder, setSelectedOrder] = useState(null);
@@ -282,9 +284,9 @@ const Orders = () => {
             {/* Header */}
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-gray-900">جدول الطلبات</h1>
+                    <h1 className="text-3xl font-bold text-gray-900">{t('ordersTitle')}</h1>
                     <p className="text-gray-600 mt-1">
-                        إدارة ومتابعة جميع طلبات المتجر
+                        {t('ordersSubtitle')}
                     </p>
                 </div>
 
@@ -295,7 +297,7 @@ const Orders = () => {
                         icon={RefreshCw}
                         onClick={handleRefresh}
                     >
-                        تحديث
+                        {t('refresh')}
                     </Button>
 
 
@@ -343,26 +345,26 @@ const Orders = () => {
                         <thead className="bg-gray-50">
                             <tr>
                                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    رقم الطلب
+                                    {t('orderNumber')}
                                 </th>
                                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    تاريخ الطلب
+                                    {t('orderDate')}
                                 </th>
                                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    المنتج
+                                    {t('product')}
                                 </th>
                                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    التفاصيل
+                                    {t('details')}
                                 </th>
                                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    حالة الطلب
+                                    {t('orderStatus')}
                                 </th>
                                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    حالة العرض
+                                    {t('offerStatus')}
                                 </th>
 
                                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    الإجراءات
+                                    {t('actions')}
                                 </th>
                             </tr>
                         </thead>
@@ -372,7 +374,7 @@ const Orders = () => {
                                     <td colSpan="7" className="px-6 py-12 text-center">
                                         <div className="flex flex-col items-center">
                                             <Package className="h-12 w-12 text-gray-400 mb-4" />
-                                            <p className="text-gray-500">لا توجد طلبات متاحة</p>
+                                            <p className="text-gray-500">{t('noOrdersAvailable')}</p>
                                         </div>
                                     </td>
                                 </tr>
@@ -413,7 +415,7 @@ const Orders = () => {
                                                 icon={Plus}
                                                 onClick={() => navigate(`/dashboard/CreateOffer/${order.id}`)}
                                             >
-                                                إنشاء عرض
+                                                {t('createOffer')}
                                             </Button>) : (
 
                                                 <Badge variant={DataUtils.getStatusVariant(order.offerId, 'offer')}>
@@ -432,7 +434,7 @@ const Orders = () => {
                                                     handleOrderClick(order.id);
                                                 }}
                                             >
-                                                عرض
+                                                {t('view')}
                                             </Button>
                                         </td>
                                     </tr>
@@ -473,29 +475,31 @@ const Orders = () => {
 
 // Order Details Modal Component
 const OrderDetailsModal = ({ order, isOpen, onClose }) => {
+    const { t } = useLanguage();
+    
     return (
-        <Modal isOpen={isOpen} onClose={onClose} title={`تفاصيل الطلب ${order.orderNumber}`} size="lg">
+        <Modal isOpen={isOpen} onClose={onClose} title={t('orderDetailsTitle', { orderNumber: order.orderNumber })} size="lg">
             <div className="space-y-6">
                 {/* Basic Order Info */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">رقم الطلب</label>
+                        <label className="block text-sm font-medium text-gray-700">{t('orderNumber')}</label>
                         <p className="mt-1 text-sm text-gray-900">{order.orderNumber}</p>
                     </div>
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">تاريخ الطلب</label>
+                        <label className="block text-sm font-medium text-gray-700">{t('orderDate')}</label>
                         <p className="mt-1 text-sm text-gray-900">{order.date}</p>
                     </div>
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">المنتج</label>
+                        <label className="block text-sm font-medium text-gray-700">{t('product')}</label>
                         <p className="mt-1 text-sm text-gray-900">{order.content}</p>
                     </div>
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">التفاصيل</label>
+                        <label className="block text-sm font-medium text-gray-700">{t('details')}</label>
                         <p className="mt-1 text-sm text-gray-900">{order.Description}</p>
                     </div>
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">حالة الطلب</label>
+                        <label className="block text-sm font-medium text-gray-700">{t('orderStatus')}</label>
                         <div className="mt-1">
                             <Badge variant={DataUtils.getStatusVariant(order.status)}>
                                 {order.status}
@@ -507,22 +511,22 @@ const OrderDetailsModal = ({ order, isOpen, onClose }) => {
                 {/* Customer Info */}
                 {order.rawData?.customerInfo && (
                     <div className="border-t pt-4">
-                        <h4 className="text-lg font-medium text-gray-900 mb-3">معلومات العميل</h4>
+                        <h4 className="text-lg font-medium text-gray-900 mb-3">{t('customerInfo')}</h4>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700">الاسم</label>
+                                <label className="block text-sm font-medium text-gray-700">{t('customerName')}</label>
                                 <p className="mt-1 text-sm text-gray-900">
                                     {order.rawData.customerInfo.name || 'غير محدد'}
                                 </p>
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700">الهاتف</label>
+                                <label className="block text-sm font-medium text-gray-700">{t('customerPhone')}</label>
                                 <p className="mt-1 text-sm text-gray-900">
                                     {order.rawData.customerInfo.phone || 'غير محدد'}
                                 </p>
                             </div>
                             <div className="md:col-span-2">
-                                <label className="block text-sm font-medium text-gray-700">العنوان</label>
+                                <label className="block text-sm font-medium text-gray-700">{t('customerAddress')}</label>
                                 <p className="mt-1 text-sm text-gray-900">
                                     {order.rawData.customerInfo.address || 'غير محدد'}
                                 </p>
@@ -534,7 +538,7 @@ const OrderDetailsModal = ({ order, isOpen, onClose }) => {
                 {/* Order Items */}
                 {order.rawData?.items && order.rawData.items.length > 0 && (
                     <div className="border-t pt-4">
-                        <h4 className="text-lg font-medium text-gray-900 mb-3">تفاصيل المنتجات</h4>
+                        <h4 className="text-lg font-medium text-gray-900 mb-3">{t('productDetails')}</h4>
                         <div className="space-y-3">
                             {order.rawData.items.map((item, index) => (
                                 <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
@@ -542,7 +546,7 @@ const OrderDetailsModal = ({ order, isOpen, onClose }) => {
                                         <p className="font-medium text-gray-900">
                                             {item.productName || item.name || 'منتج غير محدد'}
                                         </p>
-                                        <p className="text-sm text-gray-600">الكمية: {item.quantity || 1}</p>
+                                        <p className="text-sm text-gray-600">{t('quantity')}: {item.quantity || 1}</p>
                                     </div>
                                     {item.price && (
                                         <p className="font-medium text-green-600">
@@ -559,7 +563,7 @@ const OrderDetailsModal = ({ order, isOpen, onClose }) => {
                 {order.rawData?.totalAmount && (
                     <div className="border-t pt-4">
                         <div className="flex justify-between items-center">
-                            <span className="text-lg font-medium text-gray-900">إجمالي المبلغ:</span>
+                            <span className="text-lg font-medium text-gray-900">{t('totalAmount')}:</span>
                             <span className="text-xl font-bold text-green-600">
                                 {DataUtils.formatCurrency(order.rawData.totalAmount)}
                             </span>
@@ -573,7 +577,7 @@ const OrderDetailsModal = ({ order, isOpen, onClose }) => {
                         variant="outline"
                         onClick={onClose}
                     >
-                        إغلاق
+                        {t('close')}
                     </Button>
 
                 </div>

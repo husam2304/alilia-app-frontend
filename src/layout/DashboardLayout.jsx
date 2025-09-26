@@ -8,25 +8,30 @@ import {
     ShoppingCart,
     LogOut,
     Menu,
-    X
+    X,
+    Globe
 } from 'lucide-react';
 import { Menu as HeadlessMenu } from '@headlessui/react';
 import { useAuth } from '../contexts/AuthContext';
+import { useLanguage } from '../contexts/LanguageContext';
+import Button from '../components/Ui/Button';
+
 export const DashboardLayout = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const { user, logout } = useAuth();
+    const { t, currentLanguage, changeLanguage, isChangingLanguage } = useLanguage();
     const location = useLocation();
     const navigate = useNavigate();
 
     const navigation = [
         {
-            name: 'لوحة التحكم',
+            name: t('dashboard'),
             href: '/dashboard',
             icon: LayoutDashboard,
             current: location.pathname === '/dashboard'
         },
         {
-            name: 'الطلبات',
+            name: t('orders'),
             href: '/dashboard/orders',
             icon: ShoppingCart,
             current: location.pathname === '/dashboard/orders'
@@ -92,7 +97,7 @@ export const DashboardLayout = () => {
                                 <input
                                     type="text"
                                     className="block w-full pr-10 py-2 border border-gray-300 rounded-lg leading-5 bg-gray-50 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-primary-500 focus:border-primary-500 focus:bg-white"
-                                    placeholder="ابحث..."
+                                    placeholder={t('search')}
                                 />
                             </div>
                         </div> */}
@@ -121,6 +126,53 @@ export const DashboardLayout = () => {
                         </div>
                         {/* Right side - Notifications and Profile */}
                         <div className="flex items-center space-x-4 space-x-reverse">
+                            {/* Language Switcher */}
+                            <div className="relative">
+                                <HeadlessMenu as="div" className="relative">
+                                    <HeadlessMenu.Button 
+                                        className="bg-gray-100 p-2 rounded-full text-gray-400 hover:text-gray-500 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors"
+                                        disabled={isChangingLanguage}
+                                    >
+                                        <Globe className="h-5 w-5" />
+                                    </HeadlessMenu.Button>
+
+                                    <HeadlessMenu.Items className="origin-top-right absolute right-0 mt-2 w-32 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
+                                        <div className="py-1">
+                                            <HeadlessMenu.Item>
+                                                {({ active }) => (
+                                                    <button
+                                                        onClick={() => changeLanguage('ar')}
+                                                        disabled={currentLanguage === 'ar' || isChangingLanguage}
+                                                        className={`${
+                                                            active ? 'bg-gray-100' : ''
+                                                        } ${
+                                                            currentLanguage === 'ar' ? 'bg-primary-50 text-primary-600' : 'text-gray-700'
+                                                        } flex items-center px-4 py-2 text-sm w-full text-right disabled:opacity-50`}
+                                                    >
+                                                        {t('arabic')}
+                                                    </button>
+                                                )}
+                                            </HeadlessMenu.Item>
+                                            <HeadlessMenu.Item>
+                                                {({ active }) => (
+                                                    <button
+                                                        onClick={() => changeLanguage('en')}
+                                                        disabled={currentLanguage === 'en' || isChangingLanguage}
+                                                        className={`${
+                                                            active ? 'bg-gray-100' : ''
+                                                        } ${
+                                                            currentLanguage === 'en' ? 'bg-primary-50 text-primary-600' : 'text-gray-700'
+                                                        } flex items-center px-4 py-2 text-sm w-full text-right disabled:opacity-50`}
+                                                    >
+                                                        {t('english')}
+                                                    </button>
+                                                )}
+                                            </HeadlessMenu.Item>
+                                        </div>
+                                    </HeadlessMenu.Items>
+                                </HeadlessMenu>
+                            </div>
+
                             {/* Notifications */}
                             {/* <button
                                 type="button"
@@ -185,7 +237,7 @@ export const DashboardLayout = () => {
                                                         } flex items-center px-4 py-2 text-sm text-gray-700 w-full text-right`}
                                                 >
                                                     <LogOut className="ml-3 h-4 w-4" />
-                                                    تسجيل الخروج
+                                                    {t('logout')}
                                                 </button>
                                             )}
                                         </HeadlessMenu.Item>
@@ -257,10 +309,10 @@ const Sidebar = ({ navigation, user }) => {
                         </div>
                         <div className="mr-3">
                             <p className="text-sm font-medium text-gray-700">
-                                مرحباً بك
+                                {t('dashboardWelcome', { name: '' }).split(',')[0]}
                             </p>
                             <p className="text-xs text-gray-500">
-                                مدير المتجر
+                                {user?.userRole === 'Admin' ? 'Admin' : 'Store Manager'}
                             </p>
                         </div>
                     </div>
