@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const API_CONFIG = {
-    BASE_URL: "http://aliaaorder.runasp.net",
+    BASE_URL: "api",
 
 };
 
