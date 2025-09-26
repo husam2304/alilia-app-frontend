@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const API_CONFIG = {
-    BASE_URL: "api",
+    BASE_URL: "/api",
 
 };
 
