@@ -14,8 +14,10 @@ export default defineConfig({
   proxy: {
     '/api': {
       target: 'http://aliaaorder.runasp.net',
-      changeOrigin: true,
-      secure: false
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+        ws: true, // Enable WebSocket support
     }
   }
 }
