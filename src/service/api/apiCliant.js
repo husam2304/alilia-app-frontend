@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const API_CONFIG = {
-    BASE_URL: ""//"https://localhost:59451",
+    BASE_URL: "http://aliaaorder.runasp.net",
 
 };
 
