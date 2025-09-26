@@ -3,7 +3,7 @@ export const ar = {
     dashboard: 'لوحة التحكم',
     orders: 'الطلبات',
     logout: 'تسجيل الخروج',
-    
+
     // Common
     loading: 'جاري التحميل...',
     error: 'حدث خطأ ما. الرجاء إعادة المحاولة لاحقًا.',
@@ -19,18 +19,22 @@ export const ar = {
     filter: 'تصفية',
     export: 'تصدير',
     print: 'طباعة',
-    
+
     // Login
     loginTitle: 'تسجيل الدخول في التطبيق',
     loginWelcome: 'مرحباً بك في التطبيق',
     userCodeLabel: 'الحساب او الأسم او رقم الهاتف',
-    passwordLabel: 'كلمة السر',
+    passwordLabel: ' كلمة السر',
     loginButton: 'تسجيل الدخول',
     loggingIn: 'جاري تسجيل الدخول...',
     noAccount: 'ليس لديك حساب بالفعل؟',
     registerLink: 'التسجيل',
     agreeTerms: 'أوافق على الشروط والأحكام',
-    
+    passwordShort: 'كلمة السر قصيرة جدا ',
+    UserCodeShort: 'اسم الحساب قصير جدا',
+
+    number: "عدد",
+    withDiscount: "بخصم",
     // Dashboard
     dashboardTitle: 'لوحة التحكم',
     dashboardWelcome: 'مرحباً {name}, إليك نظرة عامة على أعمالك',
@@ -39,11 +43,11 @@ export const ar = {
     completedOffers: 'عدد الطلبات',
     totalOrders: 'عدد الطلبات المكتملة',
     totalProfit: 'إجمالي الأرباح',
-    deliveryRequests: 'طلبات التوصيل',
+    OfferStatues: 'طلبات العروض',
     offerOrders: 'طلبات العروض',
     profitsThisYear: 'الأرباح خلال السنة',
     topProducts: 'المنتجات الأكثر تسوق',
-    
+
     // Orders
     ordersTitle: 'جدول الطلبات',
     ordersSubtitle: 'إدارة ومتابعة جميع طلبات المتجر',
@@ -64,7 +68,7 @@ export const ar = {
     productDetails: 'تفاصيل المنتجات',
     quantity: 'الكمية',
     totalAmount: 'إجمالي المبلغ',
-    
+
     // Price Quote
     priceQuoteTitle: 'تقديم عرض سعر',
     offerDate: 'تاريخ العرض',
@@ -83,7 +87,7 @@ export const ar = {
     date: 'التاريخ',
     time: 'الوقت',
     location: 'الموقع',
-    
+
     // Status
     inProgress: 'قائم',
     closed: 'مغلق',
@@ -93,7 +97,7 @@ export const ar = {
     offerAccepted: 'تم قبول العرض',
     offerExpired: 'انتهت صلاحية العرض',
     offerRejected: 'تم رفض العرض',
-    
+
     // Pagination
     showing: 'عرض',
     to: 'إلى',
@@ -101,7 +105,7 @@ export const ar = {
     results: 'نتيجة',
     previous: 'السابق',
     next: 'التالي',
-    
+
     // Months
     january: 'يناير',
     february: 'فبراير',
@@ -115,7 +119,7 @@ export const ar = {
     october: 'أكتوبر',
     november: 'نوفمبر',
     december: 'ديسمبر',
-    
+
     // Registration
     registerTitle: 'تسجيل في التطبيق',
     registerSubtitle: 'قم بتسجيل البيانات الخاصة بالمؤسسة',
@@ -139,7 +143,17 @@ export const ar = {
     register: 'التسجيل',
     haveAccount: 'لديك حساب بالفعل؟',
     loginLink: 'تسجيل الدخول',
-    
+
+
+    fileSizeError: 'حجم الملف كبير جداً. الحد الأقصى 5 ميجابايت',
+    fileTypeError: 'يرجى اختيار ملف صورة صالح',
+    passwordMismatch: 'كلمتا المرور غير متطابقتين',
+    chooseProfileImage: "اختر صورة شخصية",
+    chooseLogo: "اختر صورة الشعار",
+    chooseLicense: "اختر صورة السجل",
+    invalidWebsite: 'الموقع الالكتروني غير صحيح',
+    invalidPhone: "الرجاء إدخال رقم هاتف صحيح",
+    required: "هذا الحقل مطلوب",
     // Language
     language: 'اللغة',
     arabic: 'العربية',

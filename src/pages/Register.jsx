@@ -13,7 +13,6 @@ import {
     Lock,
     CreditCard,
     Globe
-
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import Button from '../components/Ui/Button';
@@ -21,13 +20,15 @@ import Input from '../components/Ui/Input';
 import toast from 'react-hot-toast';
 import Logo from '../assets/images/logo.png';
 import LoginImage from '../assets/images/login.png';
+import { useLanguage } from '../contexts/LanguageContext';
+
 const Register = () => {
     const [logoPreview, setLogoPreview] = useState(null);
     const [licensePreview, setLicensePreview] = useState(null);
     const [imagePreview, setImagePreview] = useState(null);
     const [step, setStep] = useState(1);
     const { register: registerUser, isLoading } = useAuth();
-
+    const { t, currentLanguage, changeLanguage, isChangingLanguage } = useLanguage();
     const navigate = useNavigate();
 
     const {
@@ -41,15 +42,13 @@ const Register = () => {
         const file = e.target.files[0];
         if (!file) return;
 
-        // Validate file size (5MB max)
         if (file.size > 5 * 1024 * 1024) {
-            toast.error('حجم الملف كبير جداً. الحد الأقصى 5 ميجابايت');
+            toast.error(t('fileSizeError'));
             return;
         }
 
-        // Validate file type
         if (!file.type.startsWith('image/')) {
-            toast.error('يرجى اختيار ملف صورة صالح');
+            toast.error(t('fileTypeError'));
             return;
         }
 
@@ -71,22 +70,17 @@ const Register = () => {
 
     const onSubmit = async (data) => {
         if (data.password !== data.confirmPassword) {
-            toast.error('كلمتا المرور غير متطابقتين');
+            toast.error(t('passwordMismatch'));
             return;
         }
-        try {
-            await registerUser(data, 'vendor');
-            if (registerUser.success) {
-                navigate('/auth/login');
-            }
-        } catch (error) {
-            // Error handled by AuthContext
+        await registerUser(data, 'vendor');
+        if (registerUser.success) {
+            navigate('/auth/login');
         }
     };
 
     return (
-        <div className="h-screen bg-gray-50 flex overflow-hidden" dir="rtl">
-
+        <div className="h-screen bg-gray-50 flex overflow-hidden" >
             {/* Right Side - Form */}
             <div className="md:w-2/3 p-8 lg:p-12 overflow-scroll">
                 <div className="max-w-lg mx-auto">
@@ -94,48 +88,49 @@ const Register = () => {
                     <div className="text-center mb-8">
                         <div className="text-center mb-4">
                             <div className="flex justify-center mb-3">
-                                <img
-                                    src={Logo}
-                                    alt="ALIA Logo"
-                                    className="w-20 h-20"
-                                />
+                                <img src={Logo} alt="ALIA Logo" className="w-20 h-20" />
                             </div>
                         </div>
                         <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                            تسجيل في التطبيق
+                            {t('registerTitle')}
                         </h1>
-                        <p className="text-gray-600">
-                            قم بتسجيل البيانات الخاصة بالمؤسسة
-                        </p>
+                        <p className="text-gray-600">{t('registerSubtitle')}</p>
                     </div>
 
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                         {step === 1 && (
                             <>
                                 <Input
-                                    label="تسجيل كبائع"
+                                    label={t('vendorName')}
                                     icon={User}
-                                    placeholder="اسم البائع"
-                                    {...register("vendorName", { required: "مطلوب" })}
+                                    placeholder={t('vendorName')}
+                                    {...register('vendorName', { required: t('required') })}
                                 />
 
-
                                 <Input
-                                    label="رقم الهاتف"
+                                    label={t('vendorPhone')}
                                     icon={Phone}
                                     type="tel"
-                                    placeholder="رقم الهاتف"
-                                    {...register("vendorPhone", { required: "مطلوب" })}
+                                    placeholder={t('vendorPhone')}
+                                    {...register('vendorPhone', {
+                                        required: t('required'),
+                                        pattern: {
+                                            value: /^07[789]\d{7}$/,
+                                            message: t('invalidPhone')
+                                        }
+                                    })}
                                     className="w-full border rounded-lg p-3"
                                 />
+
                                 <Input
-                                    label="البريد الإلكتروني"
+                                    label={t('vendorEmail')}
                                     icon={Mail}
                                     type="email"
-                                    placeholder="البريد الإلكتروني"
-                                    {...register("vendorEmail", { required: "مطلوب" })}
+                                    placeholder={t('vendorEmail')}
+                                    {...register('vendorEmail', { required: t('required') })}
                                     className="w-full border rounded-lg p-3"
                                 />
+
                                 <div className="relative">
                                     <input
                                         type="file"
@@ -151,31 +146,35 @@ const Register = () => {
                                         {imagePreview ? (
                                             <img
                                                 src={imagePreview}
-                                                alt="image Preview"
+                                                alt="Preview"
                                                 className="h-24 w-24 object-cover rounded-lg"
                                             />
                                         ) : (
                                             <div className="flex flex-col items-center">
                                                 <Camera className="w-8 h-8 text-gray-400 mb-2" />
-                                                <p className="text-sm text-gray-500">اختر صورة شخصية</p>
+                                                <p className="text-sm text-gray-500">
+                                                    {t('chooseProfileImage')}
+                                                </p>
                                             </div>
                                         )}
                                     </label>
                                 </div>
+
                                 <Input
-                                    label="كلمة المرور"
+                                    label={t('password')}
                                     icon={Lock}
                                     type="password"
-                                    placeholder="كلمة المرور"
-                                    {...register("password", { required: "مطلوب" })}
+                                    placeholder={t('password')}
+                                    {...register('password', { required: t('required') })}
                                     className="w-full border rounded-lg p-3"
                                 />
+
                                 <Input
-                                    label="تأكيد كلمة المرور"
+                                    label={t('confirmPassword')}
                                     icon={Lock}
                                     type="password"
-                                    placeholder="تأكيد كلمة المرور"
-                                    {...register("confirmPassword", { required: "مطلوب" })}
+                                    placeholder={t('confirmPassword')}
+                                    {...register('confirmPassword', { required: t('required') })}
                                     className="w-full border rounded-lg p-3"
                                 />
 
@@ -187,103 +186,96 @@ const Register = () => {
                                     loading={isLoading}
                                     onClick={() => setStep(2)}
                                 >
-                                    متابعة
+                                    {t('continue')}
                                 </Button>
                             </>
                         )}
 
                         {step === 2 && (
                             <>
-                                {/* Store Name */}
                                 <Input
-                                    label="اسم المنشأة"
+                                    label={t('storeName')}
                                     icon={Store}
-                                    placeholder="أدخل اسم المنشأة"
-                                    {...register('storeName', {
-                                        required: 'اسم المنشأة مطلوب',
-                                        minLength: {
-                                            value: 2,
-                                            message: 'اسم المنشأة قصير جداً'
-                                        }
-                                    })}
+                                    placeholder={t('storeName')}
+                                    {...register('storeName', { required: t('required') })}
                                     error={errors.storeName?.message}
                                 />
+
                                 <Input
-                                    label="السجل التجاري"
+                                    label={t('commercialRegister')}
                                     icon={CreditCard}
-                                    placeholder="السجل التجاري"
-                                    {...register("commercialNumber", { required: "مطلوب" })}
+                                    placeholder={t('commercialRegister')}
+                                    {...register('commercialNumber', { required: t('required') })}
                                     className="w-full border rounded-lg p-3"
                                 />
+
                                 <Input
-                                    label="الدولة"
+                                    label={t('country')}
                                     icon={Globe}
-                                    placeholder="الدولة"
-                                    {...register("country", { required: "مطلوب" })}
+                                    placeholder={t('country')}
+                                    {...register('country', { required: t('required') })}
                                     className="w-full border rounded-lg p-3"
                                 />
+
                                 <Input
-                                    label="المدينة"
+                                    label={t('city')}
                                     icon={Globe}
-                                    placeholder="المدينة"
-                                    {...register("city", { required: "مطلوب" })}
+                                    placeholder={t('city')}
+                                    {...register('city', { required: t('required') })}
                                     className="w-full border rounded-lg p-3"
                                 />
-                                {/* Address */}
+
                                 <Input
-                                    label="العنوان"
+                                    label={t('address')}
                                     icon={MapPin}
-                                    placeholder="أدخل العنوان"
-                                    {...register('address', {
-                                        required: 'العنوان مطلوب',
-                                        minLength: {
-                                            value: 10,
-                                            message: 'العنوان قصير جداً'
-                                        }
-                                    })}
+                                    placeholder={t('address')}
+                                    {...register('address', { required: t('required') })}
                                     error={errors.address?.message}
                                 />
 
-                                {/* Phone */}
                                 <Input
-                                    label="البريد الإلكتروني"
+                                    label={t('vendorEmail')}
                                     icon={Mail}
                                     type="email"
-                                    placeholder="البريد الإلكتروني"
-                                    {...register("email", { required: "مطلوب" })}
+                                    placeholder={t('vendorEmail')}
+                                    {...register('email', { required: t('required') })}
                                     className="w-full border rounded-lg p-3"
                                 />
+
                                 <Input
-                                    label="رقم الهاتف"
+                                    label={t('vendorPhone')}
                                     icon={Phone}
                                     type="tel"
-                                    placeholder="رقم الهاتف"
-                                    {...register("phone", {
-                                        required: 'رقم الجوال مطلوب',
+                                    placeholder={t('vendorPhone')}
+                                    {...register('phone', {
+                                        required: t('required'),
                                         pattern: {
-                                            message: 'رقم الجوال غير صحيح (9 أرقام)'
+                                            value: /^07[789]\d{7}$/,
+                                            message: t('invalidPhone')
                                         }
                                     })}
                                     className="w-full border rounded-lg p-3"
                                 />
+
                                 <Input
-                                    label="الموقع الالكتروني"
+                                    label={t('website')}
                                     icon={Globe}
                                     type="text"
-                                    placeholder="الموقع الالكتروني"
-                                    {...register("website", {
-                                        required: '  الموقع الالكتروني مطلوب',
+                                    placeholder={t('website')}
+                                    {...register('website', {
+                                        required: t('required'),
                                         pattern: {
                                             value: /^(ftp|http|https):\/\/[^ "]+$/,
-                                            message: 'الموقع الالكتروني غير صحيح'
+                                            message: t('invalidWebsite')
                                         }
                                     })}
                                     className="w-full border rounded-lg p-3"
                                 />
+
                                 {/* Logo Upload */}
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                                        الشعار
+                                        {t('logo')}
                                     </label>
                                     <div className="relative">
                                         <input
@@ -306,7 +298,9 @@ const Register = () => {
                                             ) : (
                                                 <div className="flex flex-col items-center">
                                                     <Camera className="w-8 h-8 text-gray-400 mb-2" />
-                                                    <p className="text-sm text-gray-500">اختر صورة الشعار</p>
+                                                    <p className="text-sm text-gray-500">
+                                                        {t('chooseLogo')}
+                                                    </p>
                                                 </div>
                                             )}
                                         </label>
@@ -316,7 +310,7 @@ const Register = () => {
                                 {/* License Upload */}
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                                        صورة السجل
+                                        {t('licenseImage')}
                                     </label>
                                     <div className="relative">
                                         <input
@@ -339,7 +333,9 @@ const Register = () => {
                                             ) : (
                                                 <div className="flex flex-col items-center">
                                                     <FileText className="w-8 h-8 text-gray-400 mb-2" />
-                                                    <p className="text-sm text-gray-500">اختر صورة السجل</p>
+                                                    <p className="text-sm text-gray-500">
+                                                        {t('chooseLicense')}
+                                                    </p>
                                                 </div>
                                             )}
                                         </label>
@@ -349,46 +345,49 @@ const Register = () => {
                                 {/* Activity */}
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                                        نشاط المؤسسة
+                                        {t('activity')}
                                     </label>
                                     <textarea
                                         rows={4}
                                         className="w-full px-3 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-vertical"
-                                        placeholder="أدخل نشاطات المؤسسة مفصولة بفواصل"
-                                        {...register('activity', { required: 'نشاط المؤسسة مطلوب' })}
+                                        placeholder={t('activity')}
+                                        {...register('activity', { required: t('required') })}
                                     />
                                     {errors.activity && (
-                                        <p className="mt-2 text-sm text-red-600">{errors.activity.message}</p>
+                                        <p className="mt-2 text-sm text-red-600">
+                                            {errors.activity.message}
+                                        </p>
                                     )}
                                 </div>
 
                                 {/* Keywords */}
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                                        كلمات دلالة
+                                        {t('keywords')}
                                     </label>
                                     <textarea
                                         rows={4}
                                         className="w-full px-3 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-vertical"
-                                        placeholder="أدخل الكلمات المفتاحية مفصولة بفواصل"
-                                        {...register('keywords', { required: 'الكلمات الدلالية مطلوبة' })}
+                                        placeholder={t('keywords')}
+                                        {...register('keywords', { required: t('required') })}
                                     />
                                     {errors.keywords && (
-                                        <p className="mt-2 text-sm text-red-600">{errors.keywords.message}</p>
+                                        <p className="mt-2 text-sm text-red-600">
+                                            {errors.keywords.message}
+                                        </p>
                                     )}
                                 </div>
 
-                                {/* Submit Button */}
                                 <div className="flex justify-between mt-6">
                                     <Button
                                         type="button"
                                         variant="primary"
                                         size="lg"
                                         className="w-1/3"
-                                        loading={isLoading}
+                                        disabled={isLoading}
                                         onClick={() => setStep(1)}
                                     >
-                                        الرجوع
+                                        {t('back')}
                                     </Button>
                                     <Button
                                         type="submit"
@@ -397,7 +396,7 @@ const Register = () => {
                                         className="w-1/2"
                                         loading={isLoading}
                                     >
-                                        التسجيل
+                                        {t('register')}
                                     </Button>
                                 </div>
                             </>
@@ -407,14 +406,23 @@ const Register = () => {
                     {/* Login Link */}
                     <div className="mt-8 text-center">
                         <p className="text-gray-600">
-                            لديك حساب بالفعل؟{' '}
+                            {t('haveAccount')}{' '}
                             <Link
                                 to="/auth/login"
                                 className="font-medium text-primary-600 hover:text-primary-500 transition-colors"
                             >
-                                تسجيل الدخول
+                                {t('loginLink')}
                             </Link>
                         </p>
+                    </div>
+                    <div className="flex items-center  justify-end mt-6">
+                        <button
+                            onClick={() => { currentLanguage == "ar" ? changeLanguage('en') : changeLanguage('ar') }}
+                            disabled={isChangingLanguage}
+                            className={` bg-primary-50 text-primary-600 flex items-center px-4 py-2 text-sm  text-right disabled:opacity-50`}
+                        >
+                            {currentLanguage == "ar" ? t('english') : t('arabic')}
+                        </button>
                     </div>
                 </div>
             </div>
@@ -428,11 +436,8 @@ const Register = () => {
                 />
                 <div className="absolute inset-0 bg-black bg-opacity-20"></div>
             </div>
-
         </div>
     );
 };
 
 export default Register;
-
-// src/pages/AdminRegistration.jsx

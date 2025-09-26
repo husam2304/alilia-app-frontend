@@ -6,11 +6,13 @@ import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import Logo from './../assets/images/logo.png';
 import LoginImage from '../assets/images/login.png';
+import toast from 'react-hot-toast';
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
+
     const { login, isLoading } = useAuth();
-    const { t } = useLanguage();
+    const { t, currentLanguage, changeLanguage, isChangingLanguage } = useLanguage();
     const navigate = useNavigate();
 
     const {
@@ -23,7 +25,7 @@ const Login = () => {
     // Load remembered user code
     useEffect(() => {
         if (localStorage.getItem('rememberMe') === 'true') {
-            const rememberedUserCode = localStorage.getItem('userCode');
+            const rememberedUserCode = localStorage.getItem('userEmail');
             if (rememberedUserCode) {
                 setValue('userCode', rememberedUserCode);
                 setValue('rememberMe', true);
@@ -32,6 +34,7 @@ const Login = () => {
     }, [setValue]);
 
     const onSubmit = async (data) => {
+
         try {
             // Convert user code to email format for backend compatibility
             const loginData = {
@@ -40,10 +43,10 @@ const Login = () => {
             };
 
             await login(loginData, data.rememberMe);
+
             navigate('/dashboard', { replace: true });
         } catch (error) {
-
-            // Error is handled by AuthContext
+            toast.error(error?.message || 'فشل في تسجيل الدخول');
         }
     };
 
@@ -52,7 +55,7 @@ const Login = () => {
     };
 
     return (
-        <div className="h-screen bg-gray-50 flex overflow-hidden" dir="rtl">
+        <div className="h-screen bg-gray-50 flex overflow-hidden" >
             {/* Right Side - Login Form */}
             <div className="w-full md:w-1/2 flex flex-col">
                 {/* Main Content */}
@@ -92,10 +95,10 @@ const Login = () => {
                                         type="text"
                                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-right"
                                         {...register('userCode', {
-                                            required: t('userCodeLabel') + ' مطلوب',
+                                            required: t('required'),
                                             minLength: {
                                                 value: 3,
-                                                message: t('userCodeLabel') + ' قصير جداً'
+                                                message: t('UserCodeShort')
                                             }
                                         })}
                                     />
@@ -118,10 +121,10 @@ const Login = () => {
                                         placeholder="••••••••"
                                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-right pr-12"
                                         {...register('password', {
-                                            required: t('passwordLabel') + ' مطلوبة',
+                                            required: t('required'),
                                             minLength: {
                                                 value: 6,
-                                                message: t('passwordLabel') + ' قصيرة جداً'
+                                                message: t('passwordShort')
                                             }
                                         })}
                                     />
@@ -195,6 +198,15 @@ const Login = () => {
                             <label htmlFor="terms" className="mr-2 text-xs text-gray-600">
                                 {t('agreeTerms')}
                             </label>
+                        </div>
+                        <div className="flex items-center  justify-end mt-6">
+                            <button
+                                onClick={() => { currentLanguage == "ar" ? changeLanguage('en') : changeLanguage('ar') }}
+                                disabled={isChangingLanguage}
+                                className={` bg-primary-50 text-primary-600 flex items-center px-4 py-2 text-sm  text-right disabled:opacity-50`}
+                            >
+                                {currentLanguage == "ar" ? t('english') : t('arabic')}
+                            </button>
                         </div>
                     </div>
                 </div>

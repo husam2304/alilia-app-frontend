@@ -3,7 +3,7 @@ export const en = {
     dashboard: 'Dashboard',
     orders: 'Orders',
     logout: 'Logout',
-    
+
     // Common
     loading: 'Loading...',
     error: 'Something went wrong. Please try again later.',
@@ -19,7 +19,8 @@ export const en = {
     filter: 'Filter',
     export: 'Export',
     print: 'Print',
-    
+    number: "number",
+    withDiscount: "with discount",
     // Login
     loginTitle: 'Login to Application',
     loginWelcome: 'Welcome to the Application',
@@ -30,7 +31,8 @@ export const en = {
     noAccount: "Don't have an account yet?",
     registerLink: 'Register',
     agreeTerms: 'I agree to the terms and conditions',
-    
+    passwordShort: 'Password is to short ',
+    UserCodeShort: 'UserName is to short ',
     // Dashboard
     dashboardTitle: 'Dashboard',
     dashboardWelcome: 'Hello {name}, here\'s an overview of your business',
@@ -39,11 +41,11 @@ export const en = {
     completedOffers: 'Completed Orders Count',
     totalOrders: 'Total Orders Count',
     totalProfit: 'Total Profit',
-    deliveryRequests: 'Delivery Requests',
+    OfferStatues: 'Offers Requests',
     offerOrders: 'Offer Orders',
     profitsThisYear: 'Profits This Year',
     topProducts: 'Top Products',
-    
+
     // Orders
     ordersTitle: 'Orders Table',
     ordersSubtitle: 'Manage and track all store orders',
@@ -64,7 +66,7 @@ export const en = {
     productDetails: 'Product Details',
     quantity: 'Quantity',
     totalAmount: 'Total Amount',
-    
+
     // Price Quote
     priceQuoteTitle: 'Submit Price Quote',
     offerDate: 'Offer Date',
@@ -83,7 +85,7 @@ export const en = {
     date: 'Date',
     time: 'Time',
     location: 'Location',
-    
+
     // Status
     inProgress: 'In Progress',
     closed: 'Closed',
@@ -93,7 +95,7 @@ export const en = {
     offerAccepted: 'Offer Accepted',
     offerExpired: 'Offer Expired',
     offerRejected: 'Offer Rejected',
-    
+
     // Pagination
     showing: 'Showing',
     to: 'to',
@@ -101,7 +103,7 @@ export const en = {
     results: 'results',
     previous: 'Previous',
     next: 'Next',
-    
+
     // Months
     january: 'January',
     february: 'February',
@@ -115,7 +117,7 @@ export const en = {
     october: 'October',
     november: 'November',
     december: 'December',
-    
+
     // Registration
     registerTitle: 'Register in Application',
     registerSubtitle: 'Register your organization data',
@@ -139,7 +141,20 @@ export const en = {
     register: 'Register',
     haveAccount: 'Already have an account?',
     loginLink: 'Login',
-    
+
+
+    fileSizeError: "The file is too large. Maximum allowed size is 5MB",
+    fileTypeError: "Please select a valid image file",
+    passwordMismatch: "Passwords do not match",
+    chooseProfileImage: "Choose a profile picture",
+    chooseLogo: "Choose a logo image",
+    chooseLicense: "Choose a commercial register image",
+    invalidWebsite: "Invalid website URL",
+    invalidPhone: "Please enter a valid phone number",
+    required: "This field is required",
+
+
+
     // Language
     language: 'Language',
     arabic: 'العربية',

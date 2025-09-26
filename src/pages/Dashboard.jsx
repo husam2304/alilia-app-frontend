@@ -58,22 +58,22 @@ const Dashboard = () => {
     const { data: AdminDashboardData, isLoading: isAdminDashboardLoading } = useQuery({
         queryKey: ['AdminDashboardData'],
         queryFn: () => dashboardService.dashboardAdmin(),
-        enabled: user.userRole == 'Admin',
+        enabled: user?.userRole == 'Admin',
     });
     const { data: VendorDashboardData, isLoading: isVendorDashboardLoading } = useQuery({
         queryKey: ['VendorDashboardData'],
         queryFn: () => dashboardService.dashboardVendor(),
-        enabled: user.userRole == 'Vendor',
+        enabled: user?.userRole == 'Vendor',
     });
     useEffect(() => {
         if (isAdminDashboardLoading || isVendorDashboardLoading) {
             setLoading(true);
             return;
         }
-        if (user.userRole == 'Admin' && AdminDashboardData) {
+        if (user?.userRole == 'Admin' && AdminDashboardData) {
             handleDashboardData(AdminDashboardData);
         }
-        if (user.userRole == 'Vendor' && VendorDashboardData) {
+        if (user?.userRole == 'Vendor' && VendorDashboardData) {
             handleDashboardData(VendorDashboardData);
         }
     }, [VendorDashboardData, AdminDashboardData]);
@@ -91,12 +91,12 @@ const Dashboard = () => {
 
 
             setChartsData(prev => ({ ...prev, pieChart: data?.dashboard?.offerStatus }));
-            if (user.userRole == "Admin") {
+            if (user?.userRole == "Admin") {
                 setChartsData(prev => ({ ...prev, barChart: data?.dashboard?.systemProfitByYear }));
                 // Handle top products
                 setTopProducts(data?.dashboard?.topProducts);
             }
-            else if (user.userRole == "Vendor") {
+            else if (user?.userRole == "Vendor") {
                 setChartsData(prev => ({ ...prev, barChart: data?.dashboard?.profitByYear }));
                 // Handle top products
                 setTopProducts(data?.dashboard?.mostProductsSells);
@@ -137,7 +137,6 @@ const Dashboard = () => {
             toast.dismiss(loadingToast);
             toast.success('تم تصدير البيانات بنجاح');
         } catch (error) {
-            handleApiError(error, 'فشل في تصدير البيانات');
         }
     };
 
@@ -152,15 +151,15 @@ const Dashboard = () => {
 
     const getFallbackChartsData = () => ({
         lineChart: {
-            labels: ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر', 'يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'],
+            labels: [t('january'), t('february'), t('march'), t('april'), t('may'), t('june'), t('july'), t('august'), t('september'), t('october'), t('november'), t('december')],
             data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         },
         pieChart: {
-            labels: ['عرض مقبول', 'عرض مرفوض', 'عرض منتهي', 'قائم'],
+            labels: [t('offerAccepted'), t('offerRejected'), t('offerExpired'), t('preparing')],
             data: [0, 0, 0, 0]
         },
         barChart: {
-            labels: ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر', 'يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'],
+            labels: [t('january'), t('february'), t('march'), t('april'), t('may'), t('june'), t('july'), t('august'), t('september'), t('october'), t('november'), t('december')],
             data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         }
     });
@@ -307,12 +306,12 @@ const Dashboard = () => {
             <div className="grid  grid-cols-1 lg:grid-cols-3 gap-6">
                 {/* Pie Chart */}
                 <Card className="p-6 bg-card-150">
-                    <h3 className="text-lg font-semibold mb-4">{t('deliveryRequests')}</h3>
+                    <h3 className="text-lg font-semibold mb-4">{t('OfferStatues')}</h3>
                     <div className="flex items-center gap-4">
                         <div className="w-48 h-48">
                             <Doughnut
                                 data={{
-                                    labels: ['عرض مقبول', 'عرض مرفوض', 'عرض منتهي', 'قائم'],
+                                    labels: [t('offerAccepted'), t('offerRejected'), t('offerExpired'), t('preparing')],
                                     datasets: [{
                                         data: [chartsData?.pieChart?.offerAccepted, chartsData?.pieChart?.offerRejected, chartsData?.pieChart?.offersExpired, chartsData?.pieChart?.preparing],
                                         backgroundColor: ['#931158', '#912baa', '#2c0962', '#075a0a'],
@@ -323,7 +322,7 @@ const Dashboard = () => {
                             />
                         </div>
                         <div className="space-y-2">
-                            {(chartsData?.pieChart?.labels || ['قائمة', 'بانتظار', 'تم الاستلام', 'تم الإلغاء']).map((label, index) => (
+                            {(chartsData?.pieChart?.labels || [t('offerAccepted'), t('offerRejected'), t('offerExpired'), t('preparing')]).map((label, index) => (
                                 <div key={label} className="flex items-center gap-2">
                                     <div
                                         className="w-3 h-3 rounded-full"

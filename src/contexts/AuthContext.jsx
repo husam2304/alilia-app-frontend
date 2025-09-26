@@ -71,7 +71,7 @@ export const AuthProvider = ({ children }) => {
                 // Store user data
                 setUserId(response.userId);
                 setIsAuthenticated(true);
-                checkAuthStatus
+                await checkAuthStatus();
                 // Handle remember me
                 if (rememberMe) {
                     localStorage.setItem('rememberMe', 'true');
@@ -83,9 +83,7 @@ export const AuthProvider = ({ children }) => {
             } else {
                 throw new Error(response.message || 'فشل في تسجيل الدخول');
             }
-        } catch (error) {
-            toast.error(error?.message || 'فشل في تسجيل الدخول');
-            throw error;
+
         } finally {
             setIsLoading(false);
         }

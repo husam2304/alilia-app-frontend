@@ -346,14 +346,14 @@ const PriceQuote = () => {
                                             {...register('extraProduct')}
                                             className="mx-2 w-16 px-2 py-1 border border-gray-300 rounded text-sm text-center"
                                         />
-                                        <span className="text-sm text-gray-600 mx-1">عدد</span>
+                                        <span className="text-sm text-gray-600 mx-1">{t('number')}</span>
 
                                         <select {...register('getCount')} className="mx-2 px-3 py-1 border border-gray-300 rounded text-sm">
                                             <option value={1}>1</option>
                                             <option value={2}>2</option>
                                             <option value={3}>3</option>
                                         </select>
-                                        <span className="text-sm text-gray-600">خصم بنسبة</span>
+                                        <span className="text-sm text-gray-600">{t('withDiscount')}</span>
                                         <input
                                             type="number"
                                             placeholder="50"

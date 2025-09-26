@@ -3,16 +3,8 @@ import { useAuth } from '../../contexts/AuthContext';
 
 
 export const PrivateRoute = ({ children }) => {
-    const { isAuthenticated, isLoading } = useAuth();
+    const { isAuthenticated } = useAuth();
     const location = useLocation();
-
-    if (isLoading) {
-        return (
-            <div className="loading-container">
-                <div className="loading-spinner">جاري التحميل...</div>
-            </div>
-        );
-    }
 
     if (!isAuthenticated) {
         return <Navigate to="/auth/login" state={{ from: location }} replace />;

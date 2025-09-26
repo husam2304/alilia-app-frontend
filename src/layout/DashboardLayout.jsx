@@ -75,7 +75,7 @@ export const DashboardLayout = () => {
             {/* Main content */}
             <div className="flex flex-col flex-1 overflow-hidden">
                 {/* Header */}
-                <header className="bg-white shadow-sm border-b border-gray-200">
+                <header className="bg-white shadow-sm border-b border-gray-200 py-8">
                     <div className="flex justify-between items-center px-4 py-4 sm:px-6 lg:px-8">
                         {/* Left side - Mobile menu button */}
                         <div className="flex items-center">
@@ -125,53 +125,49 @@ export const DashboardLayout = () => {
                             </nav>
                         </div>
                         {/* Right side - Notifications and Profile */}
-                        <div className="flex items-center space-x-4 space-x-reverse">
+                        <div className={`flex items-center space-x-4 ${currentLanguage === 'ar' ? "space-x-reverse" : ""}`} >
                             {/* Language Switcher */}
-                            <div className="relative">
-                                <HeadlessMenu as="div" className="relative">
-                                    <HeadlessMenu.Button 
-                                        className="bg-gray-100 p-2 rounded-full text-gray-400 hover:text-gray-500 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors"
-                                        disabled={isChangingLanguage}
-                                    >
-                                        <Globe className="h-5 w-5" />
-                                    </HeadlessMenu.Button>
+                            {/* < div className="relative"> */}
+                            <HeadlessMenu as="div" className="relative">
+                                <HeadlessMenu.Button
+                                    className={`bg-gray-100  p-2 rounded-full text-gray-400 hover:text-gray-500 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors`}
+                                    disabled={isChangingLanguage}
+                                >
+                                    <Globe className="h-5 w-5" />
+                                </HeadlessMenu.Button>
 
-                                    <HeadlessMenu.Items className="origin-top-right absolute right-0 mt-2 w-32 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
-                                        <div className="py-1">
-                                            <HeadlessMenu.Item>
-                                                {({ active }) => (
-                                                    <button
-                                                        onClick={() => changeLanguage('ar')}
-                                                        disabled={currentLanguage === 'ar' || isChangingLanguage}
-                                                        className={`${
-                                                            active ? 'bg-gray-100' : ''
-                                                        } ${
-                                                            currentLanguage === 'ar' ? 'bg-primary-50 text-primary-600' : 'text-gray-700'
+                                <HeadlessMenu.Items className={` ${currentLanguage === 'ar' ? " origin-top-right left-0" : "origin-top-left right-0"} absolute  mt-2 w-32 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50`}>
+                                    <div className="py-1">
+                                        <HeadlessMenu.Item>
+                                            {({ active }) => (
+                                                <button
+                                                    onClick={() => changeLanguage('ar')}
+                                                    disabled={currentLanguage === 'ar' || isChangingLanguage}
+                                                    className={`${active ? 'bg-gray-100' : ''
+                                                        } ${currentLanguage === 'ar' ? 'bg-primary-50 text-primary-600' : 'text-gray-700'
                                                         } flex items-center px-4 py-2 text-sm w-full text-right disabled:opacity-50`}
-                                                    >
-                                                        {t('arabic')}
-                                                    </button>
-                                                )}
-                                            </HeadlessMenu.Item>
-                                            <HeadlessMenu.Item>
-                                                {({ active }) => (
-                                                    <button
-                                                        onClick={() => changeLanguage('en')}
-                                                        disabled={currentLanguage === 'en' || isChangingLanguage}
-                                                        className={`${
-                                                            active ? 'bg-gray-100' : ''
-                                                        } ${
-                                                            currentLanguage === 'en' ? 'bg-primary-50 text-primary-600' : 'text-gray-700'
+                                                >
+                                                    {t('arabic')}
+                                                </button>
+                                            )}
+                                        </HeadlessMenu.Item>
+                                        <HeadlessMenu.Item>
+                                            {({ active }) => (
+                                                <button
+                                                    onClick={() => changeLanguage('en')}
+                                                    disabled={currentLanguage === 'en' || isChangingLanguage}
+                                                    className={`${active ? 'bg-gray-100' : ''
+                                                        } ${currentLanguage === 'en' ? 'bg-primary-50 text-primary-600' : 'text-gray-700'
                                                         } flex items-center px-4 py-2 text-sm w-full text-right disabled:opacity-50`}
-                                                    >
-                                                        {t('english')}
-                                                    </button>
-                                                )}
-                                            </HeadlessMenu.Item>
-                                        </div>
-                                    </HeadlessMenu.Items>
-                                </HeadlessMenu>
-                            </div>
+                                                >
+                                                    {t('english')}
+                                                </button>
+                                            )}
+                                        </HeadlessMenu.Item>
+                                    </div>
+                                </HeadlessMenu.Items>
+                            </HeadlessMenu>
+                            {/* </div> */}
 
                             {/* Notifications */}
                             {/* <button
@@ -201,7 +197,7 @@ export const DashboardLayout = () => {
                                     </HeadlessMenu.Button>
                                 </div>
 
-                                <HeadlessMenu.Items className="origin-top-right absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
+                                <HeadlessMenu.Items className={`${currentLanguage === 'ar' ? "origin-top-right left-0" : "origin-top-left right-0"} absolute  mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50`}>
                                     <div className="py-1">
                                         {/* <HeadlessMenu.Item>
                                             {({ active }) => (
@@ -256,12 +252,12 @@ export const DashboardLayout = () => {
                         </div>
                     </div>
                 </main>
-            </div>
-        </div>
+            </div >
+        </div >
     );
 };
 const Sidebar = ({ navigation, user }) => {
-      const { t } = useLanguage();
+    const { t } = useLanguage();
     return (
         <div className="flex flex-col flex-grow bg-white border-l border-gray-200">
             {/* Logo */}

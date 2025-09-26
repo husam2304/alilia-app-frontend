@@ -28,12 +28,12 @@ const Orders = () => {
     const { data: vendorOrder, isloading: vendorOrderLoading } = useQuery({
         queryKey: ['vendorOrder', rowsPerPage, currentPage],
         queryFn: () => vendorService.getOrders(currentPage, rowsPerPage),
-        enabled: user.userRole == 'Vendor',
+        enabled: user?.userRole == 'Vendor',
     });
     const { data: adminOrder, isloading: adminOrderLoading } = useQuery({
         queryKey: ['adminOrder', rowsPerPage, currentPage],
         queryFn: () => adminService.getOrders(currentPage, rowsPerPage),
-        enabled: user.userRole == 'Admin',
+        enabled: user?.userRole == 'Admin',
     });
     const navigate = useNavigate();
 
@@ -42,10 +42,10 @@ const Orders = () => {
             setLoading(true);
             return;
         }
-        if (user.userRole == 'Admin' && adminOrder) {
+        if (user?.userRole == 'Admin' && adminOrder) {
             loadOrders(adminOrder);
         }
-        if (user.userRole == 'Vendor' && vendorOrder) {
+        if (user?.userRole == 'Vendor' && vendorOrder) {
             loadOrders(vendorOrder);
 
         }
@@ -400,7 +400,7 @@ const Orders = () => {
                                             </Badge>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
-                                            {order.offerId === 1 && user.userRole != 'Admin' ? (<Button
+                                            {order.offerId === 1 && user?.userRole != 'Admin' ? (<Button
                                                 variant="primary"
                                                 size="sm"
                                                 icon={Plus}
@@ -467,7 +467,7 @@ const Orders = () => {
 // Order Details Modal Component
 const OrderDetailsModal = ({ order, isOpen, onClose }) => {
     const { t } = useLanguage();
-    
+
     return (
         <Modal isOpen={isOpen} onClose={onClose} title={t('orderDetailsTitle', { orderNumber: order.orderNumber })} size="lg">
             <div className="space-y-6">

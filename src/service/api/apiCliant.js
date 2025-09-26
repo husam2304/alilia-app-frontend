@@ -1,67 +1,110 @@
-// src/services/api.js
+
+// ===============================================
+// عميل API الأساسي (API Client)
+// service/api/apiClient.js
+// ===============================================
+
+/*
+ * ما هو Axios؟
+ * مكتبة JavaScript تستخدم لإرسال طلبات HTTP
+ * 
+ * 
+ * أنواع طلبات HTTP الأساسية:
+ * GET: للحصول على البيانات (مثل قراءة ملف)
+ * POST: لإرسال بيانات جديدة (مثل إنشاء حساب)
+ * PUT: لتحديث بيانات موجودة (مثل تعديل ملف)
+ * DELETE: لحذف بيانات (مثل حذف ملف)
+ */
+
 import axios from 'axios';
 
+// إعدادات الـ API الأساسية
 const API_CONFIG = {
-    BASE_URL: "/api",
-
+    BASE_URL: "",  // العنوان الأساسي لجميع الطلبات - مثل اسم المدينة في العنوان البريدي
 };
 
-// Create axios instance
+// إنشاء instance من axios مع الإعدادات المخصصة
 const api = axios.create({
-    baseURL: API_CONFIG.BASE_URL,
-    credentials: "include",
-    headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
+    baseURL: API_CONFIG.BASE_URL,          // العنوان الأساسي
+    credentials: "include",                // إرسال ملفات تعريف الارتباط مع كل طلب
+    headers: {                             // رؤوس HTTP - معلومات إضافية ترسل مع كل طلب
+        "Content-Type": "application/json", // نوع البيانات المرسلة (JSON)
+        "Accept": "application/json"        // نوع البيانات المقبولة في الرد
     }
 });
 
-// Request interceptor
+/*
+ * ما هي الـ Interceptors؟
+ * دوال تعمل تلقائياً قبل إرسال الطلب أو بعد استلام الرد
+ * مثل موظف الأمن - يفتش كل شخص داخل وخارج
+ */
+
+// مُعترِض الطلبات (Request Interceptor) - يعمل قبل إرسال أي طلب
 api.interceptors.request.use(
     (config) => {
+        // الحصول على رمز المصادقة من التخزين المحلي
         const token = localStorage.getItem('authToken');
         if (token) {
+            // إضافة رمز المصادقة لرأس التفويض
+            // مثل إظهار الهوية للحارس قبل الدخول
             config.headers.Authorization = `Bearer ${token}`;
         }
 
-        // Add Accept-Language header
-        const language = localStorage.getItem('language') || 'ar';
+        // الحصول على اللغة المفضلة وإضافتها للطلب
+        const language = localStorage.getItem('language') || 'ar'; // افتراضي: العربية
         config.headers['Accept-Language'] = language;
 
-        return config;
+        return config; // إرجاع الإعدادات المحدثة
     },
     (error) => {
+        // في حالة حدوث خطأ أثناء تحضير الطلب
         return Promise.reject(error);
     }
 );
 
+/*
+ * مُعترِض الردود (Response Interceptor) - يعمل بعد استلام الرد
+ * يتعامل مع الأخطاء الشائعة تلقائياً
+ */
 api.interceptors.response.use(
-    response => response, // Directly return successful responses.
+    response => response, // في حالة نجاح الطلب، إرجاع الرد كما هو
     async error => {
-        const originalRequest = error.config;
-        if (error.response.status === 401 && !originalRequest._retry) {
-            originalRequest._retry = true; // Mark the request as retried to avoid infinite loops.
+        const originalRequest = error.config; // الطلب الأصلي الذي فشل
+        const authpath = (window.location.href.includes("auth/login") || window.location.href.includes("auth/register"))
+
+        // إذا كان الخطأ 401 (غير مصرح) ولم نحاول إصلاحه من قبل
+
+        if (error.response.status === 401 && !originalRequest._retry && !authpath) {
+            originalRequest._retry = true; // تمييز الطلب كمُعاد المحاولة لمنع الحلقة اللانهائية
+
             try {
-                const refreshToken = localStorage.getItem('refreshToken'); // Retrieve the stored refresh token.
-                // Make a request to your auth server to refresh the token.
+                // محاولة تجديد رمز المصادقة
+                const refreshToken = localStorage.getItem('refreshToken');
                 const response = await axios.post(`${API_CONFIG.BASE_URL}/Auth/refresh-token/${refreshToken}`);
+
+                // استخراج الرموز الجديدة من الرد
                 const { accessToken, refreshToken: newRefreshToken } = response.data;
-                // Store the new access and refresh tokens.
+
+                // حفظ الرموز الجديدة في التخزين المحلي
                 localStorage.setItem('authToken', accessToken);
                 localStorage.setItem('refreshToken', newRefreshToken);
-                // Update the authorization header with the new access token.
+
+                // تحديث رأس التفويض الافتراضي
                 api.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-                return api(originalRequest); // Retry the original request with the new access token.
+
+                // إعادة محاولة الطلب الأصلي بالرمز الجديد
+                return api(originalRequest);
             } catch (refreshError) {
-                // Handle refresh token errors by clearing stored tokens and redirecting to the login page.
-                console.error('Token refresh failed:', refreshError);
-                localStorage.removeItem('authToken');
-                localStorage.removeItem('refreshToken');
-                window.location.href = '/auth/login';
+                // فشل تجديد الرمز - تنظيف البيانات وإعادة توجيه لتسجيل الدخول
+                localStorage.removeItem('authToken');      // حذف رمز المصادقة
+                localStorage.removeItem('refreshToken');   // حذف رمز التجديد
+                window.location.href = '/auth/login';      // إعادة توجيه لصفحة تسجيل الدخول
                 return Promise.reject(refreshError);
             }
         }
-        return Promise.reject(error); // For all other errors, return the error as is.
+
+        // لجميع الأخطاء الأخرى، إرجاع الخطأ كما هو
+        return Promise.reject(error);
     }
 );
 export default api;

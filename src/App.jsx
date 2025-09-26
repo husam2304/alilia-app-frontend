@@ -28,7 +28,7 @@ function App() {
     queryClient,
     persister: localStoragePersister,
   });
-  const { isAuthenticated, refreshAuth, isLoading } = useAuth();
+  const { isAuthenticated, refreshAuth } = useAuth();
 
   useEffect(() => {
 
@@ -37,7 +37,7 @@ function App() {
     }
   }, [isAuthenticated]);
   const fetchUser = async () => {
-    if (isAuthenticated && !isLoading) {
+    if (isAuthenticated) {
       await refreshAuth();
     }
   };
