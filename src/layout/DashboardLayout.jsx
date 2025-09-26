@@ -261,6 +261,7 @@ export const DashboardLayout = () => {
     );
 };
 const Sidebar = ({ navigation, user }) => {
+      const { t } = useLanguage();
     return (
         <div className="flex flex-col flex-grow bg-white border-l border-gray-200">
             {/* Logo */}
