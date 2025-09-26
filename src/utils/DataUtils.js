@@ -1,4 +1,5 @@
-import { translations } from '../locales/ar';
+// import { translations } from '../locales/ar';
+
 import en from '../locales/en';
 import ar from '../locales/ar';
 
