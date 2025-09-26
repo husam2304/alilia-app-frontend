@@ -9,6 +9,7 @@ const API_CONFIG = {
 // Create axios instance
 const api = axios.create({
     baseURL: API_CONFIG.BASE_URL,
+    credentials: "include",
     headers: {
         "Content-Type": "application/json",
         "Accept": "application/json"
