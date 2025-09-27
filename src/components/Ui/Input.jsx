@@ -8,8 +8,10 @@ const Input = forwardRef(({
     endIcon: EndIcon,
     className = '',
     containerClassName = '',
+    language,
     ...props
 }, ref) => {
+
     return (
         <div className={`${containerClassName}`}>
             {label && (
@@ -27,6 +29,7 @@ const Input = forwardRef(({
 
                 <input
                     ref={ref}
+                    dir={language === "ar" ? "rtl" : language === "en" ? "ltr" : undefined}
                     className={`
             block w-full px-3 py-3 border border-gray-300 rounded-xl
             placeholder-gray-500 text-gray-900 bg-gray-50

@@ -24,7 +24,7 @@ export const en = {
     // Login
     loginTitle: 'Login to Application',
     loginWelcome: 'Welcome to the Application',
-    userCodeLabel: 'Account, Name or Phone Number',
+    userCodeLabel: 'Email, Name or Phone Number',
     passwordLabel: 'Password',
     loginButton: 'Login',
     loggingIn: 'Logging in...',
@@ -45,6 +45,7 @@ export const en = {
     offerOrders: 'Offer Orders',
     profitsThisYear: 'Profits This Year',
     topProducts: 'Top Products',
+    unothrized: 'you do not have access',
 
     // Orders
     ordersTitle: 'Orders Table',
@@ -142,7 +143,6 @@ export const en = {
     haveAccount: 'Already have an account?',
     loginLink: 'Login',
 
-
     fileSizeError: "The file is too large. Maximum allowed size is 5MB",
     fileTypeError: "Please select a valid image file",
     passwordMismatch: "Passwords do not match",
@@ -153,7 +153,32 @@ export const en = {
     invalidPhone: "Please enter a valid phone number",
     required: "This field is required",
 
+    sendOTP: 'Send verification code',
+    sending: 'Sending...',
+    invalidIdentifier: 'Invalid identifier',
+    ForgetPassword: 'Forgot Password',
+    backToLogin: 'Back to Login',
+    verifyOTP: 'Verify Code',
+    verifying: 'Verifying...',
+    invalidOTP: 'Invalid verification code',
+    otpLabel: 'Verification Code',
+    enterOTPMessage: 'Please enter the verification code sent',
+    verifyOTPTitle: 'Code Verification',
+    newPasswordLabel: 'New Password',
+    resetPasswordWelcome: 'Welcome to Password Reset',
+    resetPasswordTitle: 'Reset Password',
+    ConfirmNewPasswordLabel: 'Confirm New Password',
 
+    forgotPasswordTitle: 'Forgot Password',
+    enterIdentifierMessage: 'Please enter your email or phone number to reset your password',
+
+    otpSent: 'Verification code sent',
+    failedToSendOTP: "Failed to send verification code",
+    resetPasswordButton: "Reset Password",
+
+    usernameExist: 'Username already exists',
+    emailExist: 'Email already exists',
+    phoneExist: "Phone number already exists",
 
     // Language
     language: 'Language',

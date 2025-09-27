@@ -12,7 +12,7 @@ export const FormUtils = {
         // Facility information
         formData.append('Faclity.Name', formInputs.storeName);
         formData.append('Faclity.CommercialRegister', formInputs.commercialNumber || '');
-        formData.append('Faclity.Country', formInputs.country);
+        formData.append('Faclity.Country', "Jordan");
         formData.append('Faclity.City', formInputs.city || '');
         formData.append('Faclity.Phone', formInputs.phone);
         formData.append('Faclity.Address', formInputs.address || '');
@@ -30,15 +30,13 @@ export const FormUtils = {
 
 
         if (formInputs.activity) {
-            const activitiesArray = formInputs.activity.split(',').map(k => k.trim());
-            activitiesArray.forEach(activity => {
+            formInputs.activity.forEach(activity => {
                 formData.append('Faclity.Activities', activity);
             });
         }
         // Handle keywords
         if (formInputs.keywords) {
-            const keywordArray = formInputs.keywords.split(',').map(k => k.trim());
-            keywordArray.forEach(keyword => {
+            formInputs.keywords.forEach(keyword => {
                 formData.append('Faclity.Keywords', keyword);
             });
         }

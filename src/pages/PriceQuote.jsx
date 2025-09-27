@@ -107,14 +107,26 @@ const PriceQuote = () => {
 
 
     const handleImageUpload = (files) => {
-        const newImages = Array.from(files).map(file => ({
-            id: Date.now() + Math.random(),
-            file: file,
-            url: URL.createObjectURL(file),
-            name: file.name
-        }));
-        setProductImages(prev => [...prev, ...newImages]);
+        setProductImages((prev) => {
+            const newFiles = Array.from(files);
+
+            // prevent exceeding 4 images
+            if (prev.length + newFiles.length > 4) {
+                toast.error(t("max4Toast"))
+                return prev; // don’t add
+            }
+
+            const newImages = newFiles.map((file) => ({
+                id: Date.now() + Math.random(),
+                file,
+                url: URL.createObjectURL(file),
+                name: file.name,
+            }));
+
+            return [...prev, ...newImages];
+        });
     };
+
 
     const handleDrag = (e) => {
         e.preventDefault();
@@ -243,51 +255,67 @@ const PriceQuote = () => {
                                 </label>
                                 <Star className="h-4 w-4 text-[#931158] mr-2" />
                             </div>
+                            <div className="mb-6">
+                                <label
+                                    htmlFor="file-input"
+                                    className="flex flex-col items-center justify-center w-full h-10 px-4 transition bg-white border-2 border-dashed rounded-xl cursor-pointer hover:bg-gray-50 border-gray-300"
+                                >
+
+                                    <span className="text-sm text-gray-600">{t("addProductImages")}</span>
+                                    <span className="text-xs text-gray-400 mt-1">{t("max4")}</span>
+                                </label>
+
+                                <input
+                                    id="file-input"
+                                    type="file"
+                                    accept="image/*"
+                                    className="hidden"
+                                    multiple
+                                    onChange={(e) => {
+                                        const files = Array.from(e.target.files);
+
+                                        if (files.length > 4 - productImages.length) {
+                                            toast.error(t('max4Toast'));
+                                            e.target.value = ""; // reset input
+                                            return;
+                                        }
+
+                                        handleImageUpload(files);
+                                    }}
+                                />
+                            </div>
 
                             {/* منطقة رفع الصور */}
-                            <div className="grid grid-cols-5 gap-4">
-                                {[1, 2, 3, 4, 5].map((index) => (
+                            <div className="grid grid-cols-4 gap-4">
+                                {[0, 1, 2, 3].map((index) => (
                                     <div
                                         key={index}
-                                        className={`aspect-square border-2 border-dashed rounded-lg flex items-center justify-center bg-gray-50 hover:border-[#931158] transition-colors cursor-pointer relative`}
+                                        className={`aspect-square border-2 border-dashed rounded-lg flex items-center justify-center bg-gray-50 hover:border-[#931158] transition-colors  relative`}
                                         onClick={() => document.getElementById(`file-input-${index}`).click()}
                                     >
-                                        <div className="text-center">
-                                            <Image className="h-8 w-8 text-gray-400 mx-auto mb-2" />
-                                            <Plus className="h-4 w-4 text-gray-400 mx-auto" />
-                                        </div>
-                                        <input
-                                            id={`file-input-${index}`}
-                                            type="file"
-                                            accept="image/*"
-                                            className="hidden"
-                                            onChange={(e) => handleImageUpload(e.target.files)}
-                                        />
+                                        {productImages[index] != null ? (
+                                            <div key={productImages[index].id} className="relative">
+                                                <img
+                                                    src={productImages[index].url}
+                                                    alt={productImages[index].name}
+                                                    className="w-full h-24 object-cover rounded-lg border"
+                                                />
+                                                <button
+                                                    type="button"
+                                                    onClick={() => setProductImages(prev => prev.filter(p => p.id !== productImages[index].id))}
+                                                    className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 text-xs"
+                                                >
+                                                    ✕
+                                                </button>
+                                            </div>) :
+                                            (<div className="text-center">
+                                                <Image className="h-8 w-8 text-gray-400 mx-auto mb-2" />
+                                                <Plus className="h-4 w-4 text-gray-400 mx-auto" />
+                                            </div>)
+                                        }
                                     </div>
                                 ))}
                             </div>
-
-                            {/* عرض الصور المرفوعة */}
-                            {productImages.length > 0 && (
-                                <div className="mt-4 grid grid-cols-5 gap-4">
-                                    {productImages.map((img) => (
-                                        <div key={img.id} className="relative">
-                                            <img
-                                                src={img.url}
-                                                alt={img.name}
-                                                className="w-full h-24 object-cover rounded-lg border"
-                                            />
-                                            <button
-                                                type="button"
-                                                onClick={() => setProductImages(prev => prev.filter(p => p.id !== img.id))}
-                                                className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 text-xs"
-                                            >
-                                                ✕
-                                            </button>
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
 
                         </div>
 

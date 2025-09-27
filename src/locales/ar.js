@@ -23,7 +23,7 @@ export const ar = {
     // Login
     loginTitle: 'تسجيل الدخول في التطبيق',
     loginWelcome: 'مرحباً بك في التطبيق',
-    userCodeLabel: 'الحساب او الأسم او رقم الهاتف',
+    userCodeLabel: 'البريد او الأسم او رقم الهاتف',
     passwordLabel: ' كلمة السر',
     loginButton: 'تسجيل الدخول',
     loggingIn: 'جاري تسجيل الدخول...',
@@ -40,14 +40,14 @@ export const ar = {
     dashboardWelcome: 'مرحباً {name}, إليك نظرة عامة على أعمالك',
     activeOffers: 'عدد العروض النشطة',
     pendingOrders: 'عدد طلبات القائمة',
-    completedOffers: 'عدد الطلبات',
-    totalOrders: 'عدد الطلبات المكتملة',
+    completedOffers: 'عدد الطلبات المكتملة',
+    totalOrders: 'عدد الطلبات',
     totalProfit: 'إجمالي الأرباح',
     OfferStatues: 'طلبات العروض',
     offerOrders: 'طلبات العروض',
     profitsThisYear: 'الأرباح خلال السنة',
     topProducts: 'المنتجات الأكثر تسوق',
-
+    unothrized: 'غير مصرح لك في التسجيل',
     // Orders
     ordersTitle: 'جدول الطلبات',
     ordersSubtitle: 'إدارة ومتابعة جميع طلبات المتجر',
@@ -157,7 +157,35 @@ export const ar = {
     // Language
     language: 'اللغة',
     arabic: 'العربية',
-    english: 'English'
+    english: 'English',
+
+
+
+    sendOTP: 'إرسال رمز التحقق',
+    sending: 'جاري الإرسال...',
+    invalidIdentifier: 'معرف غير صالح',
+    ForgetPassword: 'نسيت كلمة المرور',
+    backToLogin: 'العودة لتسجيل الدخول',
+    verifyOTP: 'تحقق من الرمز',
+    verifying: 'جاري التحقق...',
+    invalidOTP: 'رمز التحقق غير صحيح',
+    otpLabel: 'رمز التحقق',
+    enterOTPMessage: 'الرجاء إدخال رمز التحقق المرسل',
+    verifyOTPTitle: 'التحقق من الرمز',
+    newPasswordLabel: 'كلمة المرور الجديدة',
+    resetPasswordWelcome: 'مرحباً بك في إعادة تعيين كلمة المرور',
+    resetPasswordTitle: 'إعادة تعيين كلمة المرور',
+    ConfirmNewPasswordLabel: 'تأكيد كلمة المرور الجديدة',
+    forgotPasswordTitle: 'نسيت كلمة المرور',
+    enterIdentifierMessage: 'الرجاء إدخال البريد الإلكتروني أو رقم الهاتف لإعادة تعيين كلمة المرور',
+    otpSent: 'تم إرسال رمز التحقق',
+    failedToSendOTP: "فشل في إرسال رمز التحقق",
+    resetPasswordButton: "إعادة تعيين كلمة المرور",
+    usernameExist: 'اسم المستخدم موجود مسبقاً',
+    emailExist: 'البريد الإلكتروني موجود مسبقاً',
+    phoneExist: "رقم الهاتف موجود مسبقا",
+    max4: '',
+    max4Toast: '',
 };
 
 export default ar;

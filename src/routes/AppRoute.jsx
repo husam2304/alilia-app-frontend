@@ -4,6 +4,10 @@ import AuthLayout from '../layout/AuthLayout';
 import DashboardLayout from '../layout/DashboardLayout';
 import { PrivateRoute, PublicRoute } from './';
 import LoadingSpinner from '../components/LoadingSpinner';
+import ForgetPassword from '../pages/ForgetPassword';
+import OTPConfirmation from '../pages/OTPConfirmation';
+import ResetPassword from '../pages/ResetPassword';
+import VerfyOtp from '../pages/verfyOtp';
 // Lazy load page components for code splitting
 const Login = lazy(() => import('../pages/Login'));
 const Register = lazy(() => import('../pages/Register'));
@@ -26,6 +30,10 @@ const AppRouter = () => {
         <Route path="/auth" element={<AuthLayout />}>
           <Route path="login" element={<PublicRoute><Login /></PublicRoute>} />
           <Route path="register" element={<PublicRoute><Register /></PublicRoute>} />
+          <Route path="forget-Password" element={<PublicRoute><ForgetPassword /></PublicRoute>} />
+          <Route path="verfyPasswordOtp" element={<PublicRoute><OTPConfirmation /></PublicRoute>} />
+          <Route path="reset-Password" element={<PublicRoute><ResetPassword /></PublicRoute>} />
+          <Route path="verfyOtp" element={<PublicRoute><VerfyOtp /></PublicRoute>} />
         </Route>
         <Route path="/" element={<Navigate to="/dashboard" />} />
 

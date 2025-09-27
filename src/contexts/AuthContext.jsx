@@ -3,6 +3,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { authService } from '../service/auth.service';
 import { TokenManager, FormUtils } from '../utils';
 import toast from 'react-hot-toast';
+import { useLanguage } from './LanguageContext';
 
 const AuthContext = createContext(null);
 
@@ -19,7 +20,7 @@ export const AuthProvider = ({ children }) => {
     const [userId, setUserId] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-
+    const { t } = useLanguage();
     // Check authentication status on mount
     useEffect(() => {
         checkAuthStatus();
@@ -33,23 +34,26 @@ export const AuthProvider = ({ children }) => {
             if (!token) {
                 setIsAuthenticated(false);
                 setUser(null);
+                setIsLoading(true);
                 return;
             }
 
-            // Verify token with backend
-            try {
-                const response = await authService.getUserInfo();
-                setUser(response.user);
-                setIsAuthenticated(true);
-            } catch (error) {
-                // Token is invalid
-                TokenManager.clearTokens();
-                setIsAuthenticated(false);
-                setUser(null);
+            const response = await authService.getUserInfo();
+            if (response?.user?.userRole == "Customer") {
+                setIsLoading(false);
+                throw new Error(t('unothrized'))
             }
+            setUser(response.user);
+            setIsAuthenticated(true);
+            setUserId(response?.user?.userId);
         } catch (error) {
+            // Token is invalid
+            TokenManager.clearTokens();
             setIsAuthenticated(false);
             setUser(null);
+            setIsLoading(false);
+
+            throw error;
         } finally {
             setIsLoading(false);
         }
@@ -69,8 +73,6 @@ export const AuthProvider = ({ children }) => {
                 );
 
                 // Store user data
-                setUserId(response.userId);
-                setIsAuthenticated(true);
                 await checkAuthStatus();
                 // Handle remember me
                 if (rememberMe) {

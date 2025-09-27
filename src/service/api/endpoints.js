@@ -22,6 +22,14 @@ export const endpoints = {
         refreshToken: '/Auth/refresh-token',            // تجديد رمز المصادقة
         userInfo: '/Auth/GetUserInfo',                  // الحصول على معلومات المستخدم
         logout: (refreshtoken) => `/Auth/logout/${refreshtoken}`, // تسجيل خروج (يحتاج رمز التجديد)
+        forgetPassword: (Identifier) => `/Auth/password/send-otp?Identifier=${Identifier}`,
+        verfiyPasswordOtp: (otp, identifer) => `/Auth/password/verify-otp?identifer=${identifer}&otp=${otp}`,
+        resetPassword: (resetToken, identifer) => `/Auth/password/reset?resetToken=${resetToken}&identifer=${identifer}`,
+        validatEmail: (email) => `/Auth/validate-email/${email}`,
+        validatUsername: (username) => `/Auth/validate-username/${username}`,
+        validatPhone: (phone) => `/Auth/validate-phone/${phone}`,
+        verfiyOtp: (UserId, otp) => `/Auth/verfiyOtp?userId=${UserId}&otp=${otp}`
+
     },
     // مجموعة خدمات لوحة التحكم والإحصائيات
     dashboard: {
@@ -46,6 +54,9 @@ export const endpoints = {
     // مجموعة خدمات العملاء
     customer: {
         changeLanguage: "/Customer/ChangeLanguage"      // تغيير لغة واجهة العميل
+    },
+    offer: {
+        offerDetails: (offerId) => `OfferDetails/${offerId}`
     }
 };
 

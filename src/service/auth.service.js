@@ -89,7 +89,89 @@ export const authService = {
             if (error.response) throw error.response.data;
             else throw error.message;
         }
-    }
+    },
+    /**
+     * إرسال رمز لإعادة تعيين كلمة المرور
+     * @param {string} Identifier - معرف المستخدم (بريد إلكتروني أو رقم هاتف)
+     * @returns {Promise} - وعد يحتوي على نتيجة العملية
+     */
+    forgetPassword: async (Identifier) => {
+        try {
+            const response = await api.post(endpoints.auth.forgetPassword(Identifier));
+            return response.data;
+        } catch (error) {
+            if (error.response) throw error.response.data;
+            else throw error.message;
+        }
+    },
+
+    /**
+     * التحقق من رمز إعادة تعيين كلمة المرور
+     * @param {string} otp - الرمز المؤقت
+     * @param {string} identifer - معرف المستخدم
+     * @returns {Promise} - وعد يحتوي على نتيجة التحقق
+     */
+    verfiyPasswordOtp: async (otp, identifer) => {
+        try {
+            const response = await api.post(endpoints.auth.verfiyPasswordOtp(otp, identifer));
+            return response.data;
+        } catch (error) {
+            if (error.response) throw error.response.data;
+            else throw error.message;
+        }
+    },
+
+    /**
+     * إعادة تعيين كلمة المرور
+     * @param {string} resetToken - رمز إعادة التعيين
+     * @param {string} identifer - معرف المستخدم
+     * @returns {Promise} - وعد يحتوي على نتيجة إعادة التعيين
+     */
+    resetPassword: async (resetToken, identifer, data) => {
+        try {
+            const response = await api.post(endpoints.auth.resetPassword(resetToken, identifer), data);
+            return response.data;
+        } catch (error) {
+            if (error.response) throw error.response.data;
+            else throw error.message;
+        }
+    },
+    validatEmail: async (email) => {
+        try {
+            const response = await api.get(endpoints.auth.validatEmail(email));
+            return response.data;
+        } catch (error) {
+            if (error.response) throw error.response.data;
+            else throw error.message;
+        }
+    },
+    validatUsername: async (username) => {
+        try {
+            const response = await api.get(endpoints.auth.validatUsername(username));
+            return response.data;
+        } catch (error) {
+            if (error.response) throw error.response.data;
+            else throw error.message;
+        }
+    },
+    validatPhone: async (phone) => {
+        try {
+            const response = await api.get(endpoints.auth.validatPhone(phone));
+            return response.data;
+        } catch (error) {
+            if (error.response) throw error.response.data;
+            else throw error.message;
+        }
+    },
+    verfiyOtp: async (userId, otp) => {
+        try {
+            const response = await api.post(endpoints.auth.verfiyOtp(userId, otp));
+            return response.data;
+        } catch (error) {
+            if (error.response) throw error.response.data;
+            else throw error.message;
+        }
+    },
 };
 
 export default authService;
