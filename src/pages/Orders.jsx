@@ -68,7 +68,8 @@ const Orders = () => {
                     offerId: order.offerStatusId,
                     payment: DataUtils.formatPaymentStatus(order.paymentStatus || 'pending'),
                     receive: order.receiveStatus ? DataUtils.formatOrderStatus(order.receiveStatus) : 'بانتظار',
-                    rawData: order
+                    rawData: order,
+                    offerDetailsId: order.offerId
                 }));
                 setOrders(formattedOrders);
                 setTotalOrders(data.count || 0);
@@ -400,30 +401,43 @@ const Orders = () => {
                                             </Badge>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
-                                            {order.offerId === 1 && user?.userRole != 'Admin' ? (<Button
-                                                variant="primary"
-                                                size="sm"
-                                                icon={Plus}
-                                                onClick={() => navigate(`/dashboard/CreateOffer/${order.id}`)}
-                                            >
-                                                {t('createOffer')}
-                                            </Button>) : (
-                                                order.offerId === 1 ? (
-                                                    <Badge variant={DataUtils.getStatusVariant(order.offerId, 'offer')}>
+                                            {order.offerId === 1 && user?.userRole != 'Admin' ? (
+                                                <div className='flex max-w-full justify-between items-center'>
+                                                    <Badge variant={DataUtils.getStatusVariant(order.offerId, 'offer')} className='mx-2 p-2'>
                                                         {order.offer}
                                                     </Badge>
-                                                ) : (
+                                                    <Button
+                                                        variant="primary"
+                                                        size="sm"
+                                                        className="flex-1 max-w-[50%]"
+
+                                                        icon={Plus}
+                                                        onClick={() => navigate(`/dashboard/CreateOffer/${order.id}`)}
+                                                    >
+                                                        {t('createOffer')}
+                                                    </Button>
+                                                </div>) : (
+                                                order.offerId === 1 ? (
+                                                    <Badge variant={DataUtils.getStatusVariant(order.offerId, 'offer')} className='mx-5 p-2'>
+                                                        {order.offer}
+                                                    </Badge>
+                                                ) : (<div className='flex max-w-full justify-between items-center'>
+                                                    <Badge variant={DataUtils.getStatusVariant(order.offerId, 'offer')} className='mx-5 p-2'>
+                                                        {order.offer}
+                                                    </Badge>
                                                     <Button
                                                         variant="outline"
                                                         size="sm"
                                                         icon={Eye}
+                                                        className="flex-1 max-w-[50%]"
                                                         onClick={(e) => {
                                                             e.stopPropagation();
-                                                            navigate(`/dashboard/offer-details/${order.id}`);
+                                                            navigate(`/dashboard/offer-details/${order.offerDetailsId}`);
                                                         }}
                                                     >
                                                         {t('viewOfferDetails')}
                                                     </Button>
+                                                </div>
                                                 )
                                             )}
                                         </td>

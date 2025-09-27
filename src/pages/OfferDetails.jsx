@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { ArrowLeft, Calendar, Package, DollarSign, Percent, Gift, Image as ImageIcon } from 'lucide-react';
@@ -96,7 +96,7 @@ const OfferDetails = () => {
                             <Package className="h-5 w-5" />
                             {t('productDetails')}
                         </h2>
-                        
+
                         <div className="space-y-4">
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -104,7 +104,7 @@ const OfferDetails = () => {
                                 </label>
                                 <p className="text-lg font-medium text-gray-900">{offer.productName}</p>
                             </div>
-                            
+
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">
                                     {t('productDescription')}
@@ -120,7 +120,7 @@ const OfferDetails = () => {
                             <DollarSign className="h-5 w-5" />
                             {t('pricingDetails')}
                         </h2>
-                        
+
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div className="bg-gray-50 p-4 rounded-lg">
                                 <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -130,7 +130,7 @@ const OfferDetails = () => {
                                     {DataUtils.formatCurrency(offer.price)}
                                 </p>
                             </div>
-                            
+
                             {offer.deliveryPrice > 0 && (
                                 <div className="bg-gray-50 p-4 rounded-lg">
                                     <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -141,7 +141,7 @@ const OfferDetails = () => {
                                     </p>
                                 </div>
                             )}
-                            
+
                             {offer.discountPercentage > 0 && (
                                 <div className="bg-green-50 p-4 rounded-lg">
                                     <label className="block text-sm font-medium text-green-700 mb-1">
@@ -153,7 +153,7 @@ const OfferDetails = () => {
                                     </p>
                                 </div>
                             )}
-                            
+
                             <div className="bg-primary-50 p-4 rounded-lg">
                                 <label className="block text-sm font-medium text-primary-700 mb-1">
                                     {t('finalPrice')}
@@ -172,7 +172,7 @@ const OfferDetails = () => {
                                 <Gift className="h-5 w-5 text-orange-500" />
                                 {t('specialOffer')}
                             </h2>
-                            
+
                             <div className="bg-white p-4 rounded-lg">
                                 <div className="flex items-center justify-center text-center">
                                     <div className="flex items-center gap-2 text-lg">
@@ -212,7 +212,7 @@ const OfferDetails = () => {
                                 <ImageIcon className="h-5 w-5" />
                                 {t('offerImages')}
                             </h2>
-                            
+
                             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                                 {offer.mediaUrls.map((url, index) => (
                                     <div
@@ -224,9 +224,9 @@ const OfferDetails = () => {
                                             src={url}
                                             alt={`${t('offerImage')} ${index + 1}`}
                                             className="w-full h-full object-cover"
-                                            onError={(e) => {
-                                                e.target.src = '/placeholder-image.png';
-                                            }}
+                                        // onError={(e) => {
+                                        //     e.target.src = '/placeholder-image.png';
+                                        // }}
                                         />
                                     </div>
                                 ))}
@@ -243,7 +243,7 @@ const OfferDetails = () => {
                             <Calendar className="h-5 w-5" />
                             {t('validityInfo')}
                         </h3>
-                        
+
                         <div className="space-y-3">
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -253,7 +253,7 @@ const OfferDetails = () => {
                                     {DataUtils.formatDate(offer.validUntil)}
                                 </p>
                             </div>
-                            
+
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">
                                     {t('offerStatus')}
@@ -270,7 +270,7 @@ const OfferDetails = () => {
                         <h3 className="text-lg font-semibold text-gray-900 mb-4">
                             {t('actions')}
                         </h3>
-                        
+
                         <div className="space-y-3">
                             <Button
                                 variant="outline"
@@ -280,7 +280,7 @@ const OfferDetails = () => {
                             >
                                 {t('backToOrders')}
                             </Button>
-                            
+
                             {isValidOffer && (
                                 <Button
                                     variant="primary"

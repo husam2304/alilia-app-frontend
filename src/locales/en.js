@@ -183,7 +183,7 @@ export const en = {
     // Language
     language: 'Language',
     arabic: 'العربية',
-    english: 'English'
+    english: 'English',
 
     // Offer Details
     offerDetailsTitle: 'Offer Details',

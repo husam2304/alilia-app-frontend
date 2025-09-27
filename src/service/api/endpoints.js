@@ -56,7 +56,7 @@ export const endpoints = {
         changeLanguage: "/Customer/ChangeLanguage"      // تغيير لغة واجهة العميل
     },
     offer: {
-        offerDetails: (offerId) => `OfferDetails/${offerId}`
+        offerDetails: (offerId) => `/Offer/OfferDetails/${offerId}`
     }
 };
 
