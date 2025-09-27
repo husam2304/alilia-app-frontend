@@ -408,10 +408,23 @@ const Orders = () => {
                                             >
                                                 {t('createOffer')}
                                             </Button>) : (
-
-                                                <Badge variant={DataUtils.getStatusVariant(order.offerId, 'offer')}>
-                                                    {order.offer}
-                                                </Badge>
+                                                order.offerId === 1 ? (
+                                                    <Badge variant={DataUtils.getStatusVariant(order.offerId, 'offer')}>
+                                                        {order.offer}
+                                                    </Badge>
+                                                ) : (
+                                                    <Button
+                                                        variant="outline"
+                                                        size="sm"
+                                                        icon={Eye}
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            navigate(`/dashboard/offer-details/${order.id}`);
+                                                        }}
+                                                    >
+                                                        {t('viewOfferDetails')}
+                                                    </Button>
+                                                )
                                             )}
                                         </td>
 

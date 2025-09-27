@@ -184,6 +184,26 @@ export const en = {
     language: 'Language',
     arabic: 'العربية',
     english: 'English'
+
+    // Offer Details
+    offerDetailsTitle: 'Offer Details',
+    offerNotFound: 'Offer Not Found',
+    offerNotFoundMessage: 'The requested offer was not found or may have been deleted',
+    viewOfferDetails: 'View Offer Details',
+    pricingDetails: 'Pricing Details',
+    originalPrice: 'Original Price',
+    deliveryPrice: 'Delivery Price',
+    discount: 'Discount',
+    finalPrice: 'Final Price',
+    specialOffer: 'Special Offer',
+    buy: 'Buy',
+    get: 'Get',
+    offerImages: 'Offer Images',
+    offerImage: 'Offer Image',
+    validityInfo: 'Validity Information',
+    validUntil: 'Valid Until',
+    backToOrders: 'Back to Orders',
+    printOffer: 'Print Offer',
 };
 
 export default en;

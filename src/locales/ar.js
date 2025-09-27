@@ -159,6 +159,26 @@ export const ar = {
     arabic: 'العربية',
     english: 'English',
 
+    // Offer Details
+    offerDetailsTitle: 'تفاصيل العرض',
+    offerNotFound: 'العرض غير موجود',
+    offerNotFoundMessage: 'لم يتم العثور على العرض المطلوب أو قد يكون محذوفاً',
+    viewOfferDetails: 'عرض تفاصيل العرض',
+    pricingDetails: 'تفاصيل الأسعار',
+    originalPrice: 'السعر الأصلي',
+    deliveryPrice: 'سعر التوصيل',
+    discount: 'الخصم',
+    finalPrice: 'السعر النهائي',
+    specialOffer: 'عرض خاص',
+    buy: 'اشتري',
+    get: 'واحصل على',
+    offerImages: 'صور العرض',
+    offerImage: 'صورة العرض',
+    validityInfo: 'معلومات الصلاحية',
+    validUntil: 'صالح حتى',
+    backToOrders: 'العودة للطلبات',
+    printOffer: 'طباعة العرض',
+
 
 
     sendOTP: 'إرسال رمز التحقق',
