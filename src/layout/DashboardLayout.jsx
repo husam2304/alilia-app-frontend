@@ -3,8 +3,17 @@ import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import defaultAvatar from '../assets/images/image.jpg';
 import Logo from '../assets/images/logo.png';
-import { LayoutDashboard, ShoppingCart, LogOut, Menu, X, Globe, User, CircleChe,c    CheckCircle
-k as CheckCircle } from 'lucide-react's HeadlessMenu } from '@headlessui/react';
+import {
+    LayoutDashboard,
+    ShoppingCart,
+    LogOut,
+    Menu,
+    X,
+    Globe,
+    User,
+    CheckCircle
+} from 'lucide-react';
+import { Menu as HeadlessMenu } from '@headlessui/react';
 import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import Button from '../components/Ui/Button';
@@ -223,6 +232,19 @@ export const DashboardLayout = () => {
                                                 </Link>
                                             )}
                                         </HeadlessMenu.Item> */}
+
+                                        <HeadlessMenu.Item>
+                                            {({ active }) => (
+                                                <Link
+                                                    to="/dashboard/profile"
+                                                    className={`${active ? 'bg-gray-100' : ''
+                                                        } flex items-center px-4 py-2 text-sm text-gray-700 w-full text-right`}
+                                                >
+                                                    <User className="ml-3 h-4 w-4" />
+                                                    {t('profile')}
+                                                </Link>
+                                            )}
+                                        </HeadlessMenu.Item>
 
                                         <HeadlessMenu.Item>
                                             {({ active }) => (
