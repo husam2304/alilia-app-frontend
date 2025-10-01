@@ -227,7 +227,31 @@ export const en = {
     adminName: 'Admin Name',
     saveChanges: 'Save Changes',
     profileUpdateSuccess: 'Profile updated successfully',
-    profileUpdateError: 'Failed to update profile'
+    profileUpdateError: 'Failed to update profile',
+
+    // Accept Offers
+    acceptOffers: 'Accept Offers',
+    acceptOffersTitle: 'Manage Offers',
+    acceptOffersSubtitle: 'Accept or reject offers submitted by customers',
+    noOffersToManage: 'No offers require management',
+    customerDetailsTitle: 'Customer and Offer Details',
+    offerSummary: 'Offer Summary',
+    offerPrice: 'Offer Price',
+    accept: 'Accept',
+    reject: 'Reject',
+    viewDetails: 'View Details',
+    viewFullOfferDetails: 'View Full Offer Details',
+    confirmAcceptOffer: 'Are you sure you want to accept this offer?',
+    confirmRejectOffer: 'Are you sure you want to reject this offer?',
+    offerAcceptedSuccess: 'Offer accepted successfully',
+    offerRejectedSuccess: 'Offer rejected successfully',
+    offerAcceptError: 'Failed to accept offer',
+    offerRejectError: 'Failed to reject offer',
+    errorLoadingOffers: 'Error loading offers',
+    tryAgainLater: 'Please try again later',
+    retry: 'Retry',
+    dataRefreshed: 'Data refreshed',
+    rowsPerPage: 'Rows per page'
 };
 
 export default en;

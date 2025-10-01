@@ -46,7 +46,10 @@ export const endpoints = {
     vendor: {
         orders: "/Vendor/Orders",                       // قائمة طلبات البائع
         createOffer: (orderId) => `/Vendor/CreateOffer/${orderId}`, // إنشاء عرض لطلب معين
-        orderDetails: (orderId) => `/Vendor/Order/${orderId}`       // تفاصيل طلب معين
+        orderDetails: (orderId) => `/Vendor/Order/${orderId}`,      // تفاصيل طلب معين
+        offersToManage: "/Vendor/OffersToManage",                   // العروض التي تحتاج موافقة البائع
+        acceptOffer: (offerId) => `/Vendor/AcceptOffer/${offerId}`, // قبول عرض معين
+        rejectOffer: (offerId) => `/Vendor/RejectOffer/${offerId}`  // رفض عرض معين
     },
     // مجموعة خدمات المدراء
     admin: {

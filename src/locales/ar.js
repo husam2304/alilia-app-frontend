@@ -227,7 +227,31 @@ export const ar = {
     adminName: 'اسم المدير',
     saveChanges: 'حفظ التغييرات',
     profileUpdateSuccess: 'تم تحديث الملف الشخصي بنجاح',
-    profileUpdateError: 'فشل في تحديث الملف الشخصي'
+    profileUpdateError: 'فشل في تحديث الملف الشخصي',
+
+    // Accept Offers
+    acceptOffers: 'قبول العروض',
+    acceptOffersTitle: 'إدارة العروض',
+    acceptOffersSubtitle: 'قبول أو رفض العروض المقدمة من العملاء',
+    noOffersToManage: 'لا توجد عروض تحتاج إلى إدارة',
+    customerDetailsTitle: 'تفاصيل العميل والعرض',
+    offerSummary: 'ملخص العرض',
+    offerPrice: 'سعر العرض',
+    accept: 'قبول',
+    reject: 'رفض',
+    viewDetails: 'عرض التفاصيل',
+    viewFullOfferDetails: 'عرض تفاصيل العرض كاملة',
+    confirmAcceptOffer: 'هل أنت متأكد من قبول هذا العرض؟',
+    confirmRejectOffer: 'هل أنت متأكد من رفض هذا العرض؟',
+    offerAcceptedSuccess: 'تم قبول العرض بنجاح',
+    offerRejectedSuccess: 'تم رفض العرض بنجاح',
+    offerAcceptError: 'فشل في قبول العرض',
+    offerRejectError: 'فشل في رفض العرض',
+    errorLoadingOffers: 'خطأ في تحميل العروض',
+    tryAgainLater: 'يرجى المحاولة مرة أخرى لاحقاً',
+    retry: 'إعادة المحاولة',
+    dataRefreshed: 'تم تحديث البيانات',
+    rowsPerPage: 'عدد الصفوف في الصفحة'
 
 };
 
