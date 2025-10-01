@@ -9,7 +9,8 @@ import {
     LogOut,
     Menu,
     X,
-    Globe
+    Globe,
+    User
 } from 'lucide-react';
 import { Menu as HeadlessMenu } from '@headlessui/react';
 import { useAuth } from '../contexts/AuthContext';

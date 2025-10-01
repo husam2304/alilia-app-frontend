@@ -215,7 +215,19 @@ export const en = {
     resending: "Resending...",
 
     WasSentTo: "was sent to ",
-    vendors: "vendors"
+    vendors: "vendors",
+
+    // Profile
+    profile: 'Profile',
+    profileTitle: 'Profile',
+    profileSubtitle: 'Manage your profile and store information',
+    personalInfo: 'Personal Information',
+    storeInfo: 'Store Information',
+    profileImage: 'Profile Image',
+    adminName: 'Admin Name',
+    saveChanges: 'Save Changes',
+    profileUpdateSuccess: 'Profile updated successfully',
+    profileUpdateError: 'Failed to update profile'
 };
 
 export default en;

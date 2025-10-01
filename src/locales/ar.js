@@ -215,7 +215,19 @@ export const ar = {
 
 
     WasSentTo: "تم الإرسال إلى",
-    vendors: "موردين"
+    vendors: "موردين",
+
+    // Profile
+    profile: 'الملف الشخصي',
+    profileTitle: 'الملف الشخصي',
+    profileSubtitle: 'إدارة معلومات الملف الشخصي والمتجر',
+    personalInfo: 'المعلومات الشخصية',
+    storeInfo: 'معلومات المتجر',
+    profileImage: 'الصورة الشخصية',
+    adminName: 'اسم المدير',
+    saveChanges: 'حفظ التغييرات',
+    profileUpdateSuccess: 'تم تحديث الملف الشخصي بنجاح',
+    profileUpdateError: 'فشل في تحديث الملف الشخصي'
 
 };
 
