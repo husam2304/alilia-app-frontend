@@ -11,7 +11,7 @@ const ResendOTP = () => {
     const { t } = useLanguage();
     const navigate = useNavigate();
 
-    const resendOtp = useMutation({
+    const resendOtp = useMutation({ 
         mutationFn: () => authService.resendOtp(id),
         onSuccess: () => {
             toast.success(t('otpSent'));
