@@ -45,8 +45,6 @@ export const DashboardLayout = () => {
             current: location.pathname === '/dashboard/accept-offers'
         }] : [])
     ].filter(Boolean);
-        }
-    ];
 
     const handleLogout = async () => {
         try {
@@ -234,19 +232,6 @@ export const DashboardLayout = () => {
                                                 </Link>
                                             )}
                                         </HeadlessMenu.Item> */}
-
-                                        <HeadlessMenu.Item>
-                                            {({ active }) => (
-                                                <Link
-                                                    to="/dashboard/profile"
-                                                    className={`${active ? 'bg-gray-100' : ''
-                                                        } flex items-center px-4 py-2 text-sm text-gray-700 w-full text-right`}
-                                                >
-                                                    <User className="ml-3 h-4 w-4" />
-                                                    {t('profile')}
-                                                </Link>
-                                            )}
-                                        </HeadlessMenu.Item>
 
                                         <HeadlessMenu.Item>
                                             {({ active }) => (
