@@ -28,7 +28,8 @@ export const endpoints = {
         validatEmail: (email) => `/Auth/validate-email/${email}`,
         validatUsername: (username) => `/Auth/validate-username/${username}`,
         validatPhone: (phone) => `/Auth/validate-phone/${phone}`,
-        verfiyOtp: (UserId, otp) => `/Auth/verfiyOtp?userId=${UserId}&otp=${otp}`
+        verfiyOtp: (UserId, otp) => `/Auth/verfiyOtp?userId=${UserId}&otp=${otp}`,
+        resendOtp: (Identifier) => `/Auth/reSendAuth-otp?Identifier=${Identifier}`
 
     },
     // مجموعة خدمات لوحة التحكم والإحصائيات
@@ -39,7 +40,7 @@ export const endpoints = {
         profitByYear: '/Dashboard/profit-by-year',      // الأرباح حسب السنة
         topProduct: '/Dashboard/top-products',          // أفضل المنتجات مبيعاً
         charts: '/Dashboard/charts',                    // بيانات الرسوم البيانية
-        export: '/Dashboard/export'                     // تصدير البيانات
+        export: (format) => `/Dashboard/export?format=${format}`                     // تصدير البيانات
     },
     // مجموعة خدمات البائعين
     vendor: {

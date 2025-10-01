@@ -34,7 +34,7 @@ export const AuthProvider = ({ children }) => {
             if (!token) {
                 setIsAuthenticated(false);
                 setUser(null);
-                setIsLoading(true);
+                setIsLoading(false);
                 return;
             }
 
@@ -83,7 +83,7 @@ export const AuthProvider = ({ children }) => {
                 toast.success('تم تسجيل الدخول بنجاح!');
                 return response;
             } else {
-                throw new Error(response.message || 'فشل في تسجيل الدخول');
+                throw new Error(response || 'فشل في تسجيل الدخول');
             }
 
         } finally {

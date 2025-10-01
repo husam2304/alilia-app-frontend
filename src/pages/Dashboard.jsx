@@ -34,6 +34,7 @@ import StatCard from '../components/cards/StatCard';
 import LoadingSpinner from '../components/LoadingSpinner';
 import toast from 'react-hot-toast';
 import { useQuery } from '@tanstack/react-query';
+import Button from '../components/Ui/Button';
 
 // Register Chart.js components
 ChartJS.register(
@@ -70,12 +71,10 @@ const Dashboard = () => {
             setLoading(true);
             return;
         }
-        if (user?.userRole == 'Admin' && AdminDashboardData) {
-            handleDashboardData(AdminDashboardData);
-        }
-        if (user?.userRole == 'Vendor' && VendorDashboardData) {
-            handleDashboardData(VendorDashboardData);
-        }
+        handleDashboardData(AdminDashboardData || VendorDashboardData);
+
+
+
     }, [VendorDashboardData, AdminDashboardData]);
 
     const handleDashboardData = async (data) => {
@@ -83,7 +82,6 @@ const Dashboard = () => {
             if (!data?.success) {
                 throw new Error(data?.message || 'فشل في جلب بيانات لوحة التحكم');
             }
-            console.log(data);
             setDashboardData(data?.dashboard?.summary);
 
             setChartsData(prev => ({ ...prev, lineChart: data?.dashboard?.charts.ordersChart }));
@@ -108,6 +106,7 @@ const Dashboard = () => {
             setDashboardData(getFallbackSummaryData());
             setChartsData(getFallbackChartsData());
             setTopProducts(getFallbackTopProducts());
+            setLoading(false);
         } finally {
             setLoading(false);
         }
@@ -119,20 +118,13 @@ const Dashboard = () => {
         try {
             const loadingToast = toast.loading('جاري تصدير البيانات...');
 
-            const response = await DashboardAPI.exportData(format);
+            await dashboardService.exportData(format);
 
-            // Create download
-            const blob = new Blob([JSON.stringify(response.data, null, 2)], {
-                type: format === 'json' ? 'application/json' : 'text/csv'
-            });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `dashboard_data.${format}`;
-            document.body.appendChild(a);
-            a.click();
-            window.URL.revokeObjectURL(url);
-            document.body.removeChild(a);
+
+
+
+            ///
+
 
             toast.dismiss(loadingToast);
             toast.success('تم تصدير البيانات بنجاح');
@@ -233,32 +225,24 @@ const Dashboard = () => {
                 </div>
 
                 {/* Export Actions */}
-                {/* <div className="flex gap-2">
-                        <Button
-                            variant="outline"
-                            size="sm"
-                            icon={<Download />}
-                            onClick={() => exportData('json')}
-                        >
-                            تصدير JSON
-                        </Button>
-                        <Button
-                            variant="outline"
-                            size="sm"
-                            icon={<FileText />}
-                            onClick={() => exportData('csv')}
-                        >
-                            تصدير CSV
-                        </Button>
-                        <Button
-                            variant="outline"
-                            size="sm"
-                            icon={<Printer />}
-                            onClick={() => window.print()}
-                        >
-                            طباعة
-                        </Button>
-                    </div> */}
+                <div className="flex gap-2">
+                    <Button
+                        variant="outline"
+                        size="sm"
+                        icon={FileText}
+                        onClick={() => exportData('excel')}
+                    >
+                        تصدير excel
+                    </Button>
+                    {/* <Button
+                        variant="outline"
+                        size="sm"
+                        icon={Printer}
+                        onClick={() => window.print()}
+                    >
+                        طباعة
+                    </Button> */}
+                </div>
             </div>
 
             {/* Stats Cards */}

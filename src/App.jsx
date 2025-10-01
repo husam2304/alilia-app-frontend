@@ -27,19 +27,6 @@ function App() {
     queryClient,
     persister: localStoragePersister,
   });
-  const { isAuthenticated, refreshAuth } = useAuth();
-
-  useEffect(() => {
-
-    if (isAuthenticated) {
-      fetchUser();
-    }
-  }, [isAuthenticated]);
-  const fetchUser = async () => {
-    if (isAuthenticated) {
-      await refreshAuth();
-    }
-  };
   return (
     <>
       <ErrorBoundary>

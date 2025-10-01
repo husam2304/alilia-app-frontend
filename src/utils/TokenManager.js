@@ -19,7 +19,11 @@ export const TokenManager = {
 
     isAuthenticated() {
         return !!this.getAccessToken();
+    },
+    getLanguage() {
+        return localStorage.getItem("language")
     }
+
 };
 export default TokenManager;
 

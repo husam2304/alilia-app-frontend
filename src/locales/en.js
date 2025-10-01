@@ -204,6 +204,18 @@ export const en = {
     validUntil: 'Valid Until',
     backToOrders: 'Back to Orders',
     printOffer: 'Print Offer',
+
+    max4: 'max 4 images',
+    max4Toast: 'can\' add more than four',
+
+
+    resendOTPTitle: "Resend OTP",
+    resendOTPMessage: "Didn’t get the code? Resend it to your registered number.",
+    resendOTP: "Resend OTP",
+    resending: "Resending...",
+
+    WasSentTo: "was sent to ",
+    vendors: "vendors"
 };
 
 export default en;

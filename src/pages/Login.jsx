@@ -45,6 +45,9 @@ const Login = () => {
 
             navigate('/dashboard', { replace: true });
         } catch (error) {
+            if (error?.isActive == false)
+                navigate(`/auth/resendOtp?id=${data.userCode}`);
+
             toast.error(error?.message || 'فشل في تسجيل الدخول');
         }
     };

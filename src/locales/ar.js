@@ -204,8 +204,19 @@ export const ar = {
     usernameExist: 'اسم المستخدم موجود مسبقاً',
     emailExist: 'البريد الإلكتروني موجود مسبقاً',
     phoneExist: "رقم الهاتف موجود مسبقا",
-    max4: '',
-    max4Toast: '',
+    max4: 'بحد أقصى اربع صورة',
+    max4Toast: 'لا يمكن اضافة اكثر من اربع صور',
+
+
+    resendOTPTitle: "إعادة إرسال رمز التحقق",
+    resendOTPMessage: "لم تستلم الرمز؟ أعد إرساله إلى رقمك المسجل.",
+    resendOTP: "إعادة إرسال الرمز",
+    resending: "جاري الإرسال...",
+
+
+    WasSentTo: "تم الإرسال إلى",
+    vendors: "موردين"
+
 };
 
 export default ar;

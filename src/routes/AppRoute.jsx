@@ -8,6 +8,7 @@ import ForgetPassword from '../pages/ForgetPassword';
 import OTPConfirmation from '../pages/OTPConfirmation';
 import ResetPassword from '../pages/ResetPassword';
 import VerfyOtp from '../pages/verfyOtp';
+import ResendOTP from '../pages/ResendOtp';
 // Lazy load page components for code splitting
 const Login = lazy(() => import('../pages/Login'));
 const Register = lazy(() => import('../pages/Register'));
@@ -36,6 +37,8 @@ const AppRouter = () => {
           <Route path="verfyPasswordOtp" element={<PublicRoute><OTPConfirmation /></PublicRoute>} />
           <Route path="reset-Password" element={<PublicRoute><ResetPassword /></PublicRoute>} />
           <Route path="verfyOtp" element={<PublicRoute><VerfyOtp /></PublicRoute>} />
+          <Route path="resendOtp" element={<PublicRoute><ResendOTP /></PublicRoute>} />
+
         </Route>
         <Route path="/" element={<Navigate to="/dashboard" />} />
 
