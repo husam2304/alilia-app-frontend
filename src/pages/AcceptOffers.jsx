@@ -1,18 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { 
-    CheckCircle, 
-    XCircle, 
-    Eye, 
-    RefreshCw, 
-    Package, 
-    User, 
-    Phone, 
-    MapPin,
-    Calendar,
-    DollarSign
-} from 'lucide-react';
+import { CircleCheck as CheckCircle, Circle as XCircle, Eye, RefreshCw, Package, User, Phone, MapPin, Calendar, DollarSign } from 'lucide-react';
 import { vendorService } from '../service';
 import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../contexts/LanguageContext';
