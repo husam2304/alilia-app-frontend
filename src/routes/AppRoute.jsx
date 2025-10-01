@@ -7,7 +7,7 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import ForgetPassword from '../pages/ForgetPassword';
 import OTPConfirmation from '../pages/OTPConfirmation';
 import ResetPassword from '../pages/ResetPassword';
-import VerfyOtp from '../pages/verfyOtp';
+import VerfyOtp from '../pages/VerfyOtp';
 import ResendOTP from '../pages/ResendOtp';
 // Lazy load page components for code splitting
 const Login = lazy(() => import('../pages/Login'));
