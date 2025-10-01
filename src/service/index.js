@@ -17,4 +17,5 @@ export * from './vendor.service';     // تصدير جميع وظائف خدمة
 export * from './auth.service';       // تصدير جميع وظائف خدمة المصادقة
 export * from './dashboard.service';  // تصدير جميع وظائف خدمة لوحة التحكم
 export * from './customer.service';   // تصدير جميع وظائف خدمة العملاء
-export * from './offer.service';   // تصدير جميع وظائف خدمة العملاء
+export * from './offer.service';      // تصدير جميع وظائف خدمة العروض
+export * from './profile.service';    // تصدير جميع وظائف خدمة الملف الشخصي

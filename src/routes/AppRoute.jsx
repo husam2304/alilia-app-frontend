@@ -16,6 +16,7 @@ const Dashboard = lazy(() => import('../pages/Dashboard'));
 const Orders = lazy(() => import('../pages/Orders'));
 const PriceQuote = lazy(() => import('../pages/PriceQuote'));
 const OfferDetails = lazy(() => import('../pages/OfferDetails'));
+const Profile = lazy(() => import('../pages/Profile'));
 
 
 
@@ -28,6 +29,7 @@ const AppRouter = () => {
           <Route path='orders' element={<PrivateRoute><Orders /></PrivateRoute>} />
           <Route path='createOffer/:OrderId' element={<PrivateRoute><PriceQuote /></PrivateRoute>} />
           <Route path='offer-details/:offerId' element={<PrivateRoute><OfferDetails /></PrivateRoute>} />
+          <Route path='profile' element={<PrivateRoute><Profile /></PrivateRoute>} />
 
         </Route>
         <Route path="/auth" element={<AuthLayout />}>

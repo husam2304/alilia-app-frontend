@@ -58,6 +58,13 @@ export const endpoints = {
     },
     offer: {
         offerDetails: (offerId) => `/Offer/OfferDetails/${offerId}`
+    },
+    // مجموعة خدمات الملف الشخصي
+    profile: {
+        getVendorProfile: '/Vendor/Profile',        // الحصول على ملف البائع الشخصي
+        updateVendorProfile: '/Vendor/Profile',     // تحديث ملف البائع الشخصي
+        getAdminProfile: '/Admin/Profile',          // الحصول على ملف المدير الشخصي
+        updateAdminProfile: '/Admin/Profile'        // تحديث ملف المدير الشخصي
     }
 };
 

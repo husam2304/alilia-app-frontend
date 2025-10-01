@@ -19,6 +19,63 @@ export const FormUtils = {
         formData.append('Faclity.Email', formInputs.email || '');
         formData.append('Faclity.Website', formInputs.website || '');
 
+    },
+
+    createVendorProfileFormData(formInputs) {
+        const formData = new FormData();
+
+        // User information
+        formData.append('Username', formInputs.vendorName);
+        formData.append('Email', formInputs.vendorEmail || '');
+        formData.append('PhoneNumber', formInputs.vendorPhone);
+        
+        // Only append image if it's a new file
+        if (formInputs.image && formInputs.image instanceof File) {
+            formData.append('Image', formInputs.image);
+        }
+
+        // Facility information
+        formData.append('Faclity.Name', formInputs.storeName);
+        formData.append('Faclity.CommercialRegister', formInputs.commercialNumber || '');
+        formData.append('Faclity.Country', "Jordan");
+        formData.append('Faclity.City', formInputs.city || '');
+        formData.append('Faclity.Phone', formInputs.phone);
+        formData.append('Faclity.Address', formInputs.address || '');
+        formData.append('Faclity.Email', formInputs.email || '');
+        formData.append('Faclity.Website', formInputs.website || '');
+
+        // Handle file uploads only if they are new files
+        if (formInputs.logo && formInputs.logo instanceof File) {
+            formData.append('Faclity.Logo', formInputs.logo);
+        }
+
+        if (formInputs.license && formInputs.license instanceof File) {
+            formData.append('Faclity.CommercialRegisterImage', formInputs.license);
+        }
+
+        // Handle activities
+        if (formInputs.activity) {
+            formInputs.activity.forEach(activity => {
+                formData.append('Faclity.Activities', activity);
+            });
+        }
+
+        // Handle keywords
+        if (formInputs.keywords) {
+            formInputs.keywords.forEach(keyword => {
+                formData.append('Faclity.Keywords', keyword);
+            });
+        }
+
+        return formData;
+    },
+
+    createAdminProfileData(formInputs) {
+        return {
+            Username: formInputs.adminName,
+            Email: formInputs.email,
+            PhoneNumber: formInputs.phone
+        };
         // Handle file uploads
         if (formInputs.logo) {
             formData.append('Faclity.Logo', formInputs.logo);
