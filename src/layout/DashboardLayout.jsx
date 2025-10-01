@@ -3,17 +3,8 @@ import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import defaultAvatar from '../assets/images/image.jpg';
 import Logo from '../assets/images/logo.png';
-import {
-    LayoutDashboard,
-    ShoppingCart,
-    LogOut,
-    Menu,
-    X,
-    Globe,
-    User,
-    CheckCircle
-} from 'lucide-react';
-import { Menu as HeadlessMenu } from '@headlessui/react';
+import { LayoutDashboard, ShoppingCart, LogOut, Menu, X, Globe, User, CircleChe,c    CheckCircle
+k as CheckCircle } from 'lucide-react's HeadlessMenu } from '@headlessui/react';
 import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import Button from '../components/Ui/Button';
