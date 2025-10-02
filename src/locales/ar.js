@@ -209,6 +209,14 @@ export const ar = {
     max4: 'بحد أقصى اربع صورة',
     max4Toast: 'لا يمكن اضافة اكثر من اربع صور',
 
+    // Excel Upload
+    excelUploadTitle: 'رفع من ملف Excel/CSV',
+    excelUploadDescription: 'يمكنك رفع ملف Excel أو CSV يحتوي على القيم المطلوبة. سيتم استخراج جميع النصوص من الملف وإضافتها تلقائياً.',
+    invalidExcelFile: 'يرجى اختيار ملف Excel أو CSV صالح',
+    excelFileTooLarge: 'حجم الملف كبير جداً. الحد الأقصى 5 ميجابايت',
+    noValidDataInFile: 'لم يتم العثور على بيانات صالحة في الملف',
+    itemsAddedSuccess: 'تم إضافة {count} عنصر بنجاح',
+    errorReadingFile: 'خطأ في قراءة الملف. يرجى التأكد من صحة الملف',
 
     resendOTPTitle: "إعادة إرسال رمز التحقق",
     resendOTPMessage: "لم تستلم الرمز؟ أعد إرساله إلى رقمك المسجل.",

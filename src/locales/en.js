@@ -208,6 +208,14 @@ export const en = {
     max4: 'max 4 images',
     max4Toast: 'can\' add more than four',
 
+    // Excel Upload
+    excelUploadTitle: 'Upload from Excel/CSV file',
+    excelUploadDescription: 'You can upload an Excel or CSV file containing the required values. All text will be extracted from the file and added automatically.',
+    invalidExcelFile: 'Please select a valid Excel or CSV file',
+    excelFileTooLarge: 'File size is too large. Maximum allowed is 5MB',
+    noValidDataInFile: 'No valid data found in the file',
+    itemsAddedSuccess: '{count} items added successfully',
+    errorReadingFile: 'Error reading file. Please ensure the file is valid',
 
     resendOTPTitle: "Resend OTP",
     resendOTPMessage: "Didn’t get the code? Resend it to your registered number.",

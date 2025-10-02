@@ -417,6 +417,7 @@ const Profile = () => {
                                             value={field.value || []}
                                             onChange={field.onChange}
                                             error={errors.activity?.message}
+                                            allowExcelUpload={true}
                                         />
                                     )}
                                 />
@@ -434,6 +435,7 @@ const Profile = () => {
                                             value={field.value || []}
                                             onChange={field.onChange}
                                             error={errors.keywords?.message}
+                                            allowExcelUpload={true}
                                         />
                                     )}
                                 />
