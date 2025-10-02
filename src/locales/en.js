@@ -61,8 +61,8 @@ export const en = {
     noOrdersAvailable: 'No orders available',
     orderDetailsTitle: 'Order Details {orderNumber}',
     customerInfo: 'Customer Information',
-    customerName: 'Name',
-    customerPhone: 'Phone',
+    customerName: 'Custome ame',
+    customerPhone: 'Custome phone',
     customerAddress: 'Address',
     productDetails: 'Product Details',
     quantity: 'Quantity',
@@ -228,7 +228,6 @@ export const en = {
     saveChanges: 'Save Changes',
     profileUpdateSuccess: 'Profile updated successfully',
     profileUpdateError: 'Failed to update profile',
-
     // Accept Offers
     acceptOffers: 'Accept Offers',
     acceptOffersTitle: 'Manage Offers',
@@ -240,8 +239,9 @@ export const en = {
     accept: 'Accept',
     reject: 'Reject',
     viewDetails: 'View Details',
-    viewFullOfferDetails: 'View Full Offer Details',
-    confirmAcceptOffer: 'Are you sure you want to accept this offer?',
+    closeOrder: 'close order',
+
+    closeAcceptOffer: 'Are you sure you want to close this order?',
     confirmRejectOffer: 'Are you sure you want to reject this offer?',
     offerAcceptedSuccess: 'Offer accepted successfully',
     offerRejectedSuccess: 'Offer rejected successfully',
@@ -251,7 +251,11 @@ export const en = {
     tryAgainLater: 'Please try again later',
     retry: 'Retry',
     dataRefreshed: 'Data refreshed',
-    rowsPerPage: 'Rows per page'
+    rowsPerPage: 'Rows per page',
+    offerNumber: "Ofeer number",
+
+    vendorInfo: 'Vendor info',
+    vednorName: 'Vendor name',
 };
 
 export default en;

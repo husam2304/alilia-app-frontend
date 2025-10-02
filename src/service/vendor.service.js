@@ -61,53 +61,6 @@ export const vendorService = {
         }
     },
 
-    /**
-     * الحصول على قائمة العروض التي تحتاج موافقة البائع
-     * @param {number} pageNumber - رقم الصفحة للتقسيم
-     * @param {number} pageSize - عدد العروض في الصفحة الواحدة
-     * @returns {Promise} - وعد يحتوي على قائمة العروض مع تفاصيل العملاء
-     */
-    getOffersToManage: async (pageNumber, pageSize) => {
-        try {
-            const response = await api.get(endpoints.vendor.offersToManage, {
-                params: { pageNumber, pageSize }
-            });
-            return response.data;
-        } catch (error) {
-            if (error.response) throw error.response.data;
-            else throw error.message;
-        }
-    },
-
-    /**
-     * قبول عرض معين
-     * @param {string|number} offerId - معرف العرض
-     * @returns {Promise} - وعد يحتوي على تأكيد قبول العرض
-     */
-    acceptOffer: async (offerId) => {
-        try {
-            const response = await api.post(endpoints.vendor.acceptOffer(offerId));
-            return response.data;
-        } catch (error) {
-            if (error.response) throw error.response.data;
-            else throw error.message;
-        }
-    },
-
-    /**
-     * رفض عرض معين
-     * @param {string|number} offerId - معرف العرض
-     * @returns {Promise} - وعد يحتوي على تأكيد رفض العرض
-     */
-    rejectOffer: async (offerId) => {
-        try {
-            const response = await api.post(endpoints.vendor.rejectOffer(offerId));
-            return response.data;
-        } catch (error) {
-            if (error.response) throw error.response.data;
-            else throw error.message;
-        }
-    }
 };
 
 export default vendorService;

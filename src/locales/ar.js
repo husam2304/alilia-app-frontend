@@ -62,9 +62,11 @@ export const ar = {
     noOrdersAvailable: 'لا توجد طلبات متاحة',
     orderDetailsTitle: 'تفاصيل الطلب {orderNumber}',
     customerInfo: 'معلومات العميل',
-    customerName: 'الاسم',
-    customerPhone: 'الهاتف',
+    customerName: 'اسم العميل',
+    customerPhone: 'هاتف العميل',
     customerAddress: 'العنوان',
+    vendorInfo: 'معلومات البائع',
+    vednorName: 'اسم البائع',
     productDetails: 'تفاصيل المنتجات',
     quantity: 'الكمية',
     totalAmount: 'إجمالي المبلغ',
@@ -227,7 +229,9 @@ export const ar = {
     adminName: 'اسم المدير',
     saveChanges: 'حفظ التغييرات',
     profileUpdateSuccess: 'تم تحديث الملف الشخصي بنجاح',
-    profileUpdateError: 'فشل في تحديث الملف الشخصي',
+    profileUpdateError: 'فشل في تحديث الملف الشخصي'
+    ,
+
 
     // Accept Offers
     acceptOffers: 'قبول العروض',
@@ -237,11 +241,12 @@ export const ar = {
     customerDetailsTitle: 'تفاصيل العميل والعرض',
     offerSummary: 'ملخص العرض',
     offerPrice: 'سعر العرض',
-    accept: 'قبول',
+    // close: 'closeOrder',
+
     reject: 'رفض',
     viewDetails: 'عرض التفاصيل',
-    viewFullOfferDetails: 'عرض تفاصيل العرض كاملة',
-    confirmAcceptOffer: 'هل أنت متأكد من قبول هذا العرض؟',
+    closeOrder: 'اغلاق الطلب',
+    closeAcceptOffer: 'هل أنت متأكد من اغلاق هذا الطلب',
     confirmRejectOffer: 'هل أنت متأكد من رفض هذا العرض؟',
     offerAcceptedSuccess: 'تم قبول العرض بنجاح',
     offerRejectedSuccess: 'تم رفض العرض بنجاح',
@@ -251,8 +256,8 @@ export const ar = {
     tryAgainLater: 'يرجى المحاولة مرة أخرى لاحقاً',
     retry: 'إعادة المحاولة',
     dataRefreshed: 'تم تحديث البيانات',
-    rowsPerPage: 'عدد الصفوف في الصفحة'
-
+    rowsPerPage: 'عدد الصفوف في الصفحة',
+    offerNumber: 'رقم العرض',
 };
 
 export default ar;

@@ -1,8 +1,19 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { CircleCheck as CheckCircle, Circle as XCircle, Eye, RefreshCw, Package, User, Phone, MapPin, Calendar, DollarSign } from 'lucide-react';
-import { vendorService } from '../service';
+import {
+    CheckCircle,
+    XCircle,
+    Eye,
+    RefreshCw,
+    Package,
+    User,
+    Phone,
+    MapPin,
+    Calendar,
+    DollarSign
+} from 'lucide-react';
+import { adminService, vendorService } from '../service';
 import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { DataUtils } from '../utils';
@@ -13,13 +24,14 @@ import Pagination from '../components/Pagination';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Modal from '../components/Modal';
 import toast from 'react-hot-toast';
+import confirmToast from '../components/toast/ConfirmToast';
 
 const AcceptOffers = () => {
     const { user } = useAuth();
     const { t } = useLanguage();
     const navigate = useNavigate();
     const queryClient = useQueryClient();
-    
+
     const [currentPage, setCurrentPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [selectedOffer, setSelectedOffer] = useState(null);
@@ -27,28 +39,28 @@ const AcceptOffers = () => {
 
     // Redirect non-vendors
     useEffect(() => {
-        if (user && user.userRole !== 'Vendor') {
+        if (user && user.userRole !== 'Admin') {
             navigate('/dashboard');
         }
     }, [user, navigate]);
 
     // Fetch offers to manage
-    const { 
-        data: offersData, 
-        isLoading, 
+    const {
+        data: offersData,
+        isLoading,
         error,
-        refetch 
+        refetch
     } = useQuery({
         queryKey: ['offersToManage', currentPage, rowsPerPage],
-        queryFn: () => vendorService.getOffersToManage(currentPage, rowsPerPage),
-        enabled: user?.userRole === 'Vendor',
+        queryFn: () => adminService.getOffersToManage(currentPage, rowsPerPage),
+        enabled: user?.userRole === 'Admin',
     });
 
     // Accept offer mutation
-    const acceptOfferMutation = useMutation({
-        mutationFn: vendorService.acceptOffer,
-        onSuccess: () => {
-            toast.success(t('offerAcceptedSuccess'));
+    const closeOrder = useMutation({
+        mutationFn: (orderId) => adminService.closeOrder(orderId),
+        onSuccess: (data) => {
+            toast.success(data.message);
             queryClient.invalidateQueries(['offersToManage']);
         },
         onError: (error) => {
@@ -56,29 +68,17 @@ const AcceptOffers = () => {
         }
     });
 
-    // Reject offer mutation
-    const rejectOfferMutation = useMutation({
-        mutationFn: vendorService.rejectOffer,
-        onSuccess: () => {
-            toast.success(t('offerRejectedSuccess'));
-            queryClient.invalidateQueries(['offersToManage']);
-        },
-        onError: (error) => {
-            toast.error(error?.message || t('offerRejectError'));
-        }
-    });
 
-    const handleAcceptOffer = async (offerId) => {
-        if (window.confirm(t('confirmAcceptOffer'))) {
-            await acceptOfferMutation.mutateAsync(offerId);
+
+    const handleAcceptOffer = async (orderId) => {
+        const confirmed = await confirmToast(t('closeAcceptOffer'));
+
+        if (!confirmed) return;
+        if (confirmed) {
+            await closeOrder.mutateAsync(orderId);
         }
     };
 
-    const handleRejectOffer = async (offerId) => {
-        if (window.confirm(t('confirmRejectOffer'))) {
-            await rejectOfferMutation.mutateAsync(offerId);
-        }
-    };
 
     const handleViewCustomerDetails = (offer) => {
         setSelectedOffer(offer);
@@ -190,9 +190,6 @@ const AcceptOffers = () => {
                                     {t('validUntil')}
                                 </th>
                                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    {t('offerStatus')}
-                                </th>
-                                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     {t('actions')}
                                 </th>
                             </tr>
@@ -248,11 +245,7 @@ const AcceptOffers = () => {
                                                 {DataUtils.formatDate(offer.validUntil)}
                                             </div>
                                         </td>
-                                        <td className="px-6 py-4 whitespace-nowrap">
-                                            <Badge variant={DataUtils.getStatusVariant(offer.statusId, 'offer')}>
-                                                {DataUtils.formatDeliveryStatus(offer.statusId)}
-                                            </Badge>
-                                        </td>
+
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                             <div className="flex items-center gap-2">
                                                 <Button
@@ -263,30 +256,19 @@ const AcceptOffers = () => {
                                                 >
                                                     {t('viewDetails')}
                                                 </Button>
-                                                
-                                                {offer.statusId === 2 && ( // Preparing status
-                                                    <>
-                                                        <Button
-                                                            variant="success"
-                                                            size="sm"
-                                                            icon={CheckCircle}
-                                                            onClick={() => handleAcceptOffer(offer.id)}
-                                                            loading={acceptOfferMutation.isPending}
-                                                        >
-                                                            {t('accept')}
-                                                        </Button>
-                                                        
-                                                        <Button
-                                                            variant="error"
-                                                            size="sm"
-                                                            icon={XCircle}
-                                                            onClick={() => handleRejectOffer(offer.id)}
-                                                            loading={rejectOfferMutation.isPending}
-                                                        >
-                                                            {t('reject')}
-                                                        </Button>
-                                                    </>
-                                                )}
+
+                                                <Button
+                                                    variant="success"
+                                                    size="sm"
+                                                    icon={CheckCircle}
+                                                    onClick={() => handleAcceptOffer(offer.orderId)}
+                                                    disabled={closeOrder.isPending}
+                                                >
+                                                    {t('close')}
+                                                </Button>
+
+
+
                                             </div>
                                         </td>
                                     </tr>
@@ -328,68 +310,119 @@ const AcceptOffers = () => {
 // Customer Details Modal Component
 const CustomerDetailsModal = ({ offer, isOpen, onClose }) => {
     const { t } = useLanguage();
-    const navigate = useNavigate();
+    const queryClient = useQueryClient();
+    const closeOrder = useMutation({
+        mutationFn: () => adminService.closeOrder(offer.orderId),
+        onSuccess: (data) => {
+            toast.success(data?.message);
+            queryClient.invalidateQueries(['offersToManage']);
+        },
+        onError: (error) => {
+            toast.error(error?.message || t('offerAcceptError'));
+        }
+    });
+    const handleAcceptOffer = async (orderId) => {
+        const confirmed = await confirmToast(t('closeAcceptOffer'));
 
-    const handleViewOfferDetails = () => {
-        navigate(`/dashboard/offer-details/${offer.id}`);
-        onClose();
+        if (!confirmed) return;
+        if (confirmed) {
+            await closeOrder.mutateAsync(orderId);
+        }
     };
 
     return (
-        <Modal 
-            isOpen={isOpen} 
-            onClose={onClose} 
-            title={t('customerDetailsTitle')} 
+        <Modal
+            isOpen={isOpen}
+            onClose={onClose}
+            title={t('customerDetailsTitle')}
             size="lg"
         >
             <div className="space-y-6">
                 {/* Customer Information */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <Card className="p-4">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                            <User className="h-5 w-5" />
-                            {t('customerInfo')}
-                        </h3>
-                        
-                        <div className="space-y-3">
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700">
-                                    {t('customerName')}
-                                </label>
-                                <p className="mt-1 text-sm text-gray-900">{offer.customerName}</p>
-                            </div>
-                            
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700">
-                                    {t('customerPhone')}
-                                </label>
-                                <p className="mt-1 text-sm text-gray-900 flex items-center gap-2">
-                                    <Phone className="h-4 w-4" />
-                                    {offer.customerPhone}
-                                </p>
-                            </div>
-                            
-                            {offer.customerAddress && (
+                    <div className='grid-rows-1 md:grid-rows-2 gap-6'>
+                        <Card className="p-4">
+                            <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                                <User className="h-5 w-5" />
+                                {t('customerInfo')}
+                            </h3>
+
+                            <div className="space-y-3">
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700">
-                                        {t('customerAddress')}
+                                        {t('customerName')}
+                                    </label>
+                                    <p className="mt-1 text-sm text-gray-900">{offer.customerName}</p>
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700">
+                                        {t('customerPhone')}
                                     </label>
                                     <p className="mt-1 text-sm text-gray-900 flex items-center gap-2">
-                                        <MapPin className="h-4 w-4" />
-                                        {offer.customerAddress}
+                                        <Phone className="h-4 w-4" />
+                                        {offer.customerPhone}
                                     </p>
                                 </div>
-                            )}
-                        </div>
-                    </Card>
 
+                                {offer.customerAddress && (
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700">
+                                            {t('customerAddress')}
+                                        </label>
+                                        <p className="mt-1 text-sm text-gray-900 flex items-center gap-2">
+                                            <MapPin className="h-4 w-4" />
+                                            {offer.customerAddress}
+                                        </p>
+                                    </div>
+                                )}
+                            </div>
+                        </Card>
+                        <Card className="p-4">
+                            <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                                <User className="h-5 w-5" />
+                                {t('vendorInfo')}
+                            </h3>
+
+                            <div className="space-y-3">
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700">
+                                        {t('vednorName')}
+                                    </label>
+                                    <p className="mt-1 text-sm text-gray-900">{offer.vendorName}</p>
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700">
+                                        {t('vendorPhone')}
+                                    </label>
+                                    <p className="mt-1 text-sm text-gray-900 flex items-center gap-2">
+                                        <Phone className="h-4 w-4" />
+                                        {offer.vendorPhone}
+                                    </p>
+                                </div>
+
+                                {offer.vendorAddress && (
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700">
+                                            {t('customerAddress')}
+                                        </label>
+                                        <p className="mt-1 text-sm text-gray-900 flex items-center gap-2">
+                                            <MapPin className="h-4 w-4" />
+                                            {offer.vendorAddress}
+                                        </p>
+                                    </div>
+                                )}
+                            </div>
+                        </Card>
+                    </div>
                     {/* Offer Summary */}
                     <Card className="p-4">
                         <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
                             <Package className="h-5 w-5" />
                             {t('offerSummary')}
                         </h3>
-                        
+
                         <div className="space-y-3">
                             <div>
                                 <label className="block text-sm font-medium text-gray-700">
@@ -397,14 +430,14 @@ const CustomerDetailsModal = ({ offer, isOpen, onClose }) => {
                                 </label>
                                 <p className="mt-1 text-sm text-gray-900">{offer.offerNumber}</p>
                             </div>
-                            
+
                             <div>
                                 <label className="block text-sm font-medium text-gray-700">
                                     {t('productName')}
                                 </label>
                                 <p className="mt-1 text-sm text-gray-900">{offer.productName}</p>
                             </div>
-                            
+
                             <div>
                                 <label className="block text-sm font-medium text-gray-700">
                                     {t('offerPrice')}
@@ -414,7 +447,7 @@ const CustomerDetailsModal = ({ offer, isOpen, onClose }) => {
                                     {DataUtils.formatCurrency(offer.finalPrice)}
                                 </p>
                             </div>
-                            
+
                             <div>
                                 <label className="block text-sm font-medium text-gray-700">
                                     {t('validUntil')}
@@ -446,14 +479,14 @@ const CustomerDetailsModal = ({ offer, isOpen, onClose }) => {
                         variant="outline"
                         onClick={onClose}
                     >
-                        {t('close')}
+                        {t('back')}
                     </Button>
-                    
+
                     <Button
                         variant="primary"
-                        onClick={handleViewOfferDetails}
+                        onClick={handleAcceptOffer}
                     >
-                        {t('viewFullOfferDetails')}
+                        {t('closeOrder')}
                     </Button>
                 </div>
             </div>

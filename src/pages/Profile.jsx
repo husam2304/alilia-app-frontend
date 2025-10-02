@@ -57,11 +57,7 @@ const Profile = () => {
             return null;
         },
         enabled: !!user?.userRole,
-        onSuccess: (data) => {
-            if (data) {
-                populateForm(data);
-            }
-        }
+
     });
 
     // Update profile mutation
@@ -85,38 +81,44 @@ const Profile = () => {
     });
 
     // Populate form with fetched data
-    const populateForm = (data) => {
-        if (user?.userRole === 'Vendor' && data.vendor && data.facility) {
-            setValue('vendorName', data.vendor.username || '');
-            setValue('vendorEmail', data.vendor.email || '');
-            setValue('vendorPhone', data.vendor.phoneNumber || '');
-            setValue('storeName', data.facility.name || '');
-            setValue('commercialNumber', data.facility.commercialRegister || '');
-            setValue('city', data.facility.city || '');
-            setValue('address', data.facility.address || '');
-            setValue('email', data.facility.email || '');
-            setValue('phone', data.facility.phone || '');
-            setValue('website', data.facility.website || '');
-            setValue('activity', data.facility.activities || []);
-            setValue('keywords', data.facility.keywords || []);
-            
-            // Set image previews
-            if (data.vendor.imageUrl) {
-                setImagePreview(data.vendor.imageUrl);
-            }
-            if (data.facility.logoUrl) {
-                setLogoPreview(data.facility.logoUrl);
-            }
-            if (data.facility.commercialRegisterImageUrl) {
-                setLicensePreview(data.facility.commercialRegisterImageUrl);
-            }
-        } else if (user?.userRole === 'Admin' && data.admin) {
-            setValue('adminName', data.admin.username || '');
-            setValue('email', data.admin.email || '');
-            setValue('phone', data.admin.phoneNumber || '');
-        }
-    };
 
+    useEffect(() => {
+
+        const populateForm = (data) => {
+            if (user?.userRole === 'Vendor' && data.vendor && data.facility) {
+                setValue('vendorName', data.vendor.username || '');
+                setValue('vendorEmail', data.vendor.email || '');
+                setValue('vendorPhone', data.vendor.phoneNumber || '');
+                setValue('storeName', data.facility.name || '');
+                setValue('commercialNumber', data.facility.commercialRegister || '');
+                setValue('city', data.facility.city || '');
+                setValue('address', data.facility.address || '');
+                setValue('email', data.facility.email || '');
+                setValue('phone', data.facility.phone || '');
+                setValue('website', data.facility.website || '');
+                setValue('activity', data.facility.activities || []);
+                setValue('keywords', data.facility.keywords || []);
+
+                // Set image previews
+                if (data.vendor.imageUrl) {
+                    setImagePreview(data.vendor.imageUrl);
+                }
+                if (data.facility.logoUrl) {
+                    setLogoPreview(data.facility.logoUrl);
+                }
+                if (data.facility.commercialRegisterImageUrl) {
+                    setLicensePreview(data.facility.commercialRegisterImageUrl);
+                }
+            } else if (user?.userRole === 'Admin' && data) {
+                setValue('adminName', data.username || '');
+                setValue('email', data.email || '');
+                setValue('phone', data.phoneNumber || '');
+            }
+        };
+        if (profileData) {
+            populateForm(profileData);
+        }
+    }, [profileData, setValue, user?.userRole]);
     const handleFileChange = (e, type) => {
         const file = e.target.files[0];
         if (!file) return;
@@ -188,6 +190,7 @@ const Profile = () => {
                                     placeholder={t('vendorName')}
                                     {...register('vendorName', { required: t('required') })}
                                     error={errors.vendorName?.message}
+                                    disabled
                                 />
 
                                 <Input
@@ -203,6 +206,7 @@ const Profile = () => {
                                         }
                                     })}
                                     error={errors.vendorPhone?.message}
+                                    disabled
                                 />
 
                                 <Input
@@ -212,6 +216,7 @@ const Profile = () => {
                                     placeholder={t('vendorEmail')}
                                     {...register('vendorEmail', { required: t('required') })}
                                     error={errors.vendorEmail?.message}
+                                    disabled
                                 />
 
                                 {/* Profile Image */}
@@ -450,6 +455,7 @@ const Profile = () => {
                                 placeholder={t('adminName')}
                                 {...register('adminName', { required: t('required') })}
                                 error={errors.adminName?.message}
+                                disabled
                             />
 
                             <Input
@@ -459,6 +465,7 @@ const Profile = () => {
                                 placeholder={t('email')}
                                 {...register('email', { required: t('required') })}
                                 error={errors.email?.message}
+                                disabled
                             />
 
                             <Input
@@ -474,24 +481,26 @@ const Profile = () => {
                                     }
                                 })}
                                 error={errors.phone?.message}
+                                disabled
                             />
                         </div>
                     </Card>
                 )}
 
                 {/* Save Button */}
-                <div className="flex justify-end">
-                    <Button
-                        type="submit"
-                        variant="primary"
-                        size="lg"
-                        icon={Save}
-                        loading={updateProfileMutation.isPending}
-                        className="min-w-[200px]"
-                    >
-                        {t('saveChanges')}
-                    </Button>
-                </div>
+                {user?.userRole === 'Vendor' && (
+                    <div className="flex justify-end">
+                        <Button
+                            type="submit"
+                            variant="primary"
+                            size="lg"
+                            icon={Save}
+                            loading={updateProfileMutation.isPending}
+                            className="min-w-[200px]"
+                        >
+                            {t('saveChanges')}
+                        </Button>
+                    </div>)}
             </form>
         </div>
     );

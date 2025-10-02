@@ -46,22 +46,22 @@ export const endpoints = {
     vendor: {
         orders: "/Vendor/Orders",                       // قائمة طلبات البائع
         createOffer: (orderId) => `/Vendor/CreateOffer/${orderId}`, // إنشاء عرض لطلب معين
-        orderDetails: (orderId) => `/Vendor/Order/${orderId}`,      // تفاصيل طلب معين
-        offersToManage: "/Vendor/OffersToManage",                   // العروض التي تحتاج موافقة البائع
-        acceptOffer: (offerId) => `/Vendor/AcceptOffer/${offerId}`, // قبول عرض معين
-        rejectOffer: (offerId) => `/Vendor/RejectOffer/${offerId}`  // رفض عرض معين
+        orderDetails: (orderId) => `/Vendor/Order/${orderId}`       // تفاصيل طلب معين
     },
     // مجموعة خدمات المدراء
     admin: {
         orders: "/Admin/Orders",                        // قائمة جميع الطلبات للمدير
+        offersToManage: "/Admin/OffersToManage",                   // العروض التي تحتاج موافقة البائع
+        closeOrder: (id) => `/Admin/closeOrder/${id}`
+    },
+    offer: {
+        offerDetails: (offerId) => `/Offer/OfferDetails/${offerId}`
     },
     // مجموعة خدمات العملاء
     customer: {
         changeLanguage: "/Customer/ChangeLanguage"      // تغيير لغة واجهة العميل
     },
-    offer: {
-        offerDetails: (offerId) => `/Offer/OfferDetails/${offerId}`
-    },
+
     // مجموعة خدمات الملف الشخصي
     profile: {
         getVendorProfile: '/Vendor/Profile',        // الحصول على ملف البائع الشخصي

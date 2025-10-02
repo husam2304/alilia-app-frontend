@@ -38,7 +38,7 @@ export const DashboardLayout = () => {
             icon: ShoppingCart,
             current: location.pathname === '/dashboard/orders'
         },
-        ...(user?.userRole === 'Vendor' ? [{
+        ...(user?.userRole === 'Admin' ? [{
             name: t('acceptOffers'),
             href: '/dashboard/accept-offers',
             icon: CheckCircle,
@@ -207,18 +207,19 @@ export const DashboardLayout = () => {
 
                                 <HeadlessMenu.Items className={`${currentLanguage === 'ar' ? "origin-top-right left-0" : "origin-top-left right-0"} absolute  mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50`}>
                                     <div className="py-1">
-                                        {/* <HeadlessMenu.Item>
+                                        <HeadlessMenu.Item>
                                             {({ active }) => (
                                                 <Link
-                                                    to="/profile"
+                                                    to="/dashboard/profile"
                                                     className={`${active ? 'bg-gray-100' : ''
-                                                        } flex items-center px-4 py-2 text-sm text-gray-700 w-full`}
+                                                        } flex items-center px-4 py-2 text-sm text-gray-700 w-full text-right`}
                                                 >
                                                     <User className="ml-3 h-4 w-4" />
-                                                    الملف الشخصي
+                                                    {t('profile')}
                                                 </Link>
                                             )}
                                         </HeadlessMenu.Item>
+                                        {/*
 
                                         <HeadlessMenu.Item>
                                             {({ active }) => (
@@ -232,19 +233,6 @@ export const DashboardLayout = () => {
                                                 </Link>
                                             )}
                                         </HeadlessMenu.Item> */}
-
-                                        <HeadlessMenu.Item>
-                                            {({ active }) => (
-                                                <Link
-                                                    to="/dashboard/profile"
-                                                    className={`${active ? 'bg-gray-100' : ''
-                                                        } flex items-center px-4 py-2 text-sm text-gray-700 w-full text-right`}
-                                                >
-                                                    <User className="ml-3 h-4 w-4" />
-                                                    {t('profile')}
-                                                </Link>
-                                            )}
-                                        </HeadlessMenu.Item>
 
                                         <HeadlessMenu.Item>
                                             {({ active }) => (
