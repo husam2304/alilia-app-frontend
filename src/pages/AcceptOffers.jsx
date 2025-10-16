@@ -13,7 +13,7 @@ import {
     Calendar,
     DollarSign
 } from 'lucide-react';
-import { adminService, vendorService } from '../service';
+import { adminService } from '../service';
 import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { DataUtils } from '../utils';
@@ -171,6 +171,7 @@ const AcceptOffers = () => {
                                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     #
                                 </th>
+
                                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     {t('offerNumber')}
                                 </th>
@@ -185,9 +186,6 @@ const AcceptOffers = () => {
                                 </th>
                                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     {t('offerPrice')}
-                                </th>
-                                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    {t('validUntil')}
                                 </th>
                                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     {t('actions')}
@@ -238,11 +236,6 @@ const AcceptOffers = () => {
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <div className="text-sm font-medium text-green-600">
                                                 {DataUtils.formatCurrency(offer.finalPrice)}
-                                            </div>
-                                        </td>
-                                        <td className="px-6 py-4 whitespace-nowrap">
-                                            <div className="text-sm text-gray-900">
-                                                {DataUtils.formatDate(offer.validUntil)}
                                             </div>
                                         </td>
 
@@ -365,17 +358,25 @@ const CustomerDetailsModal = ({ offer, isOpen, onClose }) => {
                                     </p>
                                 </div>
 
-                                {offer.customerAddress && (
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700">
-                                            {t('customerAddress')}
-                                        </label>
-                                        <p className="mt-1 text-sm text-gray-900 flex items-center gap-2">
-                                            <MapPin className="h-4 w-4" />
-                                            {offer.customerAddress}
-                                        </p>
-                                    </div>
-                                )}
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700">
+                                        {t('customerCity')}
+                                    </label>
+                                    <p className="mt-1 text-sm text-gray-900 flex items-center gap-2">
+                                        <MapPin className="h-4 w-4" />
+                                        {offer.customerCity}
+                                    </p>
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700">
+                                        {t('customerAddress')}
+                                    </label>
+                                    <p className="mt-1 text-sm text-gray-900 flex items-center gap-2">
+                                        <MapPin className="h-4 w-4" />
+                                        {offer.customerAddress}
+                                    </p>
+                                </div>
+
                             </div>
                         </Card>
                         <Card className="p-4">
@@ -402,10 +403,10 @@ const CustomerDetailsModal = ({ offer, isOpen, onClose }) => {
                                     </p>
                                 </div>
 
-                                {offer.vendorAddress && (
+                                {offer.vendorAddress && offer.vendorAddress !== '' && (
                                     <div>
                                         <label className="block text-sm font-medium text-gray-700">
-                                            {t('customerAddress')}
+                                            {t('vendorAddress')}
                                         </label>
                                         <p className="mt-1 text-sm text-gray-900 flex items-center gap-2">
                                             <MapPin className="h-4 w-4" />
@@ -448,21 +449,12 @@ const CustomerDetailsModal = ({ offer, isOpen, onClose }) => {
                                 </p>
                             </div>
 
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700">
-                                    {t('validUntil')}
-                                </label>
-                                <p className="mt-1 text-sm text-gray-900 flex items-center gap-2">
-                                    <Calendar className="h-4 w-4" />
-                                    {DataUtils.formatDate(offer.validUntil)}
-                                </p>
-                            </div>
                         </div>
                     </Card>
                 </div>
 
                 {/* Product Description */}
-                {offer.description && (
+                {offer.description && offer.description !== '' && (
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
                             {t('productDescription')}

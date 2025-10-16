@@ -65,6 +65,8 @@ export const ar = {
     customerName: 'اسم العميل',
     customerPhone: 'هاتف العميل',
     customerAddress: 'العنوان',
+    customerCity: 'المدينة',
+    vendorAddress: 'العنوان',
     vendorInfo: 'معلومات البائع',
     vednorName: 'اسم البائع',
     productDetails: 'تفاصيل المنتجات',
@@ -139,7 +141,7 @@ export const ar = {
     logo: 'الشعار',
     licenseImage: 'صورة السجل',
     activity: 'نشاط المؤسسة',
-    keywords: 'كلمات دلالة',
+    keywords: 'كلمات دالة',
     continue: 'متابعة',
     back: 'الرجوع',
     register: 'التسجيل',
@@ -266,6 +268,9 @@ export const ar = {
     dataRefreshed: 'تم تحديث البيانات',
     rowsPerPage: 'عدد الصفوف في الصفحة',
     offerNumber: 'رقم العرض',
+
+    excelLabel: 'رفع من ملف Excel/CSV',
+    excelDetails: 'يمكنك رفع ملف Excel أو CSV يحتوي على القيم المطلوبة. سيتم استخراج جميع النصوص من الملف وإضافتها تلقائياً.'
 };
 
 export default ar;

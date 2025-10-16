@@ -3,11 +3,12 @@ import { useState } from "react";
 import { X, Plus, Upload, FileSpreadsheet } from "lucide-react";
 import * as XLSX from 'xlsx';
 import toast from 'react-hot-toast';
+import { useLanguage } from "../../contexts/LanguageContext";
 
 const TagInput = ({ label, placeholder, value = [], onChange, error, allowExcelUpload = true }) => {
     const [inputValue, setInputValue] = useState("");
     const [isUploading, setIsUploading] = useState(false);
-
+    const { t } = useLanguage();
     const addTag = () => {
         const newValue = inputValue.trim();
         if (newValue && !value.includes(newValue)) {
@@ -111,7 +112,7 @@ const TagInput = ({ label, placeholder, value = [], onChange, error, allowExcelU
                 >
                     <Plus size={16} />
                 </button>
-                
+
                 {allowExcelUpload && (
                     <>
                         <input
@@ -124,9 +125,8 @@ const TagInput = ({ label, placeholder, value = [], onChange, error, allowExcelU
                         />
                         <label
                             htmlFor={`excel-upload-${label}`}
-                            className={`px-3 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors flex items-center cursor-pointer ${
-                                isUploading ? 'opacity-50 cursor-not-allowed' : ''
-                            }`}
+                            className={`px-3 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors flex items-center cursor-pointer ${isUploading ? 'opacity-50 cursor-not-allowed' : ''
+                                }`}
                         >
                             {isUploading ? (
                                 <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
@@ -142,10 +142,13 @@ const TagInput = ({ label, placeholder, value = [], onChange, error, allowExcelU
                 <div className="mb-3 p-3 bg-blue-50 border border-blue-200 rounded-lg">
                     <div className="flex items-center gap-2 text-blue-700 text-sm mb-2">
                         <FileSpreadsheet size={16} />
-                        <span className="font-medium">رفع من ملف Excel/CSV</span>
+                        <span className="font-medium">
+                            {t('excelLabel')}
+                        </span>
                     </div>
                     <p className="text-blue-600 text-xs">
-                        يمكنك رفع ملف Excel أو CSV يحتوي على القيم المطلوبة. سيتم استخراج جميع النصوص من الملف وإضافتها تلقائياً.
+                        {t('excelDetails')}
+
                     </p>
                 </div>
             )}

@@ -22,8 +22,8 @@ export const en = {
     number: "number",
     withDiscount: "with discount",
     // Login
-    loginTitle: 'Login to Application',
-    loginWelcome: 'Welcome to the Application',
+    loginTitle: 'Login on Application',
+    loginWelcome: 'Welcome on the Application',
     userCodeLabel: 'Email, Name or Phone Number',
     passwordLabel: 'Password',
     loginButton: 'Login',
@@ -64,6 +64,8 @@ export const en = {
     customerName: 'Custome ame',
     customerPhone: 'Custome phone',
     customerAddress: 'Address',
+    customerCity: 'City',
+    vendorAddress: "Address",
     productDetails: 'Product Details',
     quantity: 'Quantity',
     totalAmount: 'Total Amount',
@@ -120,7 +122,7 @@ export const en = {
     december: 'December',
 
     // Registration
-    registerTitle: 'Register in Application',
+    registerTitle: 'Register on Application',
     registerSubtitle: 'Register your organization data',
     vendorName: 'Vendor Name',
     vendorPhone: 'Phone Number',
@@ -264,6 +266,11 @@ export const en = {
 
     vendorInfo: 'Vendor info',
     vednorName: 'Vendor name',
+
+    excelLabel: 'Upload from Excel/CSV file',
+    excelDetails: 'You can upload an Excel or CSV file containing the required values. All texts will be extracted from the file and added automatically.'
+
+
 };
 
 export default en;
