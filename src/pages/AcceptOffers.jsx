@@ -1,18 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import {
-    CheckCircle,
-    XCircle,
-    Eye,
-    RefreshCw,
-    Package,
-    User,
-    Phone,
-    MapPin,
-    Calendar,
-    DollarSign
-} from 'lucide-react';
+import { CircleCheck as CheckCircle, Circle as XCircle, Eye, RefreshCw, Package, User, Phone, MapPin, Calendar, DollarSign } from 'lucide-react';
 import { adminService } from '../service';
 import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -394,20 +383,6 @@ const CustomerDetailsModal = ({ offer, isOpen, onClose }) => {
         }
     };
 
-    const handleMarkAsDelivered = async (offerId) => {
-        const confirmed = await confirmToast(t('confirmMarkAsDelivered'));
-        if (confirmed) {
-            await markAsDelivered.mutateAsync(offerId);
-        }
-    };
-
-    const handleMarkAsCompleted = async (offerId) => {
-        const confirmed = await confirmToast(t('confirmMarkAsCompleted'));
-        if (confirmed) {
-            await markAsCompleted.mutateAsync(offerId);
-        }
-    };
-
     return (
         <Modal
             isOpen={isOpen}
@@ -499,16 +474,6 @@ const CustomerDetailsModal = ({ offer, isOpen, onClose }) => {
                                         </p>
                                     </div>
                                 )}
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700">
-                                        {t('offerStatus')}
-                                    </label>
-                                    <div className="mt-1">
-                                        <Badge variant={DataUtils.getStatusVariant(offer.statusId, 'offer')}>
-                                            {DataUtils.formatDeliveryStatus(offer.statusId)}
-                                        </Badge>
-                                    </div>
-                                </div>
                             </div>
                         </Card>
                     </div>
@@ -569,38 +534,12 @@ const CustomerDetailsModal = ({ offer, isOpen, onClose }) => {
                         {t('back')}
                     </Button>
 
-                    {/* Show Mark as Delivered button for accepted offers */}
-                    {offer.statusId === 3 && (
-                        <Button
-                            variant="primary"
-                            onClick={() => handleMarkAsDelivered(offer.offerId)}
-                            disabled={markAsDelivered.isPending}
-                        >
-                            {t('markAsDelivered')}
-                        </Button>
-                    )}
-
-                    {/* Show Mark as Completed button for delivered offers */}
-                    {offer.statusId === 6 && (
-                        <Button
-                            variant="warning"
-                            onClick={() => handleMarkAsCompleted(offer.offerId)}
-                            disabled={markAsCompleted.isPending}
-                        >
-                            {t('markAsCompleted')}
-                        </Button>
-                    )}
-
-                    {/* Show Close Order button for completed offers */}
-                    {offer.statusId === 7 && (
-                        <Button
-                            variant="success"
-                            onClick={() => handleAcceptOffer(offer.orderId)}
-                            disabled={closeOrder.isPending}
-                        >
-                            {t('closeOrder')}
-                        </Button>
-                    )}
+                    <Button
+                        variant="primary"
+                        onClick={handleAcceptOffer}
+                    >
+                        {t('closeOrder')}
+                    </Button>
                 </div>
             </div>
         </Modal>
