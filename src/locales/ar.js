@@ -101,6 +101,8 @@ export const ar = {
     offerAccepted: 'تم قبول العرض',
     offerExpired: 'انتهت صلاحية العرض',
     offerRejected: 'تم رفض العرض',
+    offerDelivered: 'تم التسليم',
+    offerCompleted: 'مكتمل',
 
     // Pagination
     showing: 'عرض',
@@ -268,6 +270,15 @@ export const ar = {
     dataRefreshed: 'تم تحديث البيانات',
     rowsPerPage: 'عدد الصفوف في الصفحة',
     offerNumber: 'رقم العرض',
+
+    markAsDelivered: 'تسليم',
+    markAsCompleted: 'إكمال',
+    confirmMarkAsDelivered: 'هل أنت متأكد من تسليم هذا العرض؟',
+    confirmMarkAsCompleted: 'هل أنت متأكد من إكمال هذا العرض؟',
+    offerMarkedAsDelivered: 'تم تسليم العرض بنجاح',
+    offerMarkedAsCompleted: 'تم إكمال العرض بنجاح',
+    markAsDeliveredError: 'فشل في تسليم العرض',
+    markAsCompletedError: 'فشل في إكمال العرض',
 
     excelLabel: 'رفع من ملف Excel/CSV',
     excelDetails: 'يمكنك رفع ملف Excel أو CSV يحتوي على القيم المطلوبة. سيتم استخراج جميع النصوص من الملف وإضافتها تلقائياً.'

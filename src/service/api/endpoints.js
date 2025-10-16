@@ -52,7 +52,9 @@ export const endpoints = {
     admin: {
         orders: "/Admin/Orders",                        // قائمة جميع الطلبات للمدير
         offersToManage: "/Admin/OffersToManage",                   // العروض التي تحتاج موافقة البائع
-        closeOrder: (id) => `/Admin/closeOrder/${id}`
+        closeOrder: (id) => `/Admin/closeOrder/${id}`,
+        markOfferAsDelivered: (offerId) => `/Admin/markOfferAsDelivered/${offerId}`,
+        markOfferAsCompleted: (offerId) => `/Admin/markOfferAsCompleted/${offerId}`
     },
     offer: {
         offerDetails: (offerId) => `/Offer/OfferDetails/${offerId}`

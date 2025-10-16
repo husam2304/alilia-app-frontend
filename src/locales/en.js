@@ -98,6 +98,8 @@ export const en = {
     offerAccepted: 'Offer Accepted',
     offerExpired: 'Offer Expired',
     offerRejected: 'Offer Rejected',
+    offerDelivered: 'Delivered',
+    offerCompleted: 'Completed',
 
     // Pagination
     showing: 'Showing',
@@ -263,6 +265,15 @@ export const en = {
     dataRefreshed: 'Data refreshed',
     rowsPerPage: 'Rows per page',
     offerNumber: "Ofeer number",
+
+    markAsDelivered: 'Mark as Delivered',
+    markAsCompleted: 'Mark as Completed',
+    confirmMarkAsDelivered: 'Are you sure you want to mark this offer as delivered?',
+    confirmMarkAsCompleted: 'Are you sure you want to mark this offer as completed?',
+    offerMarkedAsDelivered: 'Offer marked as delivered successfully',
+    offerMarkedAsCompleted: 'Offer marked as completed successfully',
+    markAsDeliveredError: 'Failed to mark offer as delivered',
+    markAsCompletedError: 'Failed to mark offer as completed',
 
     vendorInfo: 'Vendor info',
     vednorName: 'Vendor name',

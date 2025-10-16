@@ -68,6 +68,30 @@ const AcceptOffers = () => {
         }
     });
 
+    // Mark as delivered mutation
+    const markAsDelivered = useMutation({
+        mutationFn: (offerId) => adminService.markOfferAsDelivered(offerId),
+        onSuccess: (data) => {
+            toast.success(data?.message || t('offerMarkedAsDelivered'));
+            queryClient.invalidateQueries(['offersToManage']);
+        },
+        onError: (error) => {
+            toast.error(error?.message || t('markAsDeliveredError'));
+        }
+    });
+
+    // Mark as completed mutation
+    const markAsCompleted = useMutation({
+        mutationFn: (offerId) => adminService.markOfferAsCompleted(offerId),
+        onSuccess: (data) => {
+            toast.success(data?.message || t('offerMarkedAsCompleted'));
+            queryClient.invalidateQueries(['offersToManage']);
+        },
+        onError: (error) => {
+            toast.error(error?.message || t('markAsCompletedError'));
+        }
+    });
+
 
 
     const handleAcceptOffer = async (orderId) => {
@@ -76,6 +100,20 @@ const AcceptOffers = () => {
         if (!confirmed) return;
         if (confirmed) {
             await closeOrder.mutateAsync(orderId);
+        }
+    };
+
+    const handleMarkAsDelivered = async (offerId) => {
+        const confirmed = await confirmToast(t('confirmMarkAsDelivered'));
+        if (confirmed) {
+            await markAsDelivered.mutateAsync(offerId);
+        }
+    };
+
+    const handleMarkAsCompleted = async (offerId) => {
+        const confirmed = await confirmToast(t('confirmMarkAsCompleted'));
+        if (confirmed) {
+            await markAsCompleted.mutateAsync(offerId);
         }
     };
 
@@ -188,6 +226,9 @@ const AcceptOffers = () => {
                                     {t('offerPrice')}
                                 </th>
                                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    {t('offerStatus')}
+                                </th>
+                                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     {t('actions')}
                                 </th>
                             </tr>
@@ -238,9 +279,14 @@ const AcceptOffers = () => {
                                                 {DataUtils.formatCurrency(offer.finalPrice)}
                                             </div>
                                         </td>
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            <Badge variant={DataUtils.getStatusVariant(offer.statusId, 'offer')}>
+                                                {DataUtils.formatDeliveryStatus(offer.statusId)}
+                                            </Badge>
+                                        </td>
 
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                            <div className="flex items-center gap-2">
+                                            <div className="flex items-center gap-1 flex-wrap">
                                                 <Button
                                                     variant="ghost"
                                                     size="sm"
@@ -250,17 +296,42 @@ const AcceptOffers = () => {
                                                     {t('viewDetails')}
                                                 </Button>
 
-                                                <Button
-                                                    variant="success"
-                                                    size="sm"
-                                                    icon={CheckCircle}
-                                                    onClick={() => handleAcceptOffer(offer.orderId)}
-                                                    disabled={closeOrder.isPending}
-                                                >
-                                                    {t('close')}
-                                                </Button>
+                                                {/* Show Mark as Delivered button for accepted offers */}
+                                                {offer.statusId === 3 && (
+                                                    <Button
+                                                        variant="primary"
+                                                        size="sm"
+                                                        onClick={() => handleMarkAsDelivered(offer.offerId)}
+                                                        disabled={markAsDelivered.isPending}
+                                                    >
+                                                        {t('markAsDelivered')}
+                                                    </Button>
+                                                )}
 
+                                                {/* Show Mark as Completed button for delivered offers */}
+                                                {offer.statusId === 6 && (
+                                                    <Button
+                                                        variant="warning"
+                                                        size="sm"
+                                                        onClick={() => handleMarkAsCompleted(offer.offerId)}
+                                                        disabled={markAsCompleted.isPending}
+                                                    >
+                                                        {t('markAsCompleted')}
+                                                    </Button>
+                                                )}
 
+                                                {/* Show Close Order button for completed offers */}
+                                                {offer.statusId === 7 && (
+                                                    <Button
+                                                        variant="success"
+                                                        size="sm"
+                                                        icon={CheckCircle}
+                                                        onClick={() => handleAcceptOffer(offer.orderId)}
+                                                        disabled={closeOrder.isPending}
+                                                    >
+                                                        {t('closeOrder')}
+                                                    </Button>
+                                                )}
 
                                             </div>
                                         </td>
@@ -320,6 +391,20 @@ const CustomerDetailsModal = ({ offer, isOpen, onClose }) => {
         if (!confirmed) return;
         if (confirmed) {
             await closeOrder.mutateAsync(orderId);
+        }
+    };
+
+    const handleMarkAsDelivered = async (offerId) => {
+        const confirmed = await confirmToast(t('confirmMarkAsDelivered'));
+        if (confirmed) {
+            await markAsDelivered.mutateAsync(offerId);
+        }
+    };
+
+    const handleMarkAsCompleted = async (offerId) => {
+        const confirmed = await confirmToast(t('confirmMarkAsCompleted'));
+        if (confirmed) {
+            await markAsCompleted.mutateAsync(offerId);
         }
     };
 
@@ -414,6 +499,16 @@ const CustomerDetailsModal = ({ offer, isOpen, onClose }) => {
                                         </p>
                                     </div>
                                 )}
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700">
+                                        {t('offerStatus')}
+                                    </label>
+                                    <div className="mt-1">
+                                        <Badge variant={DataUtils.getStatusVariant(offer.statusId, 'offer')}>
+                                            {DataUtils.formatDeliveryStatus(offer.statusId)}
+                                        </Badge>
+                                    </div>
+                                </div>
                             </div>
                         </Card>
                     </div>
@@ -474,12 +569,38 @@ const CustomerDetailsModal = ({ offer, isOpen, onClose }) => {
                         {t('back')}
                     </Button>
 
-                    <Button
-                        variant="primary"
-                        onClick={handleAcceptOffer}
-                    >
-                        {t('closeOrder')}
-                    </Button>
+                    {/* Show Mark as Delivered button for accepted offers */}
+                    {offer.statusId === 3 && (
+                        <Button
+                            variant="primary"
+                            onClick={() => handleMarkAsDelivered(offer.offerId)}
+                            disabled={markAsDelivered.isPending}
+                        >
+                            {t('markAsDelivered')}
+                        </Button>
+                    )}
+
+                    {/* Show Mark as Completed button for delivered offers */}
+                    {offer.statusId === 6 && (
+                        <Button
+                            variant="warning"
+                            onClick={() => handleMarkAsCompleted(offer.offerId)}
+                            disabled={markAsCompleted.isPending}
+                        >
+                            {t('markAsCompleted')}
+                        </Button>
+                    )}
+
+                    {/* Show Close Order button for completed offers */}
+                    {offer.statusId === 7 && (
+                        <Button
+                            variant="success"
+                            onClick={() => handleAcceptOffer(offer.orderId)}
+                            disabled={closeOrder.isPending}
+                        >
+                            {t('closeOrder')}
+                        </Button>
+                    )}
                 </div>
             </div>
         </Modal>
