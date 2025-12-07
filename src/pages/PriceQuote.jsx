@@ -153,13 +153,13 @@ const PriceQuote = () => {
             {/* Header */}
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-gray-900">{t('priceQuoteTitle')}</h1>
+                    <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">{t('priceQuoteTitle')}</h1>
 
                 </div>
             </div>
 
             {/* المحتوى الرئيسي */}
-            <div className="flex gap-6">
+            <div className="flex flex-col lg:flex-row gap-6">
                 {/* النموذج - الجانب الأيمن */}
                 <div className="flex-1 bg-white rounded-lg shadow-sm border border-gray-200 p-6">
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -348,8 +348,8 @@ const PriceQuote = () => {
 
                             <div className="space-y-4">
                                 {/* اشتري واحصل على خصم */}
-                                <div className="flex items-center justify-between">
-                                    <div className="flex items-center">
+                                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                                    <div className="flex flex-wrap items-center gap-2">
                                         <input
                                             type="radio"
                                             id="buyDiscount"
@@ -448,7 +448,7 @@ const PriceQuote = () => {
                 </div>
 
                 {/* معلومات الطلب - الجانب الأيسر */}
-                <div className="w-80 bg-white rounded-lg shadow-sm border border-gray-200 p-6 h-fit">
+                <div className="w-full lg:w-80 bg-white rounded-lg shadow-sm border border-gray-200 p-6 h-fit">
                     <h2 className="text-lg font-semibold text-gray-900 mb-4">{t('orderInfo')}</h2>
 
                     <div className="space-y-3 text-sm">

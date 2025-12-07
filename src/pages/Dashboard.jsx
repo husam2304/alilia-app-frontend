@@ -34,7 +34,6 @@ import StatCard from '../components/cards/StatCard';
 import LoadingSpinner from '../components/LoadingSpinner';
 import toast from 'react-hot-toast';
 import { useQuery } from '@tanstack/react-query';
-import Button from '../components/Ui/Button';
 
 // Register Chart.js components
 ChartJS.register(
@@ -71,10 +70,12 @@ const Dashboard = () => {
             setLoading(true);
             return;
         }
-        handleDashboardData(AdminDashboardData || VendorDashboardData);
-
-
-
+        if (user?.userRole == 'Admin' && AdminDashboardData) {
+            handleDashboardData(AdminDashboardData);
+        }
+        if (user?.userRole == 'Vendor' && VendorDashboardData) {
+            handleDashboardData(VendorDashboardData);
+        }
     }, [VendorDashboardData, AdminDashboardData]);
 
     const handleDashboardData = async (data) => {
@@ -82,6 +83,7 @@ const Dashboard = () => {
             if (!data?.success) {
                 throw new Error(data?.message || 'فشل في جلب بيانات لوحة التحكم');
             }
+            console.log(data);
             setDashboardData(data?.dashboard?.summary);
 
             setChartsData(prev => ({ ...prev, lineChart: data?.dashboard?.charts.ordersChart }));
@@ -106,7 +108,6 @@ const Dashboard = () => {
             setDashboardData(getFallbackSummaryData());
             setChartsData(getFallbackChartsData());
             setTopProducts(getFallbackTopProducts());
-            setLoading(false);
         } finally {
             setLoading(false);
         }
@@ -118,13 +119,20 @@ const Dashboard = () => {
         try {
             const loadingToast = toast.loading('جاري تصدير البيانات...');
 
-            await dashboardService.exportData(format);
+            const response = await DashboardAPI.exportData(format);
 
-
-
-
-            ///
-
+            // Create download
+            const blob = new Blob([JSON.stringify(response.data, null, 2)], {
+                type: format === 'json' ? 'application/json' : 'text/csv'
+            });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `dashboard_data.${format}`;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
 
             toast.dismiss(loadingToast);
             toast.success('تم تصدير البيانات بنجاح');
@@ -218,35 +226,43 @@ const Dashboard = () => {
             {/* Header */}
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-gray-900">{t('dashboardTitle')}</h1>
+                    <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">{t('dashboardTitle')}</h1>
                     <p className="text-gray-600 mt-1">
                         {t('dashboardWelcome', { name: user?.name || '' })}
                     </p>
                 </div>
 
                 {/* Export Actions */}
-                <div className="flex gap-2">
-                    <Button
-                        variant="outline"
-                        size="sm"
-                        icon={FileText}
-                        onClick={() => exportData('excel')}
-                    >
-                        تصدير excel
-                    </Button>
-                    {/* <Button
-                        variant="outline"
-                        size="sm"
-                        icon={Printer}
-                        onClick={() => window.print()}
-                    >
-                        طباعة
-                    </Button> */}
-                </div>
+                {/* <div className="flex gap-2">
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            icon={<Download />}
+                            onClick={() => exportData('json')}
+                        >
+                            تصدير JSON
+                        </Button>
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            icon={<FileText />}
+                            onClick={() => exportData('csv')}
+                        >
+                            تصدير CSV
+                        </Button>
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            icon={<Printer />}
+                            onClick={() => window.print()}
+                        >
+                            طباعة
+                        </Button>
+                    </div> */}
             </div>
 
             {/* Stats Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 sm:gap-6">
                 <StatCard
                     title={t('activeOffers')}
                     value={dashboardData?.activeOffers || 0}

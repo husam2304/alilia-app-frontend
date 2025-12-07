@@ -22,8 +22,8 @@ export const en = {
     number: "number",
     withDiscount: "with discount",
     // Login
-    loginTitle: 'Login on Application',
-    loginWelcome: 'Welcome on the Application',
+    loginTitle: 'Login to Application',
+    loginWelcome: 'Welcome to the Application',
     userCodeLabel: 'Email, Name or Phone Number',
     passwordLabel: 'Password',
     loginButton: 'Login',
@@ -61,15 +61,13 @@ export const en = {
     noOrdersAvailable: 'No orders available',
     orderDetailsTitle: 'Order Details {orderNumber}',
     customerInfo: 'Customer Information',
-    customerName: 'Custome ame',
-    customerPhone: 'Custome phone',
+    customerName: 'Name',
+    customerPhone: 'Phone',
     customerAddress: 'Address',
-    customerCity: 'City',
-    vendorAddress: "Address",
     productDetails: 'Product Details',
     quantity: 'Quantity',
     totalAmount: 'Total Amount',
-    OfferQuantity: 'Quantity',
+
     // Price Quote
     priceQuoteTitle: 'Submit Price Quote',
     offerDate: 'Offer Date',
@@ -98,8 +96,6 @@ export const en = {
     offerAccepted: 'Offer Accepted',
     offerExpired: 'Offer Expired',
     offerRejected: 'Offer Rejected',
-    offerDelivered: 'Delivered',
-    offerCompleted: 'Completed',
 
     // Pagination
     showing: 'Showing',
@@ -124,7 +120,7 @@ export const en = {
     december: 'December',
 
     // Registration
-    registerTitle: 'Register on Application',
+    registerTitle: 'Register in Application',
     registerSubtitle: 'Register your organization data',
     vendorName: 'Vendor Name',
     vendorPhone: 'Phone Number',
@@ -208,80 +204,6 @@ export const en = {
     validUntil: 'Valid Until',
     backToOrders: 'Back to Orders',
     printOffer: 'Print Offer',
-
-    max4: 'max 4 images',
-    max4Toast: 'can\' add more than four',
-
-    // Excel Upload
-    excelUploadTitle: 'Upload from Excel/CSV file',
-    excelUploadDescription: 'You can upload an Excel or CSV file containing the required values. All text will be extracted from the file and added automatically.',
-    invalidExcelFile: 'Please select a valid Excel or CSV file',
-    excelFileTooLarge: 'File size is too large. Maximum allowed is 5MB',
-    noValidDataInFile: 'No valid data found in the file',
-    itemsAddedSuccess: '{count} items added successfully',
-    errorReadingFile: 'Error reading file. Please ensure the file is valid',
-
-    resendOTPTitle: "Resend OTP",
-    resendOTPMessage: "Didn’t get the code? Resend it to your registered number.",
-    resendOTP: "Resend OTP",
-    resending: "Resending...",
-
-    WasSentTo: "was sent to ",
-    vendors: "vendors",
-
-    // Profile
-    profile: 'Profile',
-    profileTitle: 'Profile',
-    profileSubtitle: 'Manage your profile and store information',
-    personalInfo: 'Personal Information',
-    storeInfo: 'Store Information',
-    profileImage: 'Profile Image',
-    adminName: 'Admin Name',
-    saveChanges: 'Save Changes',
-    profileUpdateSuccess: 'Profile updated successfully',
-    profileUpdateError: 'Failed to update profile',
-    // Accept Offers
-    acceptOffers: 'Accept Offers',
-    acceptOffersTitle: 'Manage Offers',
-    acceptOffersSubtitle: 'Accept or reject offers submitted by customers',
-    noOffersToManage: 'No offers require management',
-    customerDetailsTitle: 'Customer and Offer Details',
-    offerSummary: 'Offer Summary',
-    offerPrice: 'Offer Price',
-    accept: 'Accept',
-    reject: 'Reject',
-    viewDetails: 'View Details',
-    closeOrder: 'close order',
-
-    closeAcceptOffer: 'Are you sure you want to close this order?',
-    confirmRejectOffer: 'Are you sure you want to reject this offer?',
-    offerAcceptedSuccess: 'Offer accepted successfully',
-    offerRejectedSuccess: 'Offer rejected successfully',
-    offerAcceptError: 'Failed to accept offer',
-    offerRejectError: 'Failed to reject offer',
-    errorLoadingOffers: 'Error loading offers',
-    tryAgainLater: 'Please try again later',
-    retry: 'Retry',
-    dataRefreshed: 'Data refreshed',
-    rowsPerPage: 'Rows per page',
-    offerNumber: "Ofeer number",
-
-    markAsDelivered: 'Mark as Delivered',
-    markAsCompleted: 'Mark as Completed',
-    confirmMarkAsDelivered: 'Are you sure you want to mark this offer as delivered?',
-    confirmMarkAsCompleted: 'Are you sure you want to mark this offer as completed?',
-    offerMarkedAsDelivered: 'Offer marked as delivered successfully',
-    offerMarkedAsCompleted: 'Offer marked as completed successfully',
-    markAsDeliveredError: 'Failed to mark offer as delivered',
-    markAsCompletedError: 'Failed to mark offer as completed',
-
-    vendorInfo: 'Vendor info',
-    vednorName: 'Vendor name',
-
-    excelLabel: 'Upload from Excel/CSV file',
-    excelDetails: 'You can upload an Excel or CSV file containing the required values. All texts will be extracted from the file and added automatically.'
-
-
 };
 
 export default en;

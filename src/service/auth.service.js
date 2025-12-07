@@ -172,15 +172,6 @@ export const authService = {
             else throw error.message;
         }
     },
-    resendOtp: async (id) => {
-        try {
-            const response = await api.post(endpoints.auth.resendOtp(id));
-            return response.data;
-        } catch (error) {
-            if (error.response) throw error.response.data;
-            else throw error.message;
-        }
-    },
 };
 
 export default authService;

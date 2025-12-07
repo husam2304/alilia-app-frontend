@@ -7,8 +7,7 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import ForgetPassword from '../pages/ForgetPassword';
 import OTPConfirmation from '../pages/OTPConfirmation';
 import ResetPassword from '../pages/ResetPassword';
-import VerfyOtp from '../pages/VerfyOtp';
-import ResendOTP from '../pages/ResendOtp';
+import VerfyOtp from '../pages/verfyOtp';
 // Lazy load page components for code splitting
 const Login = lazy(() => import('../pages/Login'));
 const Register = lazy(() => import('../pages/Register'));
@@ -16,8 +15,6 @@ const Dashboard = lazy(() => import('../pages/Dashboard'));
 const Orders = lazy(() => import('../pages/Orders'));
 const PriceQuote = lazy(() => import('../pages/PriceQuote'));
 const OfferDetails = lazy(() => import('../pages/OfferDetails'));
-const Profile = lazy(() => import('../pages/Profile'));
-const AcceptOffers = lazy(() => import('../pages/AcceptOffers'));
 
 
 
@@ -30,8 +27,6 @@ const AppRouter = () => {
           <Route path='orders' element={<PrivateRoute><Orders /></PrivateRoute>} />
           <Route path='createOffer/:OrderId' element={<PrivateRoute><PriceQuote /></PrivateRoute>} />
           <Route path='offer-details/:offerId' element={<PrivateRoute><OfferDetails /></PrivateRoute>} />
-          <Route path='profile' element={<PrivateRoute><Profile /></PrivateRoute>} />
-          <Route path='accept-offers' element={<PrivateRoute><AcceptOffers /></PrivateRoute>} />
 
         </Route>
         <Route path="/auth" element={<AuthLayout />}>
@@ -41,8 +36,6 @@ const AppRouter = () => {
           <Route path="verfyPasswordOtp" element={<PublicRoute><OTPConfirmation /></PublicRoute>} />
           <Route path="reset-Password" element={<PublicRoute><ResetPassword /></PublicRoute>} />
           <Route path="verfyOtp" element={<PublicRoute><VerfyOtp /></PublicRoute>} />
-          <Route path="resendOtp" element={<PublicRoute><ResendOTP /></PublicRoute>} />
-
         </Route>
         <Route path="/" element={<Navigate to="/dashboard" />} />
 

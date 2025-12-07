@@ -59,8 +59,7 @@ export const vendorService = {
             if (error.response) throw error.response.data;
             else throw error.message;
         }
-    },
-
+    }
 };
 
 export default vendorService;

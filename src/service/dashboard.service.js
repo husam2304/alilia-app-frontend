@@ -3,7 +3,6 @@
 // dashboard.service.js
 // ===============================================
 
-import { TokenManager } from "../utils";
 import api from "./api/apiCliant";
 import endpoints from "./api/endpoints";
 
@@ -97,33 +96,12 @@ export const dashboardService = {
      * ملاحظة: هناك خطأ في الكود الأصلي - يجب استخدام export بدلاً من exportData
      * @returns {Promise} - وعد يحتوي على الملف المُصدَّر أو رابط التحميل
      */
-    exportData: async (format) => {
-        /**
-         * fetch هان احتجت أتعامل مع 
-         * أنو برجع البيانات زي مهي
-         * كامل بدي انزله excel هاي فيها ملف  endpoint وال  
-         *   fetch  فاستخدمت  
-         * (Body) بعدل على البيانات وبرجع المطلوب بس زي  axios
-         */
+    exportData: async () => {
         try {
-            const token = TokenManager.getAccessToken();
-            const language = TokenManager.getLanguage();
             // خطأ في الكود الأصلي: endpoints.dashboard.exportData غير موجود
             // يجب أن يكون: endpoints.dashboard.export
-            const response = await fetch(`/api${endpoints.dashboard.export(format)}`, {
-                method: "GET", // or POST if your API expects it
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`, // replace with your actual token
-                    "Accept-Language": `${language}`
-                }
-            }); const blob = await response.blob();
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'Dashboard_Report.xlsx';
-            a.click();
-            return;
+            const response = await api.get(endpoints.dashboard.export);
+            return response.data;
         } catch (error) {
             if (error.response) throw error.response.data;
             else throw error.message;

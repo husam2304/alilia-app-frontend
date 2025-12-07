@@ -25,12 +25,12 @@ const Orders = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [totalOrders, setTotalOrders] = useState(0);
-    const { data: vendorOrder, isloading: vendorOrderLoading, refetch: vendorRefetch } = useQuery({
+    const { data: vendorOrder, isloading: vendorOrderLoading } = useQuery({
         queryKey: ['vendorOrder', rowsPerPage, currentPage],
         queryFn: () => vendorService.getOrders(currentPage, rowsPerPage),
         enabled: user?.userRole == 'Vendor',
     });
-    const { data: adminOrder, isloading: adminOrderLoading, refetch: adminRefetch } = useQuery({
+    const { data: adminOrder, isloading: adminOrderLoading } = useQuery({
         queryKey: ['adminOrder', rowsPerPage, currentPage],
         queryFn: () => adminService.getOrders(currentPage, rowsPerPage),
         enabled: user?.userRole == 'Admin',
@@ -42,46 +42,48 @@ const Orders = () => {
             setLoading(true);
             return;
         }
+        if (user?.userRole == 'Admin' && adminOrder) {
+            loadOrders(adminOrder);
+        }
+        if (user?.userRole == 'Vendor' && vendorOrder) {
+            loadOrders(vendorOrder);
 
+        }
+    }, [adminOrder, vendorOrder]);
 
-        const loadOrders = async (data) => {
-            try {
-                setLoading(true);
+    const loadOrders = async (data) => {
+        try {
+            setLoading(true);
 
-                if (data && Array.isArray(data.orders)) {
-                    const formattedOrders = data.orders.map(order => ({
-                        id: order.id,
-                        orderNumber: order.orderNumber,
-                        date: DataUtils.formatDate(order.createdAt || order.orderDate),
-                        content: formatOrderItems(order.items) || order.productName || 'منتجات متعددة',
-                        Description: order.description || 'لا يوجد وصف',
-                        status: DataUtils.formatOrderStatus(order.orderStatusId || 'pending'),
-                        statusId: order.orderStatusId,
-                        offer: DataUtils.formatDeliveryStatus(order.offerStatusId || 'pending'),
-                        offerId: order.offerStatusId,
-                        payment: DataUtils.formatPaymentStatus(order.paymentStatus || 'pending'),
-                        receive: order.receiveStatus ? DataUtils.formatOrderStatus(order.receiveStatus) : 'بانتظار',
-                        rawData: order,
-                        offerDetailsId: order.offerId,
-                        vendors: order.vendorCounts
-                    }));
-                    setOrders(formattedOrders);
-                    setTotalOrders(data.count || 0);
-                } else {
-                    setOrders([]);
-                    setTotalOrders(0);
-                }
-            } catch (error) {
+            if (data && Array.isArray(data.orders)) {
+                const formattedOrders = data.orders.map(order => ({
+                    id: order.id,
+                    orderNumber: order.orderNumber,
+                    date: DataUtils.formatDate(order.createdAt || order.orderDate),
+                    content: formatOrderItems(order.items) || order.productName || 'منتجات متعددة',
+                    Description: order.description || 'لا يوجد وصف',
+                    status: DataUtils.formatOrderStatus(order.orderStatusId || 'pending'),
+                    statusId: order.orderStatusId,
+                    offer: DataUtils.formatDeliveryStatus(order.offerStatusId || 'pending'),
+                    offerId: order.offerStatusId,
+                    payment: DataUtils.formatPaymentStatus(order.paymentStatus || 'pending'),
+                    receive: order.receiveStatus ? DataUtils.formatOrderStatus(order.receiveStatus) : 'بانتظار',
+                    rawData: order,
+                    offerDetailsId: order.offerId
+                }));
+                setOrders(formattedOrders);
+                setTotalOrders(data.count || 0);
+            } else {
                 setOrders([]);
                 setTotalOrders(0);
-            } finally {
-                setLoading(false);
             }
-        };
-        loadOrders(adminOrder || vendorOrder);
-
-    }, [adminOrder, adminOrderLoading, vendorOrder, vendorOrderLoading]);
-
+        } catch (error) {
+            setOrders([]);
+            setTotalOrders(0);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     // Pagination calculation from backend
 
@@ -128,10 +130,7 @@ const Orders = () => {
     const handleRefresh = async () => {
         const refreshToast = toast.loading('جاري تحديث الطلبات...');
         try {
-            if (user.userRole == "Admin")
-                adminRefetch.apply()
-            else
-                vendorRefetch.apply()
+            await loadOrders();
             toast.success('تم تحديث الطلبات بنجاح', { id: refreshToast });
         } catch (error) {
             toast.error('فشل في تحديث الطلبات', { id: refreshToast });
@@ -277,7 +276,7 @@ const Orders = () => {
             {/* Header */}
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-gray-900">{t('ordersTitle')}</h1>
+                    <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">{t('ordersTitle')}</h1>
                     <p className="text-gray-600 mt-1">
                         {t('ordersSubtitle')}
                     </p>
@@ -338,9 +337,6 @@ const Orders = () => {
                         <thead className="bg-gray-50">
                             <tr>
                                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    #
-                                </th>
-                                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     {t('orderNumber')}
                                 </th>
                                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -352,19 +348,12 @@ const Orders = () => {
                                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     {t('details')}
                                 </th>
-                                {user?.userRole == "Admin" ? (
-
-                                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        {t('WasSentTo')}
-                                    </th>
-                                ) : (null)}
                                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     {t('orderStatus')}
                                 </th>
                                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     {t('offerStatus')}
                                 </th>
-
 
                                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     {t('actions')}
@@ -382,18 +371,12 @@ const Orders = () => {
                                     </td>
                                 </tr>
                             ) : (
-                                orders.map((order, index) => (
+                                orders.map((order) => (
                                     <tr
                                         key={order.id}
                                         className="hover:bg-gray-50 cursor-pointer transition-colors"
                                         onClick={() => handleOrderClick(order.id)}
                                     >
-
-                                        <td className="py-4 whitespace-nowrap">
-                                            <div className="text-sm font-medium">
-                                                {(index + 1) * currentPage}
-                                            </div>
-                                        </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <div className="text-sm font-medium text-primary-600 hover:text-primary-900">
                                                 {order.orderNumber}
@@ -412,14 +395,6 @@ const Orders = () => {
                                                 {order.Description}
                                             </div>
                                         </td>
-                                        {
-                                            user?.userRole == "Admin" ? (
-                                                <td className="px-6 py-4 whitespace-nowrap">
-                                                    <div className="text-sm text-gray-900 max-w-xs truncate">
-                                                        {order.vendors} {t('vendors')}
-                                                    </div>
-                                                </td>) : (null)
-                                        }
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <Badge variant={DataUtils.getStatusVariant(order.statusId, 'order')}>
                                                 {order.status}

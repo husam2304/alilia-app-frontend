@@ -62,17 +62,13 @@ export const ar = {
     noOrdersAvailable: 'لا توجد طلبات متاحة',
     orderDetailsTitle: 'تفاصيل الطلب {orderNumber}',
     customerInfo: 'معلومات العميل',
-    customerName: 'اسم العميل',
-    customerPhone: 'هاتف العميل',
+    customerName: 'الاسم',
+    customerPhone: 'الهاتف',
     customerAddress: 'العنوان',
-    customerCity: 'المدينة',
-    vendorAddress: 'العنوان',
-    vendorInfo: 'معلومات البائع',
-    vednorName: 'اسم البائع',
     productDetails: 'تفاصيل المنتجات',
     quantity: 'الكمية',
     totalAmount: 'إجمالي المبلغ',
-    OfferQuantity: 'العدد المطلوب',
+
     // Price Quote
     priceQuoteTitle: 'تقديم عرض سعر',
     offerDate: 'تاريخ العرض',
@@ -101,8 +97,6 @@ export const ar = {
     offerAccepted: 'تم قبول العرض',
     offerExpired: 'انتهت صلاحية العرض',
     offerRejected: 'تم رفض العرض',
-    offerDelivered: 'تم التسليم',
-    offerCompleted: 'مكتمل',
 
     // Pagination
     showing: 'عرض',
@@ -143,7 +137,7 @@ export const ar = {
     logo: 'الشعار',
     licenseImage: 'صورة السجل',
     activity: 'نشاط المؤسسة',
-    keywords: 'كلمات دالة',
+    keywords: 'كلمات دلالة',
     continue: 'متابعة',
     back: 'الرجوع',
     register: 'التسجيل',
@@ -210,78 +204,8 @@ export const ar = {
     usernameExist: 'اسم المستخدم موجود مسبقاً',
     emailExist: 'البريد الإلكتروني موجود مسبقاً',
     phoneExist: "رقم الهاتف موجود مسبقا",
-    max4: 'بحد أقصى اربع صورة',
-    max4Toast: 'لا يمكن اضافة اكثر من اربع صور',
-
-    // Excel Upload
-    excelUploadTitle: 'رفع من ملف Excel/CSV',
-    excelUploadDescription: 'يمكنك رفع ملف Excel أو CSV يحتوي على القيم المطلوبة. سيتم استخراج جميع النصوص من الملف وإضافتها تلقائياً.',
-    invalidExcelFile: 'يرجى اختيار ملف Excel أو CSV صالح',
-    excelFileTooLarge: 'حجم الملف كبير جداً. الحد الأقصى 5 ميجابايت',
-    noValidDataInFile: 'لم يتم العثور على بيانات صالحة في الملف',
-    itemsAddedSuccess: 'تم إضافة {count} عنصر بنجاح',
-    errorReadingFile: 'خطأ في قراءة الملف. يرجى التأكد من صحة الملف',
-
-    resendOTPTitle: "إعادة إرسال رمز التحقق",
-    resendOTPMessage: "لم تستلم الرمز؟ أعد إرساله إلى رقمك المسجل.",
-    resendOTP: "إعادة إرسال الرمز",
-    resending: "جاري الإرسال...",
-
-
-    WasSentTo: "تم الإرسال إلى",
-    vendors: "موردين",
-
-    // Profile
-    profile: 'الملف الشخصي',
-    profileTitle: 'الملف الشخصي',
-    profileSubtitle: 'إدارة معلومات الملف الشخصي والمتجر',
-    personalInfo: 'المعلومات الشخصية',
-    storeInfo: 'معلومات المتجر',
-    profileImage: 'الصورة الشخصية',
-    adminName: 'اسم المدير',
-    saveChanges: 'حفظ التغييرات',
-    profileUpdateSuccess: 'تم تحديث الملف الشخصي بنجاح',
-    profileUpdateError: 'فشل في تحديث الملف الشخصي'
-    ,
-
-
-    // Accept Offers
-    acceptOffers: 'قبول العروض',
-    acceptOffersTitle: 'إدارة العروض',
-    acceptOffersSubtitle: 'قبول أو رفض العروض المقدمة من العملاء',
-    noOffersToManage: 'لا توجد عروض تحتاج إلى إدارة',
-    customerDetailsTitle: 'تفاصيل العميل والعرض',
-    offerSummary: 'ملخص العرض',
-    offerPrice: 'سعر العرض',
-    // close: 'closeOrder',
-
-    reject: 'رفض',
-    viewDetails: 'عرض التفاصيل',
-    closeOrder: 'اغلاق الطلب',
-    closeAcceptOffer: 'هل أنت متأكد من اغلاق هذا الطلب',
-    confirmRejectOffer: 'هل أنت متأكد من رفض هذا العرض؟',
-    offerAcceptedSuccess: 'تم قبول العرض بنجاح',
-    offerRejectedSuccess: 'تم رفض العرض بنجاح',
-    offerAcceptError: 'فشل في قبول العرض',
-    offerRejectError: 'فشل في رفض العرض',
-    errorLoadingOffers: 'خطأ في تحميل العروض',
-    tryAgainLater: 'يرجى المحاولة مرة أخرى لاحقاً',
-    retry: 'إعادة المحاولة',
-    dataRefreshed: 'تم تحديث البيانات',
-    rowsPerPage: 'عدد الصفوف في الصفحة',
-    offerNumber: 'رقم العرض',
-
-    markAsDelivered: 'تسليم',
-    markAsCompleted: 'إكمال',
-    confirmMarkAsDelivered: 'هل أنت متأكد من تسليم هذا العرض؟',
-    confirmMarkAsCompleted: 'هل أنت متأكد من إكمال هذا العرض؟',
-    offerMarkedAsDelivered: 'تم تسليم العرض بنجاح',
-    offerMarkedAsCompleted: 'تم إكمال العرض بنجاح',
-    markAsDeliveredError: 'فشل في تسليم العرض',
-    markAsCompletedError: 'فشل في إكمال العرض',
-
-    excelLabel: 'رفع من ملف Excel/CSV',
-    excelDetails: 'يمكنك رفع ملف Excel أو CSV يحتوي على القيم المطلوبة. سيتم استخراج جميع النصوص من الملف وإضافتها تلقائياً.'
+    max4: '',
+    max4Toast: '',
 };
 
 export default ar;
