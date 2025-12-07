@@ -72,14 +72,6 @@ export const DataUtils = {
             '5': {
                 ar: translationsMap.ar.offerRejected,
                 en: translationsMap.en.offerRejected
-            },
-            '6': {
-                ar: translationsMap.ar.offerDelivered,
-                en: translationsMap.en.offerDelivered
-            },
-            '7': {
-                ar: translationsMap.ar.offerCompleted,
-                en: translationsMap.en.offerCompleted
             }
         };
         return statusMap[status]?.[currentLang] || status;
@@ -108,9 +100,7 @@ export const DataUtils = {
                 '1': 'info',
                 '2': 'primary',
                 '5': 'success',
-                '4': 'error',
-                '6': 'info',
-                '7': 'success'
+                '4': 'error'
             }
 
         };

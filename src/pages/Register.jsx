@@ -109,6 +109,15 @@ const Register = () => {
     return (
 
         <div className="w-full max-w-md">
+            <div className="flex items-center justify-end mb-4">
+                <button
+                    onClick={() => { currentLanguage == "ar" ? changeLanguage('en') : changeLanguage('ar') }}
+                    disabled={isChangingLanguage}
+                    className={` bg-primary-50 text-primary-600 flex items-center px-4 py-2 text-sm rounded-lg hover:bg-primary-100 transition-colors disabled:opacity-50`}
+                >
+                    {currentLanguage == "ar" ? t('english') : t('arabic')}
+                </button>
+            </div>
             {/* Header */}
             <div className="text-center mb-8">
                 <div className="text-center mb-4">
@@ -403,7 +412,6 @@ const Register = () => {
                                         value={field.value || []}
                                         onChange={field.onChange}
                                         error={errors.activity?.message}
-                                        allowExcelUpload={true}
                                     />
                                 )}
                             />
@@ -424,7 +432,6 @@ const Register = () => {
                                         value={field.value || []}
                                         onChange={field.onChange}
                                         error={errors.keywords?.message}
-                                        allowExcelUpload={true}
                                     />
                                 )}
                             />
@@ -467,15 +474,7 @@ const Register = () => {
                     </Link>
                 </p>
             </div>
-            <div className="flex items-center justify-center mt-6">
-                <button
-                    onClick={() => { currentLanguage == "ar" ? changeLanguage('en') : changeLanguage('ar') }}
-                    disabled={isChangingLanguage}
-                    className={` bg-primary-50 text-primary-600 flex items-center px-4 py-2 text-sm w-full text-right disabled:opacity-50`}
-                >
-                    {currentLanguage == "ar" ? t('english') : t('arabic')}
-                </button>
-            </div>
+
         </div>
 
     );

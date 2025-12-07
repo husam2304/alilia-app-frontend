@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { ArrowLeft, Calendar, Package, DollarSign, Percent, Gift, Image as ImageIcon } from 'lucide-react';
@@ -74,7 +74,7 @@ const OfferDetails = () => {
                         {t('back')}
                     </Button>
                     <div>
-                        <h1 className="text-3xl font-bold text-gray-900">
+                        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
                             {t('offerDetailsTitle')}
                         </h1>
                         <p className="text-gray-600 mt-1">

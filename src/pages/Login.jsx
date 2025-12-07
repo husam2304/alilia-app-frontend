@@ -45,9 +45,6 @@ const Login = () => {
 
             navigate('/dashboard', { replace: true });
         } catch (error) {
-            if (error?.isActive == false)
-                navigate(`/auth/resendOtp?id=${data.userCode}`);
-
             toast.error(error?.message || 'فشل في تسجيل الدخول');
         }
     };
@@ -58,6 +55,15 @@ const Login = () => {
 
     return (
         <div className="w-full max-w-md">
+            <div className="flex items-center justify-end mb-4">
+                <button
+                    onClick={() => { currentLanguage == "ar" ? changeLanguage('en') : changeLanguage('ar') }}
+                    disabled={isChangingLanguage}
+                    className={` bg-primary-50 text-primary-600 flex items-center px-4 py-2 text-sm rounded-lg hover:bg-primary-100 transition-colors disabled:opacity-50`}
+                >
+                    {currentLanguage == "ar" ? t('english') : t('arabic')}
+                </button>
+            </div>
             {/* Logo Section */}
             <div className="text-center mb-4">
                 <div className="flex justify-center mb-3">
@@ -196,15 +202,7 @@ const Login = () => {
                     {t('agreeTerms')}
                 </label>
             </div>
-            <div className="flex items-center  justify-end mt-6">
-                <button
-                    onClick={() => { currentLanguage == "ar" ? changeLanguage('en') : changeLanguage('ar') }}
-                    disabled={isChangingLanguage}
-                    className={` bg-primary-50 text-primary-600 flex items-center px-4 py-2 text-sm  text-right disabled:opacity-50`}
-                >
-                    {currentLanguage == "ar" ? t('english') : t('arabic')}
-                </button>
-            </div>
+
         </div>
 
     );

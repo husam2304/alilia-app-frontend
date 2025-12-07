@@ -13,8 +13,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://aliaaorder.runasp.net',
-        // target: 'https://localhost:59451/',
+        target: 'https://yallaalia.com',
         changeOrigin: true,
         secure: false,
         rewrite: (path) => path.replace(/^\/api/, ""),

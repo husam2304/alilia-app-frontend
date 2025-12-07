@@ -28,8 +28,7 @@ export const endpoints = {
         validatEmail: (email) => `/Auth/validate-email/${email}`,
         validatUsername: (username) => `/Auth/validate-username/${username}`,
         validatPhone: (phone) => `/Auth/validate-phone/${phone}`,
-        verfiyOtp: (UserId, otp) => `/Auth/verfiyOtp?userId=${UserId}&otp=${otp}`,
-        resendOtp: (Identifier) => `/Auth/reSendAuth-otp?Identifier=${Identifier}`
+        verfiyOtp: (UserId, otp) => `/Auth/verfiyOtp?userId=${UserId}&otp=${otp}`
 
     },
     // مجموعة خدمات لوحة التحكم والإحصائيات
@@ -40,7 +39,7 @@ export const endpoints = {
         profitByYear: '/Dashboard/profit-by-year',      // الأرباح حسب السنة
         topProduct: '/Dashboard/top-products',          // أفضل المنتجات مبيعاً
         charts: '/Dashboard/charts',                    // بيانات الرسوم البيانية
-        export: (format) => `/Dashboard/export?format=${format}`                     // تصدير البيانات
+        export: '/Dashboard/export'                     // تصدير البيانات
     },
     // مجموعة خدمات البائعين
     vendor: {
@@ -51,25 +50,13 @@ export const endpoints = {
     // مجموعة خدمات المدراء
     admin: {
         orders: "/Admin/Orders",                        // قائمة جميع الطلبات للمدير
-        offersToManage: "/Admin/OffersToManage",                   // العروض التي تحتاج موافقة البائع
-        closeOrder: (id) => `/Admin/closeOrder/${id}`,
-        markOfferAsDelivered: (offerId) => `/Admin/markOfferAsDelivered/${offerId}`,
-        markOfferAsCompleted: (offerId) => `/Admin/markOfferAsCompleted/${offerId}`
-    },
-    offer: {
-        offerDetails: (offerId) => `/Offer/OfferDetails/${offerId}`
     },
     // مجموعة خدمات العملاء
     customer: {
         changeLanguage: "/Customer/ChangeLanguage"      // تغيير لغة واجهة العميل
     },
-
-    // مجموعة خدمات الملف الشخصي
-    profile: {
-        getVendorProfile: '/Vendor/Profile',        // الحصول على ملف البائع الشخصي
-        updateVendorProfile: '/Vendor/Profile',     // تحديث ملف البائع الشخصي
-        getAdminProfile: '/Admin/Profile',          // الحصول على ملف المدير الشخصي
-        updateAdminProfile: '/Admin/Profile'        // تحديث ملف المدير الشخصي
+    offer: {
+        offerDetails: (offerId) => `/Offer/OfferDetails/${offerId}`
     }
 };
 
