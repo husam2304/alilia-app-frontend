@@ -11,7 +11,8 @@ import {
     X,
     Globe,
     User,
-    CheckCircle
+    CheckCircle,
+    Settings
 } from 'lucide-react';
 import { Menu as HeadlessMenu } from '@headlessui/react';
 import { useAuth } from '../contexts/AuthContext';
@@ -109,7 +110,7 @@ export const DashboardLayout = () => {
                                 />
                             </div>
                         </div> */}
-                        <div className="flex-1 flex w-full max-w-2xl mx-4">
+                        <div className="hidden lg:flex flex-1 w-full max-w-2xl mx-4">
                             <nav className="flex-1 px-2 justify-center flex space-y-1">
                                 {navigation.map((item) => {
                                     const Icon = item.icon;
@@ -212,27 +213,13 @@ export const DashboardLayout = () => {
                                                 <Link
                                                     to="/dashboard/profile"
                                                     className={`${active ? 'bg-gray-100' : ''
-                                                        } flex items-center px-4 py-2 text-sm text-gray-700 w-full text-right`}
+                                                        } flex items-center px-4 py-2 text-sm text-gray-700 w-full`}
                                                 >
                                                     <User className="ml-3 h-4 w-4" />
-                                                    {t('profile')}
+                                                    {t('profile') || 'الملف الشخصي'}
                                                 </Link>
                                             )}
                                         </HeadlessMenu.Item>
-                                        {/*
-
-                                        <HeadlessMenu.Item>
-                                            {({ active }) => (
-                                                <Link
-                                                    to="/settings"
-                                                    className={`${active ? 'bg-gray-100' : ''
-                                                        } flex items-center px-4 py-2 text-sm text-gray-700 w-full`}
-                                                >
-                                                    <Settings className="ml-3 h-4 w-4" />
-                                                    الإعدادات
-                                                </Link>
-                                            )}
-                                        </HeadlessMenu.Item> */}
 
                                         <HeadlessMenu.Item>
                                             {({ active }) => (
@@ -306,13 +293,13 @@ const Sidebar = ({ navigation, user }) => {
                 {/* User info at bottom */}
                 <div className="flex-shrink-0 p-4 border-t border-gray-200">
                     <div className="flex items-center">
-                        <div className="flex-shrink-0">
+                        <Link to="/dashboard/profile" className="flex-shrink-0 group block">
                             <img
-                                className="h-10 w-10 rounded-full"
+                                className="h-10 w-10 rounded-full group-hover:opacity-75 transition-opacity"
                                 src={user?.imageUrl || defaultAvatar}
                                 alt="User avatar"
                             />
-                        </div>
+                        </Link>
                         <div className="mr-3">
                             <p className="text-sm font-medium text-gray-700">
                                 {t('dashboardWelcome', { name: '' }).split(',')[0]}

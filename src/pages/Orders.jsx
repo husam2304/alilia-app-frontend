@@ -271,13 +271,12 @@ const Orders = () => {
             </div>
         );
     }
-
     return (
         <div className="space-y-6">
             {/* Header */}
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-gray-900">{t('ordersTitle')}</h1>
+                    <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">{t('ordersTitle')}</h1>
                     <p className="text-gray-600 mt-1">
                         {t('ordersSubtitle')}
                     </p>
@@ -338,9 +337,6 @@ const Orders = () => {
                         <thead className="bg-gray-50">
                             <tr>
                                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    #
-                                </th>
-                                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     {t('orderNumber')}
                                 </th>
                                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -352,19 +348,12 @@ const Orders = () => {
                                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     {t('details')}
                                 </th>
-                                {user?.userRole == "Admin" ? (
-
-                                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        {t('WasSentTo')}
-                                    </th>
-                                ) : (null)}
                                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     {t('orderStatus')}
                                 </th>
                                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     {t('offerStatus')}
                                 </th>
-
 
                                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     {t('actions')}
@@ -382,18 +371,12 @@ const Orders = () => {
                                     </td>
                                 </tr>
                             ) : (
-                                orders.map((order, index) => (
+                                orders.map((order) => (
                                     <tr
                                         key={order.id}
                                         className="hover:bg-gray-50 cursor-pointer transition-colors"
                                         onClick={() => handleOrderClick(order.id)}
                                     >
-
-                                        <td className="py-4 whitespace-nowrap">
-                                            <div className="text-sm font-medium">
-                                                {(index + 1) * currentPage}
-                                            </div>
-                                        </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <div className="text-sm font-medium text-primary-600 hover:text-primary-900">
                                                 {order.orderNumber}
@@ -412,14 +395,6 @@ const Orders = () => {
                                                 {order.Description}
                                             </div>
                                         </td>
-                                        {
-                                            user?.userRole == "Admin" ? (
-                                                <td className="px-6 py-4 whitespace-nowrap">
-                                                    <div className="text-sm text-gray-900 max-w-xs truncate">
-                                                        {order.vendors} {t('vendors')}
-                                                    </div>
-                                                </td>) : (null)
-                                        }
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <Badge variant={DataUtils.getStatusVariant(order.statusId, 'order')}>
                                                 {order.status}

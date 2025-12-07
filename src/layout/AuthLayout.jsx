@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import LoginImage from '../assets/images/login.jpeg';
+import LoginImage from '../assets/images/login.jpg';
 
 export const AuthLayout = () => {
 
@@ -9,12 +9,12 @@ export const AuthLayout = () => {
 
                 <div className="h-screen bg-gray-50 flex overflow-hidden" >
                     {/* Right Side - Login Form */}
-                    <div className="md:w-2/3 p-8 lg:p-12 px-6 py-8 flex flex-1 justify-center overflow-scroll">
+                    <div className="w-full md:w-1/2 p-6 md:p-12 flex flex-1 justify-center overflow-y-auto">
                         <Outlet />
                     </div>
 
                     {/* Left Side - Image */}
-                    < div className="hidden md:flex md:w-1/2 relative" >
+                    <div className="hidden md:flex md:w-1/2 relative" >
                         <img
                             src={LoginImage}
                             alt="CANDID Store"
