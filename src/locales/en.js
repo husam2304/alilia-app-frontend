@@ -69,7 +69,7 @@ export const en = {
     productDetails: 'Product Details',
     quantity: 'Quantity',
     totalAmount: 'Total Amount',
-
+    OfferQuantity: 'Quantity',
     // Price Quote
     priceQuoteTitle: 'Submit Price Quote',
     offerDate: 'Offer Date',

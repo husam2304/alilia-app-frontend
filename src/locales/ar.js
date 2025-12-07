@@ -72,7 +72,7 @@ export const ar = {
     productDetails: 'تفاصيل المنتجات',
     quantity: 'الكمية',
     totalAmount: 'إجمالي المبلغ',
-
+    OfferQuantity: 'العدد المطلوب',
     // Price Quote
     priceQuoteTitle: 'تقديم عرض سعر',
     offerDate: 'تاريخ العرض',

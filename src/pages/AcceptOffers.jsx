@@ -499,6 +499,16 @@ const CustomerDetailsModal = ({ offer, isOpen, onClose }) => {
                                 <p className="mt-1 text-sm text-gray-900">{offer.productName}</p>
                             </div>
 
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700">
+                                    {t('OfferQuantity')}
+                                </label>
+                                <p className="mt-1 text-sm font-semibold text-gray-900 flex items-center gap-2">
+                                    {/* <DollarSign className="h-4 w-4" /> */}
+                                    {offer.quantity}
+                                </p>
+                            </div>
                             <div>
                                 <label className="block text-sm font-medium text-gray-700">
                                     {t('offerPrice')}
@@ -509,21 +519,20 @@ const CustomerDetailsModal = ({ offer, isOpen, onClose }) => {
                                 </p>
                             </div>
 
+
                         </div>
                     </Card>
                 </div>
 
-                {/* Product Description */}
-                {offer.description && offer.description !== '' && (
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                            {t('productDescription')}
-                        </label>
-                        <div className="bg-gray-50 p-4 rounded-lg">
-                            <p className="text-sm text-gray-900">{offer.description}</p>
-                        </div>
+                <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                        {t('productDescription')}
+                    </label>
+                    <div className="bg-gray-50 p-4 rounded-lg">
+                        <p className="text-sm text-gray-900">{offer.description}</p>
                     </div>
-                )}
+                </div>
+
 
                 {/* Action Buttons */}
                 <div className="flex justify-end space-x-3 space-x-reverse pt-4 border-t">
